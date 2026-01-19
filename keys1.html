@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1-KEYS: Faktcheking Amaliyoti | Mirobid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        
+        :root { 
+            --tg-blue: #24A1DE; 
+            --danger: #e74c3c; 
+            --success: #27ae60; 
+            --bg: #e6ecf0; 
+            --primary: #0f172a;
+            --accent: #3b82f6;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', 'Ubuntu', sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            padding-top: 90px; /* Navbar uchun joy */
+        }
+
+        /* --- Navigatsiya Paneli (Yangi qo'shildi) --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        /* ----------------------------------------- */
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .card { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        
+        .tg-msg { background: #fff; border: 1px solid #ddd; border-radius: 15px; max-width: 400px; margin: 20px auto; overflow: hidden; position: relative; }
+        .tg-img { width: 100%; height: auto; background: #333; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; position: relative; }
+        .tg-img img { width: 100%; height: auto; display: block; }
+        .tg-body { padding: 15px; }
+        .tg-text { font-size: 15px; line-height: 1.4; margin-bottom: 10px; }
+        .tg-meta { color: var(--tg-blue); font-size: 12px; text-align: right; }
+
+        .step-box { display: flex; gap: 20px; margin-bottom: 15px; align-items: flex-start; }
+        .step-num { background: var(--tg-blue); color: white; min-width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .step-content { background: #f8f9fa; padding: 15px; border-radius: 10px; flex: 1; border-left: 5px solid var(--tg-blue); }
+
+        .search-demo { background: #eee; padding: 15px; border-radius: 10px; margin-top: 10px; display: none; }
+        
+        .btn { background: var(--tg-blue); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s; width: 100%; }
+        .btn:hover { opacity: 0.9; transform: scale(1.02); }
+        .btn-danger { background: var(--danger); }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .input-card { background: #fffde7; padding: 15px; border-radius: 10px; border: 1px solid #fff59d; }
+        textarea, select { width: 100%; border: 1px solid #ccc; border-radius: 5px; padding: 8px; margin-top: 5px; font-family: inherit; box-sizing: border-box; }
+
+        .feyk-label { display: inline-block; background: var(--danger); color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; margin-bottom: 15px; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Mobil uchun menyuni yashirish yoki burger menyu qilish mumkin */
+            padding-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="index.html#darslar">Darslar</a>
+        <a href="index.html#keyslar">Ilovalar va Keyslar</a>
+        <a href="index.html#oyinlar">O'yinlar</a>
+        <a href="index.html#diagnostika">Diagnostika</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div style="text-align: center;">
+            <span class="feyk-label"><i class="fas fa-mask"></i> SHUBHALI XABAR</span>
+            <h2 style="margin: 0 0 10px 0;">1-KEYS: "Shov-shuvli xabar" tahlili</h2>
+            <p style="color: #666;">Telegram tarmog'ida quyidagi xabar tarqaldi:</p>
+        </div>
+
+        <div class="tg-msg">
+            <div class="tg-img">
+                <img src="https://avatars.mds.yandex.net/i?id=dd54a184002d2c993ed707bde56850132fdf8267-12496909-images-thumbs&n=13" alt="Sovuq havo">
+            </div>
+            <div class="tg-body">
+                <div class="tg-text">
+                    <strong>DIQQAT! ERTAGA MAKTABLAR YOPILADI!</strong><br><br>
+                    Respublikamizga o'ta qattiq sovuq kirib kelmoqda. Barcha maktablarda darslar bekor qilinadi. Rasmiy xabarni kuting!
+                </div>
+                <div class="tg-meta">12:45 | 12400 views</div>
+            </div>
+        </div>
+
+        <button class="btn" onclick="toggleAnalysis()">FAKTCHEKINGNI BOSHLASH</button>
+    </div>
+
+    <div id="analysis-section" style="display: none;">
+        <div class="card" style="border-top: 5px solid var(--danger);">
+            <h2><i class="fas fa-vial"></i> SIFT usulida tekshirish</h2>
+            
+            <div class="step-box">
+                <div class="step-num">S</div>
+                <div class="step-content">
+                    <strong>Stop (To'xtang):</strong> Sarlavha emotsiyaga (qo'rquv va hayajon) qaratilgan. Shoshilib tarqatmang!
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">I</div>
+                <div class="step-content">
+                    <strong>Investigate (Manbani tekshiring):</strong> Xabar anonim kanalda chiqdi. Muallif yoki rasmiy tashkilot nomi yo'q.
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">F</div>
+                <div class="step-content">
+                    <strong>Find Better Coverage (Yaxshiroq manba):</strong>
+                    Quyidagi rasmiy kanallarni tekshiring:
+                    <ul style="margin: 10px 0; font-size: 14px;">
+                        <li><i class="fas fa-check-circle" style="color: var(--success);"></i> @uzedu (Vazirlik)</li>
+                        <li><i class="fas fa-check-circle" style="color: var(--success);"></i> @uzhydromet (Ob-havo)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="step-num">T</div>
+                <div class="step-content">
+                    <strong>Trace Back (Asliga qayting):</strong> Google Lens orqali tekshiramiz.
+                    <button class="btn" style="margin-top:10px; padding: 5px 10px; font-size: 12px; width: auto;" onclick="showSearch()">Google Lens simulyatsiyasi</button>
+                    <div id="search-demo" class="search-demo">
+                        <i class="fab fa-google"></i> Qidiruv natijasi: <strong>"Ushbu surat ilk bor 2019-yilda e'lon qilingan."</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 5px solid var(--success);">
+            <h2><i class="fas fa-edit"></i> O'quvchi topshirig'i</h2>
+            <div class="grid-3">
+                <div class="input-card">
+                    <label>Feyk belgisi:</label>
+                    <textarea id="b1" rows="2" placeholder="Nima uchun bu feyk?"></textarea>
+                </div>
+                <div class="input-card">
+                    <label>Manbalar:</label>
+                    <textarea id="b2" rows="2" placeholder="Qayerdan tekshirasiz?"></textarea>
+                </div>
+                <div class="input-card">
+                    <label>Xulosa:</label>
+                    <select id="res">
+                        <option>--- Tanlang ---</option>
+                        <option value="feyk">XABAR FEYK</option>
+                        <option value="fakt">XABAR FAKT</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn" style="margin-top: 20px; background: var(--success);" onclick="finishKey()">KEYS TAHLILINI YAKUNLASH</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleAnalysis() {
+        document.getElementById('analysis-section').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function showSearch() {
+        document.getElementById('search-demo').style.display = 'block';
+    }
+
+    function finishKey() {
+        const res = document.getElementById('res').value;
+        if(res === 'feyk') {
+            alert("To'g'ri! Siz haqiqiy faktcheker ekansiz. Xabar feyk, chunki surat 2019-yilga tegishli.");
+        } else {
+            alert("Diqqat bilan qaytadan ko'rib chiqing. Manba va sanaga e'tibor bering!");
+        }
+    }
+</script>
+
+</body>
+</html>

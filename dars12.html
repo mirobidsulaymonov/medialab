@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-Mashg'ulot: Shaxsiy axborot immuniteti</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --navy: #1a1a2e;
+            --crimson: #e94560;
+            --gold: #ffd54f;
+            --light-bg: #f4f7f6;
+            --shield-blue: #0984e3;
+            --text-color: #333;
+            --card-bg: white;
+            --border-color: #ddd;
+        }
+
+        body.dark-mode {
+            --light-bg: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --navy: #000;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .top-nav {
+            background: var(--navy);
+            padding: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
+        .home-btn { background: var(--crimson); border: none; }
+
+        .container {
+            max-width: 850px;
+            margin: 25px auto;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s;
+        }
+
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .header-image-box {
+            flex: 1;
+            min-width: 250px;
+            height: 160px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 4px solid var(--crimson);
+            transition: transform 0.4s ease;
+            cursor: pointer;
+        }
+
+        .header-image-box:hover { transform: scale(1.05); }
+        .header-image-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 1.5; text-align: right; }
+        .header-text h1 { color: var(--text-color); font-size: 20px; margin: 0; opacity: 0.8; }
+        .header-text h2 { color: var(--crimson); font-size: 28px; font-weight: 900; margin: 5px 0; line-height: 1.2; }
+        .header-text p { font-style: italic; color: var(--text-color); margin: 0; opacity: 0.7; }
+
+        .goal-box {
+            border-left: 6px solid var(--shield-blue);
+            padding: 20px;
+            background: rgba(9, 132, 227, 0.1);
+            margin-bottom: 35px;
+            font-size: 15px;
+            line-height: 1.6;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-container { display: flex; margin-bottom: 40px; scroll-margin-top: 100px; }
+        .step-number {
+            min-width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 900; color: white;
+            margin-right: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+
+        .s1 .step-number { background: #0f3460; }
+        .s2 .step-number { background: #16213e; }
+        .s3 .step-number { background: var(--shield-blue); }
+        .s4 .step-number { background: var(--crimson); }
+
+        .step-content { 
+            flex-grow: 1; 
+            border-radius: 15px; 
+            border: 1px solid var(--border-color); 
+            background: var(--card-bg); 
+            overflow: hidden; 
+        }
+        
+        .step-header { 
+            background: var(--navy); 
+            color: white; 
+            padding: 15px; 
+            font-weight: bold; 
+            text-align: center; 
+        }
+        
+        .step-body { padding: 20px; line-height: 1.7; }
+
+        .scenario-box {
+            background: rgba(233, 69, 96, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid var(--crimson);
+        }
+
+        .section-title {
+            background: var(--navy); color: white;
+            padding: 15px; border-radius: 8px;
+            text-align: center; margin: 40px 0 20px;
+            font-weight: bold; text-transform: uppercase;
+        }
+
+        .media-card { 
+            background: var(--card-bg); 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 30px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            text-align: center;
+        }
+        
+        .video-box { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 10px; overflow: hidden; }
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        /* Diskka o'tish tugmasi uslubi */
+        .disk-link {
+            display: inline-block;
+            margin-top: 15px;
+            background: var(--crimson);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .disk-link:hover { opacity: 0.9; transform: scale(1.02); }
+        .disk-note { font-size: 12px; color: #777; margin-top: 8px; line-height: 1.4; }
+
+        @media print { .top-nav { display: none; } body { background: white; color: black; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#dars-reja" class="nav-btn"><i class="fas fa-list-alt"></i> DARS REJASI</a>
+    <a href="#info-area" class="nav-btn"><i class="fas fa-image"></i> INFOGRAFIKA</a>
+    <a href="#video-area" class="nav-btn"><i class="fas fa-play"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> TUNGI REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <div class="header-section">
+        <div class="header-image-box">
+            <img src="https://drive.google.com/thumbnail?id=1sSi4rbijd_czdgHKH813LTsHDWK92Wh-&sz=w1000" alt="Shaxsiy Axborot Immuniteti">
+        </div>
+        <div class="header-text">
+            <h1>12-Mashg'ulot:</h1>
+            <h2>Shaxsiy axborot immuniteti</h2>
+            <p>Kognitiv himoya strategiyasi</p>
+        </div>
+    </div>
+
+    <div class="goal-box">
+        <strong>Maqsadi:</strong> O'quvchilarda axborot xurujlari va kiber-tahdidlarga nisbatan shaxsiy himoya tizimini shakllantirish, kognitiv resurslarni (diqqat va vaqt) to'g'ri taqsimlashni o'rgatish.
+    </div>
+
+    <div id="dars-reja">
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">Affektiv tahlil: "Diqqat o'g'rilari" (7 daqiqa)</div>
+                <div class="step-body">
+                    <strong>Metod: "Media-diet"</strong><br>
+                    O'qituvchi o'quvchilarga telefonlardagi "Screen Time" (ekran vaqti) funksiyasini eslatadi va ularga doimiy chalg'ituvchi bildirishnomalar (notifications) qanday hissiyot uyg'otishini so'raydi.
+<br>•	Vazifa: O'quvchi doimiy axborot oqimi (shovqin) ostida o'zida paydo bo'ladigan affektiv toliqish (charchoq, diqqat tarqoqligi) darajasini aniqlaydi.
+<br>•	Monitoring: O'quvchining axborot yuklamasiga nisbatan psixofiziologik chidamliligi o'lchanadi.
+<br><br>
+                    <strong>Vazifa:</strong> O'quvchi doimiy axborot oqimi (shovqin) ostida o'zida paydo bo'ladigan affektiv toliqish darajasini aniqlaydi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">2. Kognitiv himoya: "Axborot filtri" (13 daqiqa) </div>
+                <div class="step-body">
+                    <strong>Metod: "5-soniya qoidasi"</strong>
+                    <ul>
+                        <li>O'quvchilarga har qanday xabarni qabul qilishdan oldin kognitiv "to'siq" qo'yish o'rgatiladi:
+<br><b>Fikrni to'xtatish:</b> Xabarni o'qiganda birinchi 5 soniya davomida hech qanday reaksiya bermaslik.</li>
+                        <br><li><b>Manba filtri:</b> ""Bu xabar mening hayotim uchun foydalimi?" degan savolni berish."</li>
+                       <br> <li><b>Strategiya:</b> Keraksiz kanallardan chiqish va bildirishnomalarni boshqarish orqali kognitiv resursni asrash.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">3. Amaliy mashg'ulot (15 daqiqa) — Metod: "Raqamli qalqon"</div>
+                <div class="step-body">
+                    <strong>Topshiriq:</strong> O'quvchilarga 3 ta kiber-xavf ssenariysi beriladi:
+<br>1.	Fishing (Phishing): "Siz sovrin yutdingiz, pasport ma'lumotlarini kiriting" degan havola.
+<br>2.	Ijtimoiy muhandislik: Notanish odamning do'stlik so'rashi va shaxsiy ma'lumotlarni so'rashi.
+<br>3.	Axborot shovqini: Bir vaqtning o'zida kelayotgan 20 ta turli xil shov-shuvli yangiliklar.
+<br>Topshiriq: O'quvchi har bir vaziyat uchun **"Kognitiv mudofaa rejasi"**ni tuzadi: "Hissiyotga berilmayman -> Havolani tekshiraman -> Shubhali bo'lsa, bloklayman".
+
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">4. O'quvchi sahifasida Monitoring (10 daqiqa)</div>
+                <div class="step-body">
+                    <strong>Ilovadagi test:</strong> "Shubhali xabar kelganda, miyangizning qaysi qismi birinchi qaror qabul qilishi kerak: 
+<br>Hissiyotmi (Affektiv) yoki Mantiqmi (Kognitiv)?"
+<br>•	O'qituvchi tahlili: Siz o'quvchining nazariy bilimlarni real xavf paytida qanchalik tez amaliy strategiyaga aylantira olishini (reaksiya tezligini) monitoring qilasiz.
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-area">
+        <div class="section-title">DARSNING INFOGRAFIKASI</div>
+        <div class="media-card">
+            <img src="https://drive.google.com/thumbnail?id=1p67mKSQVvjtX-v1_Q7UUh2HIKwXAKBji&sz=w1000" style="width:100%; border-radius:10px;" alt="Infografika">
+            <a href="https://drive.google.com/file/d/1p67mKSQVvjtX-v1_Q7UUh2HIKwXAKBji/view?usp=sharing" target="_blank" class="disk-link"><i class="fas fa-external-link-alt"></i> INFOGRAFIKANI DISKDA KO'RISH</a>
+            <p class="disk-note">Eslatma: Tasvir yuklanishi uchun Google hisobingizga kirgan bo'lishingiz kerak bo'lishi mumkin.</p>
+        </div>
+    </div>
+
+    <div id="video-area">
+        <div class="section-title">MAVZUGA DOIR VIDEO</div>
+        <div class="media-card">
+            <div class="video-box">
+                <iframe src="https://drive.google.com/file/d/1xmOZmlw-vtIEt_fQx-wiXGj66cyDbvRX/preview" allow="autoplay" allowfullscreen></iframe>
+            </div>
+            <a href="https://drive.google.com/file/d/1xmOZmlw-vtIEt_fQx-wiXGj66cyDbvRX/view?usp=sharing" target="_blank" class="disk-link"><i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH (Agar ochilmasa, bosing)</a>
+            <p class="disk-note">Eslatma: Video yuklanishi uchun Google hisobingizga kirgan bo'lishingiz kerak bo'lishi mumkin.</p>
+        </div>
+    </div>
+
+</div>
+
+<footer style="text-align: center; padding: 30px; opacity: 0.7; font-size: 13px;">
+    © 2026 Mirobid | Shaxsiy axborot immuniteti mashg'uloti
+</footer>
+
+</body>
+</html>

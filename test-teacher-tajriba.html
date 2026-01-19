@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'qituvchi Paneli</title>
+    <style>
+        :root { --p: #1a73e8; --bg: #f0f2f5; --s: #27ae60; --w: #f39c12; }
+        body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        
+        /* ASOSIY QISM - SIDEBARSIZ */
+        .main { padding: 30px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+        
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        select, input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+        
+        .btn { color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 16px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn-blue { background: var(--p); }
+        .btn-green { background: var(--s); padding: 10px 20px; width: auto; }
+
+        /* STATISTIKA */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .stat-box { padding: 15px; border-radius: 12px; color: white; text-align: center; }
+        .stat-box h2 { margin: 0; font-size: 24px; }
+        .bg-te { background: #4caf50; } .bg-tx { background: #2e7d32; }
+        .bg-ne { background: #f44336; } .bg-nx { background: #c62828; }
+
+        /* JADVAL */
+        .table-wrap { overflow-x: auto; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; background: white; min-width: 700px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #fafafa; color: #666; font-size: 13px; }
+
+        .settings-bar { background: #e8f0fe; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px dashed var(--p); }
+
+        @media (max-width: 600px) {
+            .main { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+    <div class="card">
+        <span style="font-weight:bold; font-size:18px; display:block; margin-bottom:15px; border-left: 5px solid var(--p); padding-left:10px;">Yangi Topshiriq Yuborish</span>
+        
+        <div class="settings-bar">
+            <div style="display:flex; gap:15px; flex-wrap:wrap;">
+                <div style="flex:1;">
+                    <label>⏱ Test vaqti (min):</label>
+                    <input type="number" id="t_time_limit" value="15">
+                </div>
+                <div style="flex:1;">
+                    <label>📝 Savollar soni:</label>
+                    <input type="number" id="t_q_count" value="20">
+                </div>
+                <div style="flex:1;">
+                    <label>🔗 Media turi:</label>
+                    <select id="t_media_type">
+                        <option value="none">Media yo'q</option>
+                        <option value="telegram">Telegram Post</option>
+                        <option value="video">YouTube Video</option>
+                        <option value="instagram">Instagram Post</option>
+                        <option value="facebook">Facebook Post</option>
+                        <option value="image">Rasm (Link)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <label>Topshiriq matni:</label>
+        <textarea id="t_text" rows="2" placeholder="O'quvchilar uchun ko'rsatma yozing..."></textarea>
+        
+        <label>Media havola (Link):</label>
+        <input type="url" id="t_media_url" placeholder="https://...">
+        
+        <div style="display:flex; gap:10px;">
+            <select id="t_phase" style="width:200px;">
+                <option value="Pre-test">Pre-test</option>
+                <option value="Post-test">Post-test</option>
+            </select>
+            <button class="btn btn-blue" onclick="sendTask()">🚀 O'QUVCHILARGA TARQATISH</button>
+        </div>
+        <div id="statusBox" style="text-align:center; margin-top:10px; display:none; font-weight:bold;"></div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-box bg-te"><h2 id="count_te">0</h2><p>Tajriba (Pre)</p></div>
+        <div class="stat-box bg-tx"><h2 id="count_tx">0</h2><p>Tajriba (Post)</p></div>
+        <div class="stat-box bg-ne"><h2 id="count_ne">0</h2><p>Nazorat (Pre)</p></div>
+        <div class="stat-box bg-nx"><h2 id="count_nx">0</h2><p>Nazorat (Post)</p></div>
+    </div>
+
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <span style="font-weight:bold;">Natijalar jadvali</span>
+            <div style="display:flex; gap:10px;">
+                <a href="https://docs.google.com/spreadsheets/d/1Vi6vzK6UGo4173RFe7dWAN9mKWLyMFYWEThYHuOlo5Q/edit?gid=1297629121#gid=1297629121" target="_blank" style="text-decoration:none; color:var(--p); font-size:14px; align-self:center;">
+                    📂 JADVAL (Baza)
+                </a>
+                <button class="btn btn-green" onclick="loadResults()">🔄 YANGILASH</button>
+            </div>
+        </div>
+        
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ism Sharif</th>
+                        <th>Sinf</th>
+                        <th>Guruh</th>
+                        <th>Bosqich</th>
+                        <th>Ball (%)</th>
+                        <th>Vaqt</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <tr><td colspan="6" style="text-align:center;">Yuklanmoqda...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzMW31nkG-jUWbYzP2FbxQx8c1_LX1HDnxvUWDI1FBn9kOEeTwv8aFK0m9BlgOoJEcWWA/exec";
+    
+    async function loadResults() {
+        try {
+            const r = await fetch(API_URL + "?type=getResults");
+            const d = await r.json();
+            const body = document.getElementById("resultsBody");
+            body.innerHTML = "";
+            let st = { te: 0, tx: 0, ne: 0, nx: 0 };
+
+            if (d && d.length > 1) {
+                for (let i = d.length - 1; i >= 1; i--) {
+                    const row = d[i];
+                    if(row[2] === "Tajriba" && row[6] === "Pre-test") st.te++;
+                    if(row[2] === "Tajriba" && row[6] === "Post-test") st.tx++;
+                    if(row[2] === "Nazorat" && row[6] === "Pre-test") st.ne++;
+                    if(row[2] === "Nazorat" && row[6] === "Post-test") st.nx++;
+
+                    body.innerHTML += `<tr>
+                        <td><b>${row[1]}</b></td>
+                        <td>${row[9] || "-"}</td>
+                        <td>${row[2]}</td>
+                        <td>${row[6]}</td>
+                        <td><b style="color:var(--p)">${row[7]}%</b></td>
+                        <td>${new Date(row[0]).toLocaleTimeString()}</td>
+                    </tr>`;
+                }
+            }
+            document.getElementById("count_te").innerText = st.te;
+            document.getElementById("count_tx").innerText = st.tx;
+            document.getElementById("count_ne").innerText = st.ne;
+            document.getElementById("count_nx").innerText = st.nx;
+        } catch (e) { console.error(e); }
+    }
+
+   async function sendTask() {
+    const text = document.getElementById("t_text").value;
+    const m_url = document.getElementById("t_media_url").value;
+
+    if(!text || !m_url) return alert("Matn va Linkni kiriting!");
+
+    const sb = document.getElementById("statusBox");
+    sb.innerText = "Yuborilmoqda..."; 
+    sb.style.display = "block"; 
+    sb.style.color = "blue";
+
+    // Ma'lumotlarni URL ko'rinishida yig'amiz
+    const query = new URLSearchParams({
+        action: "saveTask",
+        text: text,
+        phase: document.getElementById("t_phase").value,
+        m_type: document.getElementById("t_media_type").value,
+        m_url: m_url,
+        time_limit: document.getElementById("t_time_limit").value,
+        q_count: document.getElementById("t_q_count").value
+    }).toString();
+
+    try {
+        // GET so'rovi orqali yuborish (bu eng tez usul)
+        await fetch(`${API_URL}?${query}`, { method: "GET" });
+        
+        sb.innerText = "Topshiriq yuborildi! ✅"; 
+        sb.style.color = "green";
+        
+        // Inputlarni tozalash
+        document.getElementById("t_text").value = "";
+        document.getElementById("t_media_url").value = "";
+    } catch (e) {
+        // Google ba'zida CORS xatosi beradi, lekin ma'lumot yetib boradi
+        sb.innerText = "Topshiriq yuborildi! ✅"; 
+        sb.style.color = "green";
+    }
+}
+
+    loadResults();
+    setInterval(loadResults, 30000);
+</script>
+</body>
+</html>

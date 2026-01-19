@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Portal | Bosh Sahifa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding-top: 70px;
+        }
+
+        /* Navigatsiya Paneli */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        .btn-extra {
+            background: var(--accent);
+            color: white !important;
+            padding: 8px 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .btn-extra:hover {
+            background: #2563eb !important;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .category-block {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 15px;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: #fff;
+            border: 1px solid #f1f5f9;
+            border-radius: 22px;
+            padding: 30px 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.1);
+            border-color: var(--accent);
+        }
+
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .blue-icon { background: #dbeafe; color: #2563eb; }
+        .orange-icon { background: #ffedd5; color: #ea580c; }
+        .green-icon { background: #dcfce7; color: #16a34a; }
+        .purple-icon { background: #f3e8ff; color: #9333ea; }
+        .teal-icon { background: #e0f2f1; color: #00897b; }
+
+        .lesson-card h3 { margin: 0; font-size: 1.1rem; font-weight: 800; }
+        .lesson-card p { margin: 0; font-size: 0.85rem; color: #64748b; }
+
+        /* Yangi Footer Stili */
+        footer {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 4px solid var(--accent);
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            text-decoration: none;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            padding: 8px 15px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .contact-item:hover {
+            color: white;
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .contact-item i {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .contact-grid { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="#"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="#darslar">Darslar</a>
+        <a href="#keyslar">Ilovalar va Keyslar</a>
+        <a href="#oyinlar">O'yinlar</a>
+        <a href="#diagnostika">Diagnostika</a>
+        <a href="qo'shimcha manbalar.html" class="btn-extra"><i class="fas fa-folder-plus"></i> Qo'shimcha manbalar</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <h1>MEDIA SAVODXONLIK</h1>
+    <p>Kelajak ko'nikmalarini bugun biz bilan egallang.</p>
+</div>
+
+<div class="main-content">
+    
+    <section id="darslar" class="category-block">
+        <div class="section-header">
+            <h2><i class="fas fa-graduation-cap" style="color: var(--accent);"></i> O'quv kursi</h2>
+        </div>
+        <div class="lesson-grid" id="lessons-container"></div>
+    </section>
+
+    <section id="keyslar" class="category-block">
+        <div class="section-header">
+            <h2><i class="fas fa-lightbulb" style="color: var(--warning);"></i> Ilovalar va Keyslar</h2>
+        </div>
+        <div class="lesson-grid">
+            <a href="ssenariy1.html" class="lesson-card" style="border-left: 4px solid var(--accent);">
+                <div class="icon-box teal-icon"><i class="fas fa-comments"></i></div>
+                <h3>Ssenariy - 1</h3>
+                <p>Muloqot tahlili.</p>
+            </a>
+            <a href="ssenariy2.html" class="lesson-card" style="border-left: 4px solid var(--accent);">
+                <div class="icon-box teal-icon"><i class="fas fa-shield-virus"></i></div>
+                <h3>Ssenariy - 2</h3>
+                <p>Kiber-xavf ssenariysi.</p>
+            </a>
+            <a href="ssenariy3.html" class="lesson-card" style="border-left: 4px solid var(--accent);">
+                <div class="icon-box teal-icon"><i class="fas fa-user-secret"></i></div>
+                <h3>Ssenariy - 3</h3>
+                <p>Axborot xavfsizligi.</p>
+            </a>
+
+            <script>
+                for(let i=1; i<=5; i++) {
+                    document.write(`
+                        <a href="keys${i}.html" class="lesson-card">
+                            <div class="icon-box orange-icon"><i class="fas fa-file-signature"></i></div>
+                            <h3>Keys - ${i}</h3>
+                            <p>Vaziyat tahlili.</p>
+                        </a>
+                    `);
+                }
+            </script>
+        </div>
+    </section>
+
+    <section id="oyinlar" class="category-block">
+        <div class="section-header">
+            <h2><i class="fas fa-gamepad" style="color: var(--success);"></i> Interaktiv O'yinlar</h2>
+        </div>
+        <div class="lesson-grid">
+            <a href="o-karta.html" class="lesson-card">
+                <div class="icon-box green-icon"><i class="fas fa-map-marked-alt"></i></div>
+                <h3>Interaktiv karta</h3>
+                <p>Xarita topshiriqlari.</p>
+            </a>
+            <a href="o-simulyator.html" class="lesson-card">
+                <div class="icon-box green-icon"><i class="fas fa-vr-cardboard"></i></div>
+                <h3>Simulyator 1</h3>
+                <p>Virtual muhit.</p>
+            </a>
+            <a href="o-simulyator2.html" class="lesson-card">
+                <div class="icon-box green-icon"><i class="fas fa-robot"></i></div>
+                <h3>Simulyator 2</h3>
+                <p>Kengaytirilgan ssenariy.</p>
+            </a>
+        </div>
+    </section>
+
+    <section id="diagnostika" class="category-block">
+        <div class="section-header">
+            <h2><i class="fas fa-vial" style="color: #9333ea;"></i> Media-madaniyat diagnostikasi</h2>
+        </div>
+        <div class="lesson-grid">
+            <a href="o-fakt.html" class="lesson-card" style="border: 2px solid #f3e8ff;">
+                <div class="icon-box purple-icon"><i class="fas fa-microscope"></i></div>
+                <h3>Fakt-checking Labirinti</h3>
+                <p>Bilim darajangizni tekshiring.</p>
+            </a>
+
+            <a href="test-student-vazifa.html" class="lesson-card" style="border-left: 4px solid var(--accent);">
+                <div class="icon-box blue-icon"><i class="fas fa-user-graduate"></i></div>
+                <h3>Talabalar tajribasi</h3>
+                <p>Studentlar uchun maxsus topshiriq.</p>
+            </a>
+
+            <a href="test-teacher-tajriba.html" class="lesson-card" style="border-left: 4px solid var(--success);">
+                <div class="icon-box green-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3>Ustozlar tajribasi</h3>
+                <p>O'qituvchilar uchun tajriba sinovi.</p>
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-name">Sulaymonov Mirobid Abduxolikovich</div>
+        
+        <div class="contact-grid">
+            <a href="tel:+998944740609" class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                +998 (94) 474-06-09
+            </a>
+            <a href="mailto:mirobid30@gmail.com" class="contact-item">
+                <i class="fas fa-envelope"></i>
+                mirobid30@gmail.com
+            </a>
+            <a href="https://t.me/mirobid30" target="_blank" class="contact-item">
+                <i class="fab fa-telegram-plane"></i>
+                @mirobid30
+            </a>
+        </div>
+
+        <div class="copyright">
+            <p>© 2026 Media Portal Loyihasi | Barcha huquqlar himoyalangan</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const lessons = [
+        { id: 1, title: "Media olamiga kirish", icon: "fa-bolt" },
+        { id: 2, title: "Fakt va fikr tahlili", icon: "fa-search" },
+        { id: 3, title: "Propaganda", icon: "fa-bullhorn" },
+        { id: 4, title: "Deepfake tahlili", icon: "fa-user-ninja" },
+        { id: 5, title: "Exo-kameralar", icon: "fa-project-diagram" },
+        { id: 6, title: "Kiberxavfsizlik", icon: "fa-shield-alt" },
+        { id: 7, title: "Fake News turlari", icon: "fa-newspaper" },
+        { id: 8, title: "Media etika", icon: "fa-balance-scale" },
+        { id: 9, title: "Vizual savod", icon: "fa-eye" },
+        { id: 10, title: "Sotsial madaniyat", icon: "fa-comments" },
+        { id: 11, title: "Raqamli izlar", icon: "fa-fingerprint" },
+        { id: 12, title: "Kritik fikrlash", icon: "fa-brain" },
+        { id: 13, title: "Reklama tili", icon: "fa-ad" },
+        { id: 14, title: "Media va qonun", icon: "fa-gavel" },
+        { id: 15, title: "Yakuniy xulosa", icon: "fa-flag-checkered" }
+    ];
+
+    document.getElementById('lessons-container').innerHTML = lessons.map(l => `
+        <a href="dars${l.id}.html" class="lesson-card">
+            <div class="icon-box blue-icon"><i class="fas ${l.icon}"></i></div>
+            <h3>${l.title}</h3>
+            <p>Mashg'ulot - ${l.id}</p>
+        </a>
+    `).join('');
+</script>
+
+</body>
+</html>

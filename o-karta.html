@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>60 Interaktiv Karta | Mirobid Sulaymonov</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+        :root {
+            --primary: #1a5276;
+            --gold: #b7950b;
+            --danger: #c0392b;
+            --success: #1e8449;
+            --info: #2980b9;
+            --purple: #8e44ad;
+            --dark: #0f172a;
+        }
+
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #f4f7f8; 
+            margin: 0; 
+            padding: 100px 20px 40px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        /* --- Navigatsiya Paneli --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* --- Header --- */
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            padding: 30px; 
+            background: white; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            width: 100%; 
+            max-width: 1200px;
+            border-bottom: 5px solid var(--primary);
+        }
+        .header h1 { color: var(--primary); margin: 0; font-size: 26px; text-transform: uppercase; }
+        
+        /* --- Kartalar Gridi --- */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+            max-width: 1400px; 
+            width: 100%; 
+        }
+
+        .flip-card { background-color: transparent; width: 100%; height: 350px; perspective: 1000px; cursor: pointer; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; border-radius: 20px; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        
+        .front, .back { 
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            -webkit-backface-visibility: hidden; 
+            backface-visibility: hidden; 
+            border-radius: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 25px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08); 
+        }
+        
+        .front { background: white; border: 1px solid #eee; }
+        .back { background: var(--primary); color: white; transform: rotateY(180deg); border: 3px solid var(--gold); }
+        
+        .tag { 
+            position: absolute; 
+            top: 15px; 
+            left: 15px; 
+            font-size: 10px; 
+            padding: 5px 10px; 
+            border-radius: 15px; 
+            color: white; 
+            font-weight: 800; 
+            text-transform: uppercase;
+        }
+        .icon { font-size: 55px; margin-bottom: 20px; }
+        h3 { font-size: 17px; line-height: 1.4; color: #2c3e50; margin: 0; font-weight: 600; }
+        .back h4 { color: var(--gold); margin-bottom: 10px; font-size: 20px; text-transform: uppercase; }
+        .back p { font-size: 16px; line-height: 1.5; margin: 0; }
+
+        .tech { background: var(--info); }
+        .ethic { background: var(--success); }
+        .legal { background: var(--danger); }
+        .psych { background: var(--gold); }
+        .media { background: var(--purple); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="index.html#darslar">Darslar</a>
+        <a href="index.html#keyslar">Keyslar</a>
+        <a href="index.html#oyinlar">O'yinlar</a>
+        <a href="diagnostika.html">Diagnostika</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>MEDIA-MADANIYAT: 60 TA INTERAKTIV KARTALAR</h1>
+    <p style="color:var(--gold); font-weight:800; margin-top:5px;">SamDVMU o'qituvchisi: Sulaymonov Mirobid Abduxolikovich</p>
+</div>
+
+<div class="grid" id="cardGrid"></div>
+
+<script>
+    const cardData = [
+        // 1-30 gacha bo'lgan eski kartalar (qisqartirib yozildi, lekin kodda to'liq bo'ladi)
+        {i: "✉️", t: "Fishing", q: "Sizga 'Yutuq yutdingiz, plastik karta raqamingizni yuboring' degan SMS keldi.", a: "Bu - Fishing. Hech qachon karta raqami va SMS kodni bermang!", c: "tech"},
+        {i: "📢", t: "Klikbeyt", q: "Rasmda qizil doira va 'DAHSHAT' so'zi bor. Nima qilasiz?", a: "To'xtang! Bu hissiy tuzoq. Tanqidiy fikrlashni ishga soling.", c: "psych"},
+        {i: "🤐", t: "Etika", q: "Do'stingiz haqida shubhali videoni guruhga tashlamoqchisiz.", a: "Bu axloqsizlik. Shaxsiy hayot daxlsizligini aslo buzmang!", c: "ethic"},
+        {i: "🔐", t: "Xavfsizlik", q: "Hamma ijtimoiy tarmoqlarga bir xil parol qo'yish xavfsizmi?", a: "Yo'q! Bitta akkaunt buzilsa, hammasi xavf ostida qoladi.", c: "tech"},
+        {i: "📶", t: "Wi-Fi", q: "Jamoat joyidagi bepul Wi-Fi orqali bank ilovasiga kirish xavfsizmi?", a: "Xavfli! Ma'lumotlaringiz o'g'irlanishi ehtimoli juda yuqori.", c: "tech"},
+        {i: "📍", t: "Geolokatsiya", q: "Har bir rasmni qayerdaligingizni ko'rsatib (location) yuklash to'g'rimi?", a: "Yo'q, bu o'g'rilar va kuzatuvchilar uchun tayyor ma'lumotdir.", c: "psych"},
+        {i: "🏥", t: "Salomatlik", q: "Internetdagi '1 kunda saratonni davolovchi' reklamaga ishonasizmi?", a: "Faqat rasmiy tibbiyotga ishoning. Bu reklamalar - manipulyatsiya.", c: "media"},
+        {i: "⚖️", t: "Qonun", q: "Internetda birovni haqorat qilish jazosiz qoladimi?", a: "Yo'q, O'zbekiston qonunchiligida ma'muriy va jinoiy jazo bor.", c: "legal"},
+        {i: "🕵️", t: "Muhandislik", q: "Notanish shaxs 'do'stlik' yubordi, rasmida chiroyli model.", a: "Bu 'Ijtimoiy muhandislik' tuzog'i bo'lishi mumkin. Qabul qilmang.", c: "psych"},
+        {i: "🛡️", t: "Himoya", q: "Kompyuterga antivirus o'rnatish shartmi?", a: "Albatta! U kiber-hujumlar va josus dasturlarni to'sib turadi.", c: "tech"},
+        {i: "🛒", t: "Savdo", q: "Instagramda juda arzon tovar ko'rdingiz, oldindan to'lov so'rashdi.", a: "Firibgarlik ehtimoli juda yuqori. Faqat ishonchli do'konlardan oling.", c: "tech"},
+        {i: "🎙️", t: "Deepfake", q: "Tanishiz ovozi bilan 'pul yubor' degan audio xabar keldi.", a: "Ehtiyot bo'ling! Bu sun'iy intellekt (Deepfake) bo'lishi mumkin.", c: "media"},
+        {i: "🔇", t: "Vahima", q: "Guruhda 'Ertaga non qimmatlaydi' degan xabar keldi.", a: "Rasmiy manbani tekshiring. Vahima tarqatishga sherik bo'lmang.", c: "ethic"},
+        {i: "👣", t: "Raqamli Iz", q: "Profilni o'chirsa, internetdagi barcha ma'lumotlar yo'qoladimi?", a: "Yo'q, raqamli iz (digital footprint) yillar davomida saqlanadi.", c: "legal"},
+        {i: "📁", t: "Hujjat", q: "Chet elda ish uchun pasport nusxasini Telegramdan yuboring deyishdi.", a: "Aslo yubormang! Shaxsingiz firibgarlik uchun ishlatilishi mumkin.", c: "legal"},
+        {i: "🛑", t: "Taqiq", q: "Shubhali saytlarda '18+' reklamalar chiqib qolsa nima qilasiz?", a: "Darhol yoping. Bunday saytlar viruslar va josuslarning makonidir.", c: "tech"},
+        {i: "👨‍👩‍👧", t: "Nazorat", q: "Bolaga internetdan foydalanishni cheksiz berish to'g'rimi?", a: "Yo'q, 'Parental control' (ota-ona nazorati) dan foydalaning.", c: "ethic"},
+        {i: "📜", t: "Shartnoma", q: "Ilovani o'rnatishda 'roziman' tugmasini o'qimay bosasizmi?", a: "O'qing! Ilova kontaktlaringiz va rasmlaringizga ruxsat olishi mumkin.", c: "legal"},
+        {i: "🔍", t: "Fakt", q: "Ma'lumot rostligini qanday tezda bilish mumkin?", a: "Kamida 3 ta mustaqil va rasmiy manba bilan solishtirib ko'ring.", c: "media"},
+        {i: "🧠", t: "Fikrlash", q: "Media-madaniyatli insonning eng asosiy quroli nima?", a: "Tanqidiy fikrlash va har bir axborotni mantiqan tahlil qilish.", c: "psych"},
+        {i: "📷", t: "Daxlsizlik", q: "Ko'chada birovni ruxsatsiz videoga olib tarqatish mumkinmi?", a: "Yo'q, bu shaxsiy hayot daxlsizligini buzish hisoblanadi.", c: "legal"},
+        {i: "🎮", t: "O'yinlar", q: "Onlayn o'yinlarda tanishgan odamga yashash manzilingizni aytasizmi?", a: "Yo'q! U o'yinchi niqobidagi jinoyatchi bo'lishi mumkin.", c: "psych"},
+        {i: "🔄", t: "Yangilanish", q: "Telefon dasturlarini yangilab turish shartmi?", a: "Ha! Yangilanishlar xavfsizlikdagi 'teshik'larni yopadi.", c: "tech"},
+        {i: "💰", t: "Xayriya", q: "Guruhlarda tarqalgan 'kasal bolaga yordam' kartalariga ishonasizmi?", a: "Faqat rasmiy fondlar orqali yordam bering. Firibgarlar ko'p.", c: "ethic"},
+        {i: "🎭", t: "Trollar", q: "Izohlarda sizni haqorat qilishsa, ularga javob berasizmi?", a: "Yo'q, trollar bilan bahslashmang. Shunchaki bloklang.", c: "psych"},
+        {i: "🔗", t: "Linklar", q: "Tanishizdan kelgan 'bu sening rasmingmi?' degan linkni ochasizmi?", a: "Aslo! Bu akkauntingizni o'g'irlash uchun 'virusli link'dir.", c: "tech"},
+        {i: "🕰️", t: "Vaqt", q: "Internetda cheksiz vaqt o'tkazish media-madaniyatga kiradimi?", a: "Yo'q, 'Raqamli gigiyena' vaqtni to'g'ri taqsimlashni talab etadi.", c: "ethic"},
+        {i: "🛂", t: "Mualliflik", q: "Birovning maqolasini o'ziniki qilib ko'rsatish nima deyiladi?", a: "Bu - Plagiat. Har doim asl muallifga havola berish shart.", c: "legal"},
+        {i: "📬", t: "E-mail", q: "Noma'lum manzildan kelgan faylni yuklab olish xavflimi?", a: "Juda xavfli! Uning ichida 'troyan' virusi bo'lishi mumkin.", c: "tech"},
+        {i: "🌟", t: "Ideal", q: "Media-savodxon jamiyat qanday bo'ladi?", a: "Axborotni tahlil qiladigan va yolg'onlarga aldanmaydigan jamiyat.", c: "media"},
+
+        // YANGI QO'SHILGAN KARTALAR (31-60)
+        {i: "🤖", t: "AI Chat", q: "ChatGPT bergan barcha ma'lumotlar 100% rostmi?", a: "Yo'q, AI ham 'hallusinatsiya' qilishi yoki noto'g'ri fakt berishi mumkin.", c: "tech"},
+        {i: "🤳", t: "Sharenting", q: "Farzandning har bir qadamini ijtimoiy tarmoqqa yuklash to'g'rimi?", a: "Xavfli. Bu bolaning kelajakdagi daxlsizligini xavf ostiga qo'yadi.", c: "ethic"},
+        {i: "🕵️‍♂️", t: "OSINT", q: "Birov haqida ochiq manbalardan ma'lumot yig'ish qonuniymi?", a: "Ma'lumot yig'ish mumkin, lekin uni yomon niyatda ishlatish jinoyat.", c: "legal"},
+        {i: "📉", t: "FOMO", q: "Internetdan uzilib qolishdan qo'rqish hissi nima deyiladi?", a: "Bu FOMO - yangiliklardan qolib ketish qo'rquvi. Raqamli detoks qiling.", c: "psych"},
+        {i: "📺", t: "Propaganda", q: "Bir tomonlama berilayotgan siyosiy xabarlarga ishonish kerakmi?", a: "Yo'q, muvozanat uchun har xil manbalarni solishtiring.", c: "media"},
+        {i: "📱", t: "Screen Time", q: "Uyqudan oldin telefondan foydalanish zararlimi?", a: "Ha, ko'k nur uyqu gormoni (melatonin) ishlab chiqarishni buzadi.", c: "media"},
+        {i: "💻", t: "Cookies", q: "Saytlardagi 'Cookies' nima uchun kerak?", a: "Sizning harakatlaringizni eslab qolish va reklama ko'rsatish uchun.", c: "tech"},
+        {i: "💳", t: "NFC", q: "Jamoat transportida kartangizni ehtiyot qilishingiz shartmi?", a: "Ha, kontaktsiz o'g'rilardan himoya qiluvchi hamyonlardan foydalaning.", c: "tech"},
+        {i: "🤬", t: "Hate Speech", q: "Guruhda millatchilik mazmunidagi gaplarni yozish mumkinmi?", a: "Aslo! Bu nafrat uyg'otish hisoblanib, qonuniy javobgarlikka sabab bo'ladi.", c: "legal"},
+        {i: "🧬", t: "Biometrika", q: "FaceID va barmoq izi 100% xavfsiz parollarmi?", a: "Ular qulay, lekin nusxasini ko'chirish ehtimoli borligini unutmang.", c: "tech"},
+        {i: "🔌", t: "USB Juicing", q: "Ko'chada, aeroportda notanish USB orqali quvvatlash xavflimi?", a: "Xavfli! USB orqali viruslar va ma'lumot o'g'irlari kirishi mumkin.", c: "tech"},
+        {i: "📡", t: "Veb-kamera", q: "Kamerani yopib qo'yish paranoiyami yoki xavfsizlik?", a: "Xavfsizlik! Josus dasturlar kameraga ruxsatsiz ulanishi mumkin.", c: "tech"},
+        {i: "🛒", t: "Review", q: "Mahsulot ostidagi hamma 'besh yulduzli' izohlar haqiqiymi?", a: "Ko'pincha ular 'botlar' tomonidan yozilgan bo'lishi mumkin.", c: "media"},
+        {i: "📞", t: "Vishing", q: "Bankdanman deb qo'ng'iroq qilganlarga ishonish kerakmi?", a: "Yo'q, bank hech qachon kodni telefon orqali so'ramaydi.", c: "tech"},
+        {i: "🧐", t: "Tahlil", q: "Xabar sarlavhasi o'ta hayajonli bo'lsa (Shok, Dahshat)?", a: "Bu klikbeyt belgisidir. Hissiyotga berilmay faktni qidiring.", c: "psych"},
+        {i: "🙅‍♀️", t: "Cancel Culture", q: "Ommaviy ravishda kimnidir internetda 'yo'q qilish' to'g'rimi?", a: "Bu ko'pincha adolatsiz hujumga aylanadi. Etikani unutmang.", c: "ethic"},
+        {i: "📂", t: "Backup", q: "Muhim fayllarni faqat telefonda saqlash to'g'rimi?", a: "Yo'q, har doim 'Cloud' (Bulut) yoki tashqi diskda nusxa saqlang.", c: "tech"},
+        {i: "🌑", t: "Dark Web", q: "Darknet saytlariga qiziqish uchun kirish xavfsizmi?", a: "Juda xavfli! U yerda jinoyatchilik va kiber-tuzoqlar makonidir.", c: "legal"},
+        {i: "🕯️", t: "Gaslighting", q: "Internetda sizni 'aqldan ozgan' qilib ko'rsatishsa?", a: "Bu psixologik manipulyatsiya. Muloqotni darhol to'xtating.", c: "psych"},
+        {i: "📦", t: "Parcel Fraud", q: "Sizga kelmagan posilka uchun 'boj to'lang' degan link kelsa?", a: "Bu firibgarlik. Faqat rasmiy kuryerlik saytidan tekshiring.", c: "tech"},
+        {i: "🎰", t: "Gambling", q: "Onlayn kazinolarda pul ishlash mumkinmi?", a: "Yo'q, ular algoritmik ravishda faqat sizni yutqazishga moslangan.", c: "legal"},
+        {i: "🤝", t: "Netiket", q: "Internetda muloqot qilish madaniyati nima deyiladi?", a: "Bu - Netiket (Tarmoq etikasi). O'zaro hurmatni saqlang.", c: "ethic"},
+        {i: "🌍", t: "Global Madaniyat", q: "Chet ellik bilan yozishganda nimalarni bilish shart?", a: "Ularning madaniy va diniy qadriyatlarini hurmat qilish.", c: "ethic"},
+        {i: "📸", t: "Metadata", q: "Rasmning 'ichida' qayerda olinganligi yashirin bo'ladimi?", a: "Ha, EXIF ma'lumotlar orqali manzilingizni aniqlash mumkin.", c: "tech"},
+        {i: "🐦", t: "Echo Chamber", q: "Faqat o'zingizga yoqadigan fikrlarni eshitish xavflimi?", a: "Ha, bu dunyoqarashni toraytirib qo'yadi. Qarama-qarshi fikrlarni ham o'qing.", c: "psych"},
+        {i: "🛡️", t: "VPN", q: "VPN faqat saytlarga kirish uchunmi?", a: "Yo'q, u ma'lumotlaringizni shifrlab, xavfsizlikni ham oshiradi.", c: "tech"},
+        {i: "📝", t: "Plagiat", q: "Boshqa talabaning ishini internetdan olib topshirish?", a: "Bu akademik firibgarlik. O'z bilimingizni ishlating.", c: "ethic"},
+        {i: "💡", t: "Kreativlik", q: "Internetdan qanday qilib foydali foydalanish mumkin?", a: "Iste'molchi bo'lishdan ijodkor (creator) bo'lishga o'ting.", c: "media"},
+        {i: "🔋", t: "Detox", q: "Haftada bir kun internetsiz yashash foydalimi?", a: "Juda foydali! Bu miyaning dam olishi va diqqatni tiklashiga yordam beradi.", c: "psych"},
+        {i: "🎓", t: "Final", q: "Media-madaniyat bu tugaydigan kursmi?", a: "Yo'q, bu texnologiyalar bilan birga rivojlanadigan umrbod ta'limdir.", c: "media"}
+    ];
+
+    const grid = document.getElementById('cardGrid');
+    cardData.forEach(c => {
+        grid.innerHTML += `
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="front">
+                        <span class="tag ${c.c}">${c.t}</span>
+                        <div class="icon">${c.i}</div>
+                        <h3>${c.q}</h3>
+                    </div>
+                    <div class="back">
+                        <h4>JAVOB:</h4>
+                        <p>${c.a}</p>
+                    </div>
+                </div>
+            </div>`;
+    });
+</script>
+
+</body>
+</html>

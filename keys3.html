@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-KEYS: Statistik Manipulyatsiya | Mirobid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Ubuntu:wght@400;700&display=swap');
+        
+        :root { 
+            --stat-orange: #f39c12; 
+            --stat-blue: #2980b9; 
+            --danger: #c0392b; 
+            --success: #27ae60;
+            --bg: #f4f7f6; 
+            --primary: #0f172a;
+            --accent: #3b82f6;
+        }
+
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', 'Ubuntu', sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            padding-top: 90px; 
+        }
+
+        /* --- Navigatsiya Paneli --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- Container va Card --- */
+        .container { max-width: 950px; margin: 0 auto; padding: 0 20px; }
+        .card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 30px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            margin-bottom: 30px; 
+            border-top: 8px solid var(--stat-orange); 
+        }
+        
+        /* Bloger posti simulyatsiyasi */
+        .blogger-post { background: #fff; border: 1px solid #e1e8ed; border-radius: 15px; max-width: 500px; margin: 20px auto; padding: 20px; text-align: left; }
+        .blogger-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .avatar { width: 50px; height: 50px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #777; }
+        .post-content { font-size: 18px; line-height: 1.5; color: #2c3e50; }
+        .stat-highlight { color: var(--danger); font-weight: bold; font-size: 24px; text-decoration: underline; }
+
+        /* Grafik simulyatsiyasi */
+        .chart-box { background: #f9f9f9; padding: 20px; border-radius: 12px; margin-top: 20px; text-align: center; }
+        .bar-container { display: flex; align-items: flex-end; justify-content: space-around; height: 180px; margin-top: 30px; border-bottom: 2px solid #ddd; padding-bottom: 5px; }
+        .bar { width: 70px; background: var(--stat-blue); position: relative; transition: 1s ease-in-out; border-radius: 8px 8px 0 0; animation: grow 1.5s ease-out; }
+        .bar-label { position: absolute; top: -30px; width: 100%; font-weight: 800; color: #333; }
+        .bar-name { margin-top: 15px; font-size: 13px; font-weight: bold; }
+
+        @keyframes grow { from { height: 0; } }
+
+        /* Qadamlar */
+        .analysis-step { background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; border-left: 6px solid var(--stat-blue); display: flex; gap: 15px; align-items: center; text-align: left; }
+        .step-icon { background: var(--stat-blue); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+        /* Tugmalar */
+        .btn { background: var(--stat-orange); color: white; border: none; padding: 15px 30px; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; font-size: 16px; margin-top: 10px; transition: 0.3s; }
+        .btn:hover { background: #d35400; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(211, 84, 0, 0.3); }
+
+        .source-box { background: #e8f4fd; border: 1px solid #b3e5fc; padding: 20px; border-radius: 12px; margin-top: 20px; display: none; text-align: left; }
+        .badge { display: inline-block; background: var(--danger); color: white; padding: 5px 15px; border-radius: 50px; font-size: 12px; font-weight: bold; margin-bottom: 15px; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="index.html#darslar">Darslar</a>
+        <a href="index.html#keyslar">Ilovalar va Keyslar</a>
+        <a href="index.html#oyinlar">O'yinlar</a>
+        <a href="index.html#diagnostika">Diagnostika</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div style="text-align: center;">
+            <span class="badge"><i class="fas fa-chart-pie"></i> STATISTIK KEYS</span>
+            <h2 style="margin: 0;">3-KEYS: “Statistika bilan aldash”</h2>
+            <p style="color: #666; margin-top: 10px;">Ijtimoiy tarmoqdagi ushbu postni tahlil qiling:</p>
+        </div>
+
+        <div class="blogger-post">
+            <div class="blogger-header">
+                <div class="avatar"><i class="fas fa-user-ninja"></i></div>
+                <div><strong>Blogger_X</strong> <small style="color:#777;">@trend_uz</small></div>
+            </div>
+            <div class="post-content">
+                “Dahshatli fakt! O‘quvchilarning <span class="stat-highlight">90%</span> smartfonsiz bir kun ham yashay olmaydi! Kelajak avlod tamom bo'lyapti... 😱📵”
+            </div>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+            <div style="font-size: 12px; color: #777;"><i class="fas fa-heart"></i> 15.4K | <i class="fas fa-retweet"></i> 2.1K</div>
+        </div>
+
+        <p style="text-align: center;"><i class="fas fa-question-circle" style="color: var(--stat-orange);"></i> <strong>Muammo:</strong> Ushbu 90% raqami qanchalik asosli?</p>
+        <button class="btn" onclick="startAnalysis()"><i class="fas fa-microscope"></i> RAQAMLARNI TEKSHIRISHNI BOSHLASH</button>
+    </div>
+
+    <div id="analysis-section" style="display: none;">
+        <div class="analysis-step">
+            <div class="step-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <div>
+                <strong>1. Manba bormi?</strong>
+                <p style="margin: 5px 0;">Postda hech qanday ilmiy tadqiqot yoki rasmiy tashkilot havolasi yo'q. Bu shunchaki "shov-shuv" uchun o'ylab topilgan raqam bo'lishi mumkin.</p>
+            </div>
+        </div>
+
+        <div class="analysis-step">
+            <div class="step-icon"><i class="fas fa-percentage"></i></div>
+            <div>
+                <strong>2. Manipulyatsiya usuli:</strong>
+                <p style="margin: 5px 0;">Odamlarni qo'rqitish va hayajonga solish uchun ko'pincha "90%", "Hamma" yoki "Hech kim" kabi mutlaq ko'rsatkichlar ishlatiladi.</p>
+            </div>
+        </div>
+
+        <div class="card" style="border-top-color: var(--stat-blue);">
+            <h3><i class="fas fa-globe"></i> 3. Haqiqiy ma'lumotlar bilan solishtiramiz</h3>
+            <p>UNESCO va Xalqaro elektraloqa ittifoqi (ITU) hisobotlarini ko'ring:</p>
+            
+            <button class="btn" style="background: var(--stat-blue);" onclick="showRealStat()">RASMIY STATISTIKANI OCHISH</button>
+
+            <div id="source-data" class="source-box">
+                <h4 style="margin: 0; color: var(--stat-blue);"><i class="fas fa-university"></i> UNESCO Hisoboti:</h4>
+                <p>Rasmiy tahlillarga ko'ra, o'smirlar orasida gadjetlarga kuchli bog'liqlik (fobiya darajasida) faqat <b>12% dan 18% gacha</b> ekanligi aniqlangan.</p>
+                
+                
+                <div class="chart-box">
+                    <strong>Smartfonga bog'liqlik darajasi (%)</strong>
+                    <div class="bar-container">
+                        <div class="bar" style="height: 90%; background: var(--danger);">
+                            <div class="bar-label">90%</div>
+                            <div class="bar-name">Bloger da'vosi</div>
+                        </div>
+                        <div class="bar" style="height: 15%; background: var(--success);">
+                            <div class="bar-label">15%</div>
+                            <div class="bar-name">Rasmiy Fakt</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 13px; margin-top: 20px; color: #555; font-style: italic;">Ko'rib turganingizdek, bloger vaziyatni 6 barobar bo'rttirib ko'rsatgan.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="border-top-color: var(--success); text-align: center;">
+            <h2 style="color: var(--success);"><i class="fas fa-check-double"></i> Yakuniy Xulosa</h2>
+            <p style="font-size: 18px; line-height: 1.6;">
+                Raqamlarga ko'r-ko'rona ishonmang. Blogerning maqsadi ma'lumot berish emas, balki <b>emotsional reaksiya</b> orqali o'z sahifasiga e'tibor jalb qilishdir.
+            </p>
+            <button class="btn" style="background: var(--primary);" onclick="window.location.href='index.html#keyslar'">KEYINGI KEYSNI TANLASH</button>
+        </div>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 30px; color: #7f8c8d;">
+    <p>© 2026 Mirobid | Media Portal loyihasi</p>
+</footer>
+
+<script>
+    function startAnalysis() {
+        document.getElementById('analysis-section').style.display = 'block';
+        window.scrollTo({ 
+            top: document.getElementById('analysis-section').offsetTop - 90, 
+            behavior: 'smooth' 
+        });
+    }
+
+    function showRealStat() {
+        document.getElementById('source-data').style.display = 'block';
+        window.scrollTo({ 
+            top: document.getElementById('source-data').offsetTop - 100, 
+            behavior: 'smooth' 
+        });
+    }
+</script>
+
+</body>
+</html>

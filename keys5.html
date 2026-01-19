@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5-KEYS: Fakt va Fikr Tahlili | Mirobid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Ubuntu:wght@400;700&display=swap');
+        
+        :root { 
+            --fakt-color: #27ae60; 
+            --fikr-color: #e67e22; 
+            --accent: #2980b9; 
+            --bg: #fdfefe; 
+            --primary: #0f172a;
+            --danger: #e74c3c;
+        }
+
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', 'Ubuntu', sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            padding-top: 90px; 
+        }
+
+        /* --- Navigatsiya Paneli --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- Container va Card --- */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 35px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+            margin-bottom: 30px; 
+            border-top: 8px solid var(--accent); 
+            text-align: center;
+        }
+        
+        .quote-box { background: #f8f9fa; border-left: 10px solid var(--accent); padding: 25px; margin: 25px 0; position: relative; font-style: italic; text-align: left; }
+        .quote-box i { position: absolute; top: 10px; right: 20px; color: #eee; font-size: 40px; }
+
+        /* Fakt vs Fikr Grid */
+        .vs-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0; }
+        .vs-card { padding: 25px; border-radius: 15px; text-align: center; color: white; cursor: pointer; transition: 0.3s; border: none; }
+        .fakt { background: var(--fakt-color); }
+        .fikr { background: var(--fikr-color); }
+        .vs-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+
+        .research-box { background: #eef2f7; border-radius: 15px; padding: 25px; margin-top: 20px; display: none; text-align: left; }
+        .research-item { background: white; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--accent); font-size: 14px; }
+
+        .btn { background: var(--accent); color: white; border: none; padding: 15px 30px; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; transition: 0.3s; }
+        .btn:hover { background: #1c6391; }
+        .btn-check { background: #34495e; }
+
+        .badge { display: inline-block; background: var(--accent); color: white; padding: 5px 15px; border-radius: 50px; font-size: 12px; margin-bottom: 15px; }
+        .highlight { background: #fff3cd; padding: 2px 5px; font-weight: bold; border-radius: 4px; }
+
+        @media (max-width: 600px) {
+            .vs-container { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="index.html#darslar">Darslar</a>
+        <a href="index.html#keyslar">Ilovalar va Keyslar</a>
+        <a href="index.html#oyinlar">O'yinlar</a>
+        <a href="index.html#diagnostika">Diagnostika</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div>
+            <span class="badge"><i class="fas fa-brain"></i> MATN TAHLILI</span>
+            <h2 style="margin: 0;">5-KEYS: “Fikrmi yo fakt?”</h2>
+            <p style="color: #666; margin-top: 10px;">Quyidagi matnni media-savodxonlik nuqtayi nazaridan tahlil qiling:</p>
+        </div>
+
+        <div class="quote-box">
+            <i class="fas fa-quote-right"></i>
+            <p style="font-size: 18px; color: #2c3e50; margin: 0;">
+                “Kompyuter o‘yinlari bolalarni <span class="highlight">agressiv qiladi</span>. <span class="highlight">Ilmiy tadqiqotlar</span> shuni isbotlagan.”
+            </p>
+        </div>
+
+        <p><strong>Topshiriq:</strong> Ushbu jumlalar qaysi toifaga kiradi?</p>
+        
+        <div class="vs-container">
+            <button class="vs-card fakt" onclick="showReason('fakt')">
+                <i class="fas fa-check-double fa-2x"></i>
+                <h3>FAKT</h3>
+                <p>Isbotlangan dalil</p>
+            </button>
+            <button class="vs-card fikr" onclick="showReason('fikr')">
+                <i class="fas fa-comment-dots fa-2x"></i>
+                <h3>FIKR</h3>
+                <p>Shaxsiy qarash</p>
+            </button>
+        </div>
+        <p id="feedback" style="text-align: center; font-weight: bold; min-height: 24px;"></p>
+    </div>
+
+    <div class="card" style="border-top-color: #34495e;">
+        <h3><i class="fas fa-microscope"></i> Nega umumiy gaplarga ishonmaslik kerak?</h3>
+        <p>Muallif o'z fikrini <b>"ilmiy"</b> qilib ko'rsatish orqali sizni ishontirishga harakat qilgan. Haqiqiy fakt quyidagicha bo'ladi:</p>
+        
+        
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 14px; text-align: left; margin-top: 20px;">
+            <div style="padding:15px; background:#fdf2f2; border-radius:12px; border: 1px solid #fab1a0;">❌ <b>Umumiy gap:</b> "Olimlar isbotladi"</div>
+            <div style="padding:15px; background:#f2fdf2; border-radius:12px; border: 1px solid #55efc4;">✅ <b>Aniq manba:</b> "Oksford universiteti tadqiqoti (2023)"</div>
+            <div style="padding:15px; background:#fdf2f2; border-radius:12px; border: 1px solid #fab1a0;">❌ <b>Noaniq natija:</b> "Hamma agressiv bo'ladi"</div>
+            <div style="padding:15px; background:#f2fdf2; border-radius:12px; border: 1px solid #55efc4;">✅ <b>Aniq natija:</b> "Ishtirokchilarning 5%ida o'zgarish bo'ldi"</div>
+        </div>
+
+        <button class="btn btn-check" onclick="showResearch()"><i class="fas fa-database"></i> HAQIQIY MA'LUMOTLAR BAZASIDAN IZLASH</button>
+
+        <div id="research-section" class="research-box">
+            <h4><i class="fas fa-search"></i> Rasmiy ilmiy xulosalar:</h4>
+            <div class="research-item">
+                <strong>Tadqiqot 1:</strong> Kompyuter o'yinlari ko'p hollarda strategik fikrlashni rivojlantiradi (APA, 2021).
+            </div>
+            <div class="research-item">
+                <strong>Tadqiqot 2:</strong> Agressiya va o'yinlar o'rtasida to'g'ridan-to'g'ri bog'liqlik topilmadi (Nature Human Behaviour).
+            </div>
+            <p style="font-size: 12px; color: #666; font-style: italic;">Xulosa: Matndagi "ilmiy isbotlangan" degan gap - yolg'on (feyk) argumentdir.</p>
+        </div>
+    </div>
+
+    <div class="card" style="border-top-color: var(--fakt-color);">
+        <h2 style="color: var(--fakt-color);"><i class="fas fa-graduation-cap"></i> Keys yakuni</h2>
+        <p style="font-size: 18px; line-height: 1.6;">
+            Siz 5 ta keysni muvaffaqiyatli yakunladingiz! Endi siz axborotni tekshirishda ancha tajribaliroqsiz.
+        </p>
+        <button class="btn" style="background: var(--primary);" onclick="window.location.href='index.html'">BOSH SAHIFAGA QAYTISH</button>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 30px; color: #7f8c8d;">
+    <p>© 2026 Mirobid | Media Savodxonlik Portali</p>
+</footer>
+
+<script>
+    function showReason(type) {
+        const feedback = document.getElementById('feedback');
+        if(type === 'fikr') {
+            feedback.innerHTML = "<i class='fas fa-check-circle'></i> To'g'ri! Bu muallifning shaxsiy fikri. Aniq dalil keltirilmagan.";
+            feedback.style.color = "var(--fakt-color)";
+        } else {
+            feedback.innerHTML = "<i class='fas fa-times-circle'></i> Adashdingiz! Faktda aniq raqam, sana va tekshirsa bo'ladigan manba bo'ladi.";
+            feedback.style.color = "var(--danger)";
+        }
+    }
+
+    function showResearch() {
+        document.getElementById('research-section').style.display = 'block';
+        window.scrollTo({ 
+            top: document.getElementById('research-section').offsetTop - 100, 
+            behavior: 'smooth' 
+        });
+    }
+</script>
+
+</body>
+</html>

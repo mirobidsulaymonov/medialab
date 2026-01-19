@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Simulyator | Mirobid Sulaymonov</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+        :root {
+            --bg: #f0f2f5;
+            --fb-blue: #1877f2;
+            --white: #ffffff;
+            --text: #1c1e21;
+            --primary: #1a5276;
+            --dark: #0f172a;
+        }
+
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 90px 20px 40px; /* Tepadan joy navigatsiya uchun */
+        }
+
+        /* --- Navigatsiya Paneli --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-links a:hover { color: var(--fb-blue); }
+
+        /* --- Simulyator Dizayni --- */
+        .phone-mockup {
+            width: 350px;
+            background: #000;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .screen {
+            background: var(--bg);
+            border-radius: 30px;
+            height: 600px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 2px solid #222;
+        }
+
+        .status-bar { padding: 15px 20px; display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; }
+
+        .post { background: var(--white); margin: 10px; border-radius: 12px; padding: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .avatar { width: 35px; height: 35px; background: var(--fb-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        .post-content { font-size: 14px; color: var(--text); line-height: 1.4; margin-bottom: 12px; font-weight: 500; }
+        
+        .post-image-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 12px; background: #eee; min-height: 150px; }
+        .post-image-container img { width: 100%; display: block; object-fit: cover; }
+
+        .actions { display: flex; border-top: 1px solid #eee; padding-top: 10px; justify-content: space-between; }
+        .action-btn { background: none; border: none; color: #65676b; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px; padding: 5px; }
+        .action-btn:hover { color: var(--fb-blue); }
+
+        .hud { width: 350px; margin-top: 20px; background: var(--white); padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .score-box { font-size: 18px; font-weight: 800; color: var(--fb-blue); }
+
+        .feedback-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255,255,255,0.9); display: none;
+            flex-direction: column; align-items: center; justify-content: center;
+            padding: 20px; text-align: center; z-index: 100; border-radius: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="index.html#darslar"><i class="fas fa-book"></i> Darslar</a>
+        <a href="index.html#keyslar"><i class="fas fa-briefcase"></i> Keyslar</a>
+        <a href="index.html#oyinlar"><i class="fas fa-gamepad"></i> O'yinlar</a>
+        <a href="diagnostika.html"><i class="fas fa-user-check"></i> Diagnostika</a>
+    </div>
+</nav>
+
+<h2 style="color: #0f172a; margin-bottom: 5px;">Media Simulyator</h2>
+<p style="color: #64748b; margin-bottom: 25px;">Muallif: M. Sulaymonov</p>
+
+
+
+<div class="phone-mockup">
+    <div class="screen">
+        <div class="status-bar">
+            <span>9:41</span>
+            <div><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></div>
+        </div>
+
+        <div id="post-container"></div>
+        
+        <div class="feedback-overlay" id="feedback">
+            <i id="feedback-icon" style="font-size: 40px; margin-bottom: 15px;"></i>
+            <div id="feedback-text" style="font-weight: bold; font-size: 14px;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="hud">
+    <div class="score-box">Reyting: <span id="score">100</span> ⭐</div>
+    <p id="game-status" style="font-size: 12px; color: #64748b; font-weight: bold; margin-top: 5px;">Bosqich: <span id="current-step">1</span>/5</p>
+</div>
+
+<script>
+    const posts = [
+        {
+            author: "Tezkor Xabarlar",
+            content: "SHOK! Ertadan boshlab hamma maktablar 1 oyga yopilar ekan. Bu xabarni hammaga tarqating!",
+            image: "https://data.daryo.uz/media/2024/04/661a865ea52c7.jpg", 
+            type: "fake",
+            hint: "Bu yolg'on xabar. Hissiy sarlavhalarga ishonmang."
+        },
+        {
+            author: "Sog'liqni saqlash",
+            content: "Vitamini ko'p mevalar iste'mol qilish immunitetni oshiradi. Rasmiy tavsiyamiz bilan tanishing.",
+            image: "https://cdn-uz.kursiv.media/wp-content/uploads/2025/05/cfa85258516b85cdd467.jpg",
+            type: "real",
+            hint: "Foydali va ishonchli ma'lumot."
+        },
+        {
+            author: "Omadli G'olib",
+            content: "Tabriklaymiz! Siz 10 mln so'm yutdingiz. Yutuqni olish uchun kartangiz raqamini yuboring!",
+            image: "https://coinsbolhov.ru/upload/iblock/d33/v4jd6gyb1g0zbpqgxfwusxwr8vtiy7n1.jpg",
+            type: "fake",
+            hint: "Bu firibgarlik (fishing). Hech qachon karta ma'lumotini bermang."
+        },
+        {
+            author: "Ekologiya Portali",
+            content: "Dunyodagi eng katta o'rmonlar maydoni qisqarmoqda. Tabiatni asrash o'z qo'limizda.",
+            image: "https://static40.tgcnt.ru/posts/_0/e2/e27fd847f35d32f34a21b429df659771.jpg",
+            type: "real",
+            hint: "Ijtimoiy ahamiyatga ega ma'lumot."
+        },
+        {
+            author: "Sirli Faktlar",
+            content: "Olimlar aniqlashicha, odamlar uxlab yotib ko'zini ochsa, boshqa olamga o'tib qolishi mumkin emish!",
+            image: "https://i.ytimg.com/vi/GgLgahC84Dk/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGF8gXyhfMA8=&rs=AOn4CLCZ4fnqWPPJYgRoKkWUZ0zZmJKSmA",
+            type: "fake",
+            hint: "Bu asossiz mif. Kritik fikrlashni ishlating."
+        }
+    ];
+
+    let score = 100;
+    let currentPost = 0;
+
+    function renderPost() {
+        const container = document.getElementById('post-container');
+        if(currentPost >= posts.length) {
+            container.innerHTML = `
+                <div style="padding: 40px; text-align:center;">
+                    <i class="fas fa-trophy" style="font-size: 60px; color: #ffd700;"></i>
+                    <h3 style="margin: 20px 0 10px;">Simulyatsiya yakunlandi!</h3>
+                    <p>Yakuniy reytingingiz: <strong>${score}</strong></p>
+                    <button onclick="location.reload()" style="padding:12px 25px; border-radius:10px; border:none; background: var(--fb-blue); color:white; cursor:pointer; font-weight:bold; margin-top:15px;">Qayta boshlash</button>
+                </div>
+            `;
+            return;
+        }
+
+        const post = posts[currentPost];
+        document.getElementById('current-step').innerText = currentPost + 1;
+        container.innerHTML = `
+            <div class="post">
+                <div class="post-header">
+                    <div class="avatar"><i class="fas fa-user-shield"></i></div>
+                    <div>
+                        <div style="font-weight: 800; font-size: 14px;">${post.author}</div>
+                        <div style="font-size: 11px; color: #65676b;">Hozirgina</div>
+                    </div>
+                </div>
+                <div class="post-content">${post.content}</div>
+                <div class="post-image-container">
+                    <img src="${post.image}" alt="Media rasm">
+                </div>
+                <div class="actions">
+                    <button class="action-btn" onclick="handleAction('like')"><i class="far fa-thumbs-up"></i> Layk</button>
+                    <button class="action-btn" onclick="handleAction('share')"><i class="far fa-share-square"></i> Ulashish</button>
+                    <button class="action-btn" onclick="handleAction('check')"><i class="fas fa-search"></i> Tekshirish</button>
+                </div>
+            </div>
+        `;
+    }
+
+    function handleAction(action) {
+        const post = posts[currentPost];
+        const feedbackOverlay = document.getElementById('feedback');
+        const feedbackText = document.getElementById('feedback-text');
+        const feedbackIcon = document.getElementById('feedback-icon');
+
+        feedbackOverlay.style.display = 'flex';
+
+        if(action === 'check') {
+            score += 10;
+            feedbackIcon.className = "fas fa-check-circle";
+            feedbackIcon.style.color = "#10b981";
+            feedbackText.innerHTML = "Juda yaxshi! <br> Har doim shubhali xabarni tekshirish kerak.";
+        } else if (action === 'share' && post.type === 'fake') {
+            score -= 20;
+            feedbackIcon.className = "fas fa-times-circle";
+            feedbackIcon.style.color = "#ef4444";
+            feedbackText.innerHTML = "Xato! <br> Soxta xabarni tarqatib reytingingizni tushirdingiz.";
+        } else if (action === 'like' && post.type === 'fake') {
+            score -= 10;
+            feedbackIcon.className = "fas fa-exclamation-triangle";
+            feedbackIcon.style.color = "#f59e0b";
+            feedbackText.innerHTML = "Ehtiyot bo'ling! <br> Yolg'on xabarga layk bosish uning tarqalishiga yordam beradi.";
+        } else {
+            score += 5;
+            feedbackIcon.className = "fas fa-info-circle";
+            feedbackIcon.style.color = "#3b82f6";
+            feedbackText.innerHTML = "Munosabat bildirildi.";
+        }
+
+        document.getElementById('score').innerText = score;
+
+        setTimeout(() => {
+            feedbackOverlay.style.display = 'none';
+            currentPost++;
+            renderPost();
+        }, 2500);
+    }
+
+    renderPost();
+</script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-Mashg'ulot: Global axborot urushlari</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --navy: #1a1a2e;
+            --global-red: #c0392b;
+            --gold: #ffd54f;
+            --light-bg: #f4f7f6;
+            --deep-blue: #2980b9;
+            --text-color: #333;
+            --card-bg: white;
+            --border-color: #ddd;
+        }
+
+        body.dark-mode {
+            --light-bg: #0f0f1a;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a2e;
+            --border-color: #333;
+            --navy: #000;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            transition: 0.3s;
+        }
+
+        .top-nav {
+            background: var(--navy);
+            padding: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center; gap: 8px;
+        }
+
+        .nav-btn:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
+        .home-btn { background: var(--global-red); border: none; }
+
+        .container {
+            max-width: 850px;
+            margin: 25px auto;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap; gap: 25px;
+        }
+
+        .header-image-box {
+            flex: 1;
+            min-width: 250px;
+            height: 160px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 4px solid var(--global-red);
+        }
+
+        .header-image-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 1.5; text-align: right; }
+        .header-text h2 { color: var(--global-red); font-size: 26px; font-weight: 900; margin: 5px 0; }
+
+        .goal-box {
+            border-left: 6px solid var(--global-red);
+            padding: 20px;
+            background: rgba(192, 57, 43, 0.05);
+            margin-bottom: 35px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .step-container { display: flex; margin-bottom: 35px; scroll-margin-top: 100px; }
+        .step-number {
+            min-width: 60px; height: 60px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px; font-weight: 900; color: white;
+            margin-right: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .s1 .step-number { background: #34495e; }
+        .s2 .step-number { background: #2980b9; }
+        .s3 .step-number { background: #c0392b; }
+
+        .step-content { flex-grow: 1; border-radius: 15px; border: 1px solid var(--border-color); overflow: hidden; }
+        .step-header { background: var(--navy); color: white; padding: 15px; font-weight: bold; }
+        .step-body { padding: 20px; line-height: 1.7; }
+
+        .section-title {
+            background: var(--navy); color: white;
+            padding: 15px; border-radius: 8px;
+            text-align: center; margin: 40px 0 20px;
+            font-weight: bold; text-transform: uppercase;
+        }
+
+        .media-card { 
+            background: var(--card-bg); 
+            padding: 20px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color); 
+            margin-bottom: 30px; 
+            text-align: center;
+        }
+
+        .video-box { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 10px; overflow: hidden; position: relative;}
+        .video-box iframe { width: 100%; height: 100%; border: none; position: absolute; top:0; left:0;}
+
+        .disk-link {
+            display: inline-block;
+            margin-top: 15px;
+            background: var(--deep-blue);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .disk-link:hover { background: var(--global-red); transform: translateY(-2px); }
+
+        .disk-note { font-size: 12px; color: #777; margin-top: 10px; line-height: 1.4; }
+
+        @media print { .top-nav { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#dars-reja" class="nav-btn"><i class="fas fa-book-open"></i> DARS REJASI</a>
+    <a href="#info-area" class="nav-btn"><i class="fas fa-image"></i> INFOGRAFIKA</a>
+    <a href="#video-area" class="nav-btn"><i class="fas fa-play"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> TUNGI REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <div class="header-section">
+        <div class="header-image-box">
+            <img src="https://drive.google.com/thumbnail?id=1RbI8vUFK5uLB8n6pwIqZZrJbjTnbKnzg&sz=w1000" alt="Global Media Image">
+        </div>
+        <div class="header-text">
+            <h1>14-Mashg'ulot:</h1>
+            <h2>Global media va axborot urushlari</h2>
+        </div>
+    </div>
+
+    <div class="goal-box">
+        <strong>Maqsadi:</strong> Dunyo miqyosidagi yirik axborot oqimlarining inson psixologiyasiga (affektiv holatiga) ta’sirini tushunish va geo-siyosiy manipulyatsiyalarni kognitiv tahlil qilish.
+    </div>
+
+    <div id="dars-reja">
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">Affektiv tahlil: "Global emotsional fon" (10 daqiqa)</div>
+                <div class="step-body">
+ <br>Vazifa: Dunyodagi biron bir krizis (masalan, global isish yoki iqtisodiy o'zgarish) haqidagi xabarlar qanday qilib ommaviy qo‘rquv yoki "aybdor qidirish" hissini uyg‘otishini tahlil qilish.
+<br>Monitoring: O‘quvchining global axborot bosimi ostida o‘zini yo‘qotib qo‘ymaslik (ruhiy barqarorlik) darajasi o‘lchanadi.
+
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Kognitiv filtr: "Manfaatlar xaritasi" (15 daqiqa)</div>
+                <div class="step-body">
+                    <strong>Metod: "Kimga foyda?"</strong><br>
+<br>O‘quvchi bitta xalqaro xabarni tahlil qilib, uning ortida turgan siyosiy yoki iqtisodiy manfaatlarni mantiqan topishi kerak.
+<br>Vazifa: Turli davlatlar OAVlaridagi bitta voqeaning ikki xil "bo'yalishini" solishtirish.
+
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Monitoring (10 daqiqa):</div>
+                <div class="step-body">
+Ilovada: "Xalqaro xabarni o'qiganda ma'lum bir tomonga nisbatan asossiz xayrixohlik yoki nafrat paydo bo'ldimi?"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-area">
+        <div class="section-title">DARSNING INFOGRAFIKASI</div>
+        <div class="media-card">
+            <img src="https://drive.google.com/thumbnail?id=10JdQuxVSy3Ts1hPiBLd3aXXQF3_HqNUX&sz=w1000" style="width:100%; border-radius:10px;" alt="Infografika">
+            <a href="https://drive.google.com/file/d/10JdQuxVSy3Ts1hPiBLd3aXXQF3_HqNUX/view?usp=sharing" target="_blank" class="disk-link"><i class="fas fa-external-link-alt"></i> INFOGRAFIKANI DISKDA KO'RISH</a>
+            <p class="disk-note">Ushbu infografika mavzuni katta masshtabda tahlil qilishga yordam beradi.</p>
+        </div>
+    </div>
+
+    <div id="video-area">
+        <div class="section-title">MAVZUGA DOIR VIDEO</div>
+        <div class="media-card">
+            <div class="video-box">
+                <iframe src="https://drive.google.com/file/d/1YDs0sinqZY9Dmt5r2E_biX-YZd8pQHn2/preview" allow="autoplay" allowfullscreen></iframe>
+            </div>
+            <a href="https://drive.google.com/file/d/1YDs0sinqZY9Dmt5r2E_biX-YZd8pQHn2/view?usp=sharing" target="_blank" class="disk-link"><i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH</a>
+            <p class="disk-note">Eslatma: Video yuklanishi uchun Google hisobingizga kirgan bo'lishingiz kerak bo'lishi mumkin.</p>
+        </div>
+    </div>
+
+</div>
+
+<footer style="text-align: center; padding: 40px; opacity: 0.6; font-size: 13px;">
+    © 2026 Mirobid | Global media tahlil markazi
+</footer>
+
+</body>
+</html>

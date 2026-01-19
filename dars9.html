@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9-Mashg'ulot: Vizual verifikatsiya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+        }
+
+        .dark-mode {
+            --bg-color: #0d1b2a;
+            --card-bg: #1b263b;
+            --text-color: #e0e1dd;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        /* Navigatsiya Paneli */
+        .top-nav {
+            background: #0d47a1;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .home-btn { background: #2e7d32; border: none; }
+        .nav-btn:hover { background: #ffca28; color: #0d47a1; }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid #ccc;
+        }
+
+        /* Header */
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-image {
+            flex: 1;
+            min-width: 250px;
+            height: 220px;
+            border-radius: 12px;
+            margin-right: 20px;
+            overflow: hidden;
+            border: 3px solid #ddd;
+        }
+
+        .header-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #1565c0; margin: 0; font-size: 28px; }
+        .header-text h2 { color: #f57c00; margin: 5px 0; font-size: 38px; font-weight: 900; line-height: 1.1; }
+
+        .goal-box {
+            border-left: 5px solid #f57c00;
+            padding: 15px;
+            background-color: rgba(245, 124, 0, 0.1);
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Dars Qadamlari */
+        .step-container { display: flex; margin-bottom: 25px; }
+        .step-number {
+            min-width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; font-weight: 900; color: white;
+            margin-right: 15px; flex-shrink: 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin-top: 10px;
+        }
+
+        .step-content { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; background: white; }
+        .step-header { padding: 12px; font-weight: bold; text-align: center; color: white; font-size: 16px; }
+        .step-body { padding: 15px; font-size: 14.5px; line-height: 1.6; color: #333; }
+
+        .s1 .step-number, .s1 .step-header { background-color: #0288d1; }
+        .s2 .step-number, .s2 .step-header { background-color: #00897b; }
+        .s3 .step-number, .s3 .step-header { background-color: #7b1fa2; }
+        .s4 .step-number, .s4 .step-header { background-color: #455a64; }
+
+        /* Media */
+        .section-title {
+            background: #0d47a1; color: white;
+            padding: 12px; border-radius: 5px;
+            text-align: center; margin: 30px 0 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #333;
+            margin-bottom: 15px;
+        }
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .info-img { width: 100%; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+        .action-btn {
+            background: #f57c00;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+            border: none;
+        }
+        .action-btn:hover { background: #e65100; transform: scale(1.05); }
+
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+
+        @media print { .top-nav { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#reja" class="nav-btn"><i class="fas fa-search"></i> DARS REJASI</a>
+    <a href="#infografika" class="nav-btn"><i class="fas fa-image"></i> INFOGRAFIKA</a>
+    <a href="#video" class="nav-btn"><i class="fas fa-play"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <section id="reja">
+        <div class="header-section">
+            <div class="header-image">
+                <img src="https://drive.google.com/thumbnail?id=1amAiK_SqSut21Jy0vrVyQu7ok1LgP81W&sz=w1000" alt="Vizual Verifikatsiya">
+            </div>
+            <div class="header-text">
+                <h1>9-Mashg'ulot:</h1>
+                <h2>Vizual verifikatsiya</h2>
+            </div>
+        </div>
+
+        <div class="goal-box">
+            <strong>Maqsad:</strong> O'quvchilarda tasvirlar orqali qilinadigan vizual manipulyatsiyani affektiv darajada sezish va ularni kognitiv asboblar (verifikatsiya) yordamida fosh qilishni o'rgatish. "Ko'rganimizga ishonish mumkinmi?" savoliga javob topish.
+        </div>
+
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">Vizual affektiv hujum (5 daqiqa) – Metod: "Birinchi taassurot"</div>
+                <div class="step-body">
+                    O'qituvchi juda ta'sirli, lekin manipulyatsiya qilingan rasmni ko'rsatadi (masalan, eski kinodan olingan kadrni bugungi tabiiy ofat deb taqdim etadi).
+                    <br>• <b>Vazifa:</b> O'quvchi rasmga qaraganda his qilgan birinchi tuyg'usini (achinish, g'azab, qo'rquv) qayd etadi.
+                    <br>• <b>Monitoring:</b> O'quvchining vizual axborotga nisbatan affektiv ta'sirchanligi o'lchanadi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Kognitiv Tekshiruv (15 daqiqa) – Metod: "Raqamli ekspertiza"</div>
+                <div class="step-body">
+                    O'quvchilarga tasvirlarni tekshirishning 3 ta asosiy "aqlli" yo'li o'rgatiladi:
+                    <ul>
+                        <li><b>Teskari qidiruv (Reverse Image Search):</b> Google yoki Yandex Images orqali rasmning asl manbasini topish.</li>
+                        <li><b>Kontekst tahlili:</b> Rasmda ko'ringan yozuvlar, mashina raqamlari yoki daraxtlar xabardagi vaqt va joyga mosligini tekshirish.</li>
+                        <li><b>Meta-ma'lumotlar (EXIF):</b> Rasm qachon va qanday qurilmada olinganini tekshirish haqida tushuncha.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Amaliy Mashg'ulot (15 daqiqa) – Metod: "Vizual detektiv"</div>
+                <div class="step-body">
+                    O'quvchilarga 3 ta vizual keys beriladi:
+                    <ul>
+                        <li><b>Keys A:</b> Fotoshop qilingan siyosiy voqea surati.</li>
+                        <li><b>Keys B:</b> 5 yil oldingi rasm bugungi yangilik deb tarqatilgan post.</li>
+                        <li><b>Keys C:</b> AI (Sun'iy intellekt) tomonidan yaratilgan o'ta realistik surat.</li>
+                    </ul>
+                    <b>Topshiriq:</b> Har bir rasmning "haqiqiy" yoki "soxta"ligini isbotlash.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">Monitoring (5 daqiqa) – Raqamli o'lchov</div>
+                <div class="step-body">
+                    O'quvchilar quyidagi savolga javob berishadi:
+                    <br><i>"Ushbu rasmning haqiqiyligiga ishonish uchun qanday kognitiv dalil topdingiz?"</i>
+                    <br>Bu o'quvchining affektiv hissiyotdan kognitiv tahlilga o'tish darajasini ko'rsatadi.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="infografika" class="section-title">DARSNING INFOGRAFIKASI</div>
+    <img src="https://drive.google.com/thumbnail?id=1926dx4I2D0a0eyEibIkDhY6mNGVglRWi&sz=w1000" class="info-img" alt="Vizual Verifikatsiya Infografikasi">
+
+    <div id="video" class="section-title">MAVZUGA DOIR VIDEO</div>
+    <div class="video-box">
+        <iframe src="https://drive.google.com/file/d/1H9tszrt0c4Wo51ersUBCcxrDK8q-AXMa/preview" allow="autoplay"></iframe>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="https://drive.google.com/file/d/1H9tszrt0c4Wo51ersUBCcxrDK8q-AXMa/view" target="_blank" class="action-btn">
+            <i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH
+        </a>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 30px; color: #7f8c8d; font-size: 14px;">
+    © 2026 Mirobid | Media Savodxonlik darslari
+</footer>
+
+</body>
+</html>

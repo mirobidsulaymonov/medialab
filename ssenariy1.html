@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Savodxonlik Portali | Mirobid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+        :root {
+            --primary: #1a5276; --accent: #e67e22; --success: #27ae60;
+            --bg: #f0f3f5; --card: #ffffff; --text: #2c3e50;
+        }
+
+        body { font-family: 'Ubuntu', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; scroll-behavior: smooth; padding-top: 80px; }
+
+        /* PLATFORMA YUQORI NAVIGATSIYASI */
+        nav { 
+            background: var(--primary); 
+            padding: 15px 0; 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            z-index: 2000; 
+            display: flex; 
+            justify-content: center; 
+            gap: 12px; 
+            flex-wrap: wrap; 
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+        }
+        .nav-link { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: bold; 
+            padding: 10px 20px; 
+            border-radius: 30px; 
+            font-size: 13px; 
+            text-transform: uppercase; 
+            transition: 0.3s; 
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .nav-link:hover { background: var(--accent); transform: translateY(-2px); border-color: transparent; }
+
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+
+        .hero { background: linear-gradient(135deg, var(--primary), #2980b9); color: white; padding: 40px; border-radius: 20px; text-align: center; margin-bottom: 40px; }
+        
+        .section-card { background: var(--card); border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-left: 6px solid var(--primary); }
+        h2 { color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 0; display: flex; align-items: center; gap: 10px; }
+
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .info-btn { padding: 20px; border-radius: 12px; border: none; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .info-btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
+        .fakt { background: #2980b9; } .fikr { background: #8e44ad; } .reklama { background: #27ae60; } .mishmish { background: #d35400; } .tahlil { background: #2c3e50; }
+
+        .case-box { background: #fff5e6; border-left: 5px solid var(--accent); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .case-box h4 { margin-top: 0; color: #d35400; display: flex; align-items: center; gap: 8px; }
+
+        .quiz-item { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #eee; }
+        .quiz-question { font-weight: bold; margin-bottom: 10px; display: block; }
+        .option { display: block; background: #f8f9fa; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; transition: 0.2s; text-align: left; width: 100%; font-family: inherit; font-size: 14px; }
+        .option:hover { background: #e8f4fd; border-color: var(--primary); }
+
+        .video-btn-box { text-align: center; padding: 30px 0; }
+        .yt-button { 
+            background: #ff0000; 
+            color: white !important; 
+            text-decoration: none; 
+            padding: 18px 40px; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            font-size: 18px;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 12px; 
+            transition: 0.3s; 
+            box-shadow: 0 5px 20px rgba(255,0,0,0.4);
+            cursor: pointer;
+            border: none;
+        }
+        .yt-button:hover { transform: scale(1.05); background: #cc0000; box-shadow: 0 8px 25px rgba(255,0,0,0.5); }
+
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
+        .modal-content { background-color: white; margin: 10% auto; padding: 30px; border-radius: 15px; width: 80%; max-width: 500px; position: relative; }
+        .close { position: absolute; right: 20px; top: 10px; font-size: 28px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-link">Bosh sahifa</a>
+    <a href="darslar.html" class="nav-link">Darslar</a>
+    <a href="keyslar.html" class="nav-link">Ilovalar va Keyslar</a>
+    <a href="oyinlar.html" class="nav-link">O'yinlar</a>
+    <a href="diagnostika.html" class="nav-link">Diagnostika</a>
+</nav>
+
+<div class="container">
+    <header class="hero">
+        <h1>Axborot Iste’moli Madaniyati</h1>
+        <p>Media olamida to'g'ri va xavfsiz harakatlanishni o'rganamiz</p>
+    </header>
+
+    <section class="section-card">
+        <h2><i class="fas fa-layer-group"></i> Axborot turlarini o‘rganing</h2>
+        <div class="info-grid">
+            <button class="info-btn fakt" onclick="showDetails('fakt')">FAKT</button>
+            <button class="info-btn fikr" onclick="showDetails('fikr')">FIKR</button>
+            <button class="info-btn reklama" onclick="showDetails('reklama')">REKLAMA</button>
+            <button class="info-btn mishmish" onclick="showDetails('mishmish')">MISH-MISH</button>
+            <button class="info-btn tahlil" onclick="showDetails('tahlil')">TAHLIL</button>
+        </div>
+    </section>
+
+    <section class="section-card">
+        <h2><i class="fas fa-puzzle-piece"></i> Amaliy Keyslar</h2>
+        <div class="case-box">
+            <h4><i class="fas fa-bullhorn"></i> 1-Keys: "Vahimali xabar"</h4>
+            <p>Telegramda: "Bugun tunda telefonni o'chiring, kosmik nurlar portlatadi!" degan xabar keldi. Nima qilasiz?</p>
+            <button class="option" onclick="alert('To\'g\'ri! Rasmiy manbalarni tekshirish kerak.')">Manbasini tekshiraman va asossiz ekanini bilaman.</button>
+            <button class="option" onclick="alert('Xato! Bu vahima tarqatishga yordam beradi.')">Xabarni darhol boshqa yaqinlarimga tarqataman.</button>
+        </div>
+
+        <div class="case-box">
+            <h4><i class="fas fa-user-secret"></i> 2-Keys: "Deepfake"</h4>
+            <p>Mashhur insonning shubhali videosini ko'rib qoldingiz. Nima qilasiz?</p>
+            <button class="option" onclick="alert('To\'g\'ri! Hozirda AI orqali soxta videolar yasash oson.')">Video soxta bo'lishi mumkinligini o'ylab, tekshiraman.</button>
+            <button class="option" onclick="alert('Xato! Har qanday videoga ko\'r-ko\'rona ishonish yomon oqibatga olib keladi.')">Videoga ishonaman va u haqida yomon fikrga boraman.</button>
+        </div>
+    </section>
+
+    <section class="section-card">
+        <h2><i class="fas fa-tasks"></i> Bilimingizni sinang (5 ta savol)</h2>
+        <div class="quiz-container">
+            <div class="quiz-item">
+                <span class="quiz-question">1. Clickbait nima?</span>
+                <div class="option" onclick="this.style.background='#d4edda'">Shov-shuvli va chalg'ituvchi sarlavha</div>
+                <div class="option" onclick="this.style.background='#ffcccc'">Rasmiy davlat xabari</div>
+            </div>
+            <div class="quiz-item">
+                <span class="quiz-question">2. "Fake News" nima?</span>
+                <div class="option" onclick="this.style.background='#d4edda'">Yolg'on, to'qima xabarlar</div>
+                <div class="option" onclick="this.style.background='#ffcccc'">Ingliz tilidagi yangiliklar</div>
+            </div>
+            <div class="quiz-item">
+                <span class="quiz-question">3. Qaysi biri fakt?</span>
+                <div class="option" onclick="this.style.background='#d4edda'">O'zbekiston poytaxti - Toshkent</div>
+                <div class="option" onclick="this.style.background='#ffcccc'">Bu rasm juda chiroyli</div>
+            </div>
+            <div class="quiz-item">
+                <span class="quiz-question">4. Axborotni tekshirishda nima muhim?</span>
+                <div class="option" onclick="this.style.background='#d4edda'">Rasmiy manba va bir nechta dalillar</div>
+                <div class="option" onclick="this.style.background='#ffcccc'">Telegramdagi ko'p ko'rilgan xabar</div>
+            </div>
+            <div class="quiz-item">
+                <span class="quiz-question">5. Media savodxonlikning maqsadi?</span>
+                <div class="option" onclick="this.style.background='#d4edda'">Axborotni tahlil qilish va saralash</div>
+                <div class="option" onclick="this.style.background='#ffcccc'">Faqat kompyuterni o'rganish</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-card">
+        <h2><i class="fas fa-play-circle"></i> Video Darslik</h2>
+        <div class="video-btn-box">
+            <a href="https://www.youtube.com/watch?v=g1wCtg0nGd4&list=PLsAOt_b3-kdtiC5A7Jxqxxkmm7okppe2r" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="yt-button">
+                <i class="fab fa-youtube"></i> VIDEO DARSNI KO'RISH
+            </a>
+        </div>
+    </section>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3 id="modalTitle"></h3>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<script>
+    const infoData = {
+        'fakt': { title: "FAKT", body: "Isbotlangan, aniq ma'lumot. Masalan: O'zbekiston poytaxti - Toshkent shahri." },
+        'fikr': { title: "FIKR", body: "Biror kishining shaxsiy munosabati. Masalan: Bugun havo juda yoqimli." },
+        'reklama': { title: "REKLAMA", body: "Sotish yoki foyda ko'rish maqsadida tayyorlangan xabarlar." },
+        'mishmish': { title: "MISH-MISH", body: "Aniq manbasi yo'q, shubhalarga asoslangan xabar." },
+        'tahlil': { title: "TAHLIL", body: "Voqeani sabab-oqibat doirasida chuqur o'rganish." }
+    };
+
+    function showDetails(type) {
+        document.getElementById('modalTitle').innerText = infoData[type].title;
+        document.getElementById('modalBody').innerHTML = infoData[type].body;
+        document.getElementById('infoModal').style.display = "block";
+    }
+
+    function closeModal() { document.getElementById('infoModal').style.display = "none"; }
+    
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('infoModal')) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>

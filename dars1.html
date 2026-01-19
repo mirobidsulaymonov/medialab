@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1-Mashg'ulot: Birlashtirilgan multimedia portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+            --primary-blue: #1a5276;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #f0f0f0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        /* Navigatsiya Paneli */
+        .top-nav {
+            background: var(--primary-blue);
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .nav-btn:hover { background: #f1c40f; color: #1a5276; }
+
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* Sahifalar (Sectionlar) */
+        .page-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+        }
+
+        .header-section { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .header-image { 
+            flex: 1; 
+            min-width: 250px; 
+            height: 180px; 
+            border-radius: 8px; 
+            margin-right: 20px; 
+            overflow: hidden; 
+            border: 1px solid #ddd; 
+        }
+        
+        .header-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s ease;
+        }
+
+        .header-image:hover img {
+            transform: scale(1.1) rotate(1deg);
+        }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1, .header-text h2 { color: #a93226; margin: 0; }
+        .subtitle-bar { background-color: #5dade2; color: white; padding: 10px; text-align: center; font-weight: bold; border-radius: 5px; margin-top: 10px; }
+
+        .step-container { display: flex; margin-bottom: 20px; }
+        .step-number { min-width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: white; margin-right: 15px; flex-shrink: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .step-content { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; }
+        .step-header { padding: 10px; font-weight: bold; text-align: center; }
+        .step-body { padding: 15px; font-size: 14px; line-height: 1.5; }
+
+        .s1 .step-number, .s1 .step-header { background: #e67e22; } .s1 .step-content { border: 2px solid #e67e22; }
+        .s2 .step-number, .s2 .step-header { background: #1abc9c; } .s2 .step-content { border: 2px solid #1abc9c; }
+        .s3 .step-number, .s3 .step-header { background: #8e44ad; color: white; } .s3 .step-content { border: 2px solid #8e44ad; }
+        .s4 .step-number, .s4 .step-header { background: #c0392b; color: white; } .s4 .step-content { border: 2px solid #c0392b; }
+
+        .info-box { background: #0c2b4a; padding: 25px; border-radius: 15px; color: white; text-align: center; }
+        .info-box img { width: 100%; border-radius: 10px; background: white; padding: 10px; }
+        .info-footer { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 15px; background: #163d63; padding: 15px; border-radius: 10px; }
+
+        /* Diskdan ko'rish tugmasi */
+        .disk-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .disk-btn:hover { background: #2ecc71; transform: translateY(-2px); }
+
+        .video-container { 
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9; 
+            background: #000; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            margin-bottom: 15px;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+
+        @media print { 
+            .top-nav, .disk-btn { display: none; } 
+            .page-section { box-shadow: none; border: 1px solid #eee; margin-bottom: 0; page-break-after: always; }
+            #video-joy { display: none; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn">BOSH SAHIFA</a>
+    <a href="#dars-reja" class="nav-btn">DARS REJA</a>
+    <a href="#infografika" class="nav-btn">INFOGRAFIKA</a>
+    <a href="#video-joy" class="nav-btn">VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')">TUNGI REJIM</button>
+    <button class="nav-btn" onclick="window.print()">CHOP ETISH</button>
+</nav>
+
+<div class="main-container">
+
+    <section id="dars-reja" class="page-section">
+        <div class="header-section">
+            <div class="header-image">
+                <img src="https://thumbs.dreamstime.com/b/%D1%81%D0%B8%D0%BB%D1%83%D1%82%D1%8B-%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85-%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2-%D0%B8-%D1%80%D1%83%D0%BA%D0%B0-%D1%81-%D0%BD%D0%B8%D1%82%D1%8F%D0%BC%D0%B8-%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D1%8F%D1%8E%D1%89%D0%B8%D0%BC%D0%B8-%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D0%BF%D1%86%D0%B8%D1%8E-300277153.jpg" alt="Manipulyatsiya">
+            </div>
+            <div class="header-text">
+                <h1>1-Mashg'ulot:</h1>
+                <h2>Sarlavhalar va visual manipulyatsiya</h2>
+                <div class="subtitle-bar">"Tuzoqni aniqlash"</div>
+            </div>
+        </div>
+
+        <div style="border: 2px solid #bdc3c7; padding: 15px; border-radius: 5px; margin-bottom: 20px; background: #fdfefe; color: #333;">
+            <strong>Maqsadi:</strong> O‘quvchilarda axborotning sarlavha va rasmga nisbatan tanqidiy munosabatni shakllantirish va hissiy manipulyatsiyani (Affektiv tahlil) aniqlashni o‘rgatish.
+        </div>
+
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">"Aqliy hujum" (5 daqiqa) — Metod: "Mantiqiy ziddiyat"</div>
+                <div class="step-body">
+                    O‘quvchilarga bitta mavzuda ikki xil sarlavha ko‘rsatiladi:<br>
+                    - A variant (Xolis): "Ertaga hududlarda shamol tezligi ortishi kutilmoqda."<br>
+                    - B variant (Klikbeyt): "DAXSHAT! Ertaga uydan chiqmaganingiz ma’qul, hamma ogohlantirildi!" <br>
+                    <strong>Savol:</strong>Qaysi xabarni birinchi bo‘lib ochgan bo‘lardingiz va nima uchun? (Bu yerda o‘quvchi o‘zidagi affektiv reaksiyani anglab yetadi).
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Nazariy qism (10 daqiqa) Metod: "Vizual komponentlar tahlili"</div>
+                <div class="step-body">
+                    <strong>Vizual manipulyatsiya turlari:</strong> Sariq rangli shriftlar: Diqqatni asossiz jalb qilish.
+                    Kontekstdan uzilgan rasmlar: 
+                    Misol uchun, 2015-yildagi avariya rasmini bugungi yangilikka qo‘yish. 
+                    Fotoshop effektlari: Mashhur shaxslarning yuz ifodasini o‘zgartirish orqali hissiyot uyg‘otish.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Amaliy mashg‘ulot (20 daqiqa)- Metod: "Detektiv-rekonstruksiya"</div>
+                <div class="step-body">
+                    <strong>Vazifa:</strong> O‘quvchilar kichik guruhlarga bo‘linadi va ularga "Noto‘g‘ri" xabarlar tarqatiladi.
+                    Vazifa: Berilgan klikbeyt sarlavhani "Xolis sarlavha"ga aylantirish.
+                    Masalan: "Mashhur xonanda vafot etdimi? Muxlislar shokda!"
+                    ➡️ Xolis varianti: "Xonanda o‘zining yangi klipi suratga olish jarayoni haqida 
+                    ma’lumot berdi."Maqsad: O‘quvchi xabarning ichki mazmuni va sarlavha orasidagi kognitiv tafovutni topishni o‘rganadi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">Monitoring va tekshiruv (10 daqiqa) Metod: "Raqamli o‘lchov"</div>
+                <div class="step-body">
+                     Dars oxirida o‘quvchilarga. 1-bosqich (Pre-test) topshirig‘ini yuboriladi.
+                    Topshiriqda aynan vizual manipulyatsiya qilingan (masalan, Telegramdan olingan soxta xabar) linki bo‘ladi. O‘quvchilar javob berishadi, va real vaqtda ularning tahlil 
+                    qobiliyatini (foizlarda) jadvalda ko‘riladi.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="infografika" class="page-section info-box">
+        <h1>1-Mashg‘ulot: Sarlavhalar va vizual manipulyatsiya</h1>
+        <p>“Tuzoqni aniqlash” — Media savodxonlik darsi</p>
+        <img src="https://drive.google.com/thumbnail?id=1WMTBFWKPmNzQnBCKuNGh-VcRbxEFv12d&sz=w1000" alt="1-dars infografika">
+        
+        <div style="text-align: center;">
+            <a href="https://drive.google.com/file/d/1WMTBFWKPmNzQnBCKuNGh-VcRbxEFv12d/view?usp=sharing" target="_blank" class="disk-btn">
+                <i class="fab fa-google-drive"></i> INFOGRAFIKANI DISKDAN KO'RISH
+            </a>
+        </div>
+
+        <div class="info-footer">
+            <div><h3 style="color:#ffd54f">🎯 Maqsad</h3><p>Klikbeytni aniqlash</p></div>
+            <div><h3 style="color:#ffd54f">🧠 Metod</h3><p>Mantiqiy tahlil</p></div>
+            <div><h3 style="color:#ffd54f">📊 Natija</h3><p>Tanqidiy fikrlash</p></div>
+        </div>
+    </section>
+
+    <section id="video-joy" class="page-section">
+        <h2 style="text-align: center; color: #1a5276;">Mavzuga oid video darslik</h2>
+        <div class="video-container">
+            <iframe 
+                src="https://drive.google.com/file/d/1VveU-twC70qwEWza8bbn3iu7ZLT_8xuX/preview" 
+                title="Dars videosi" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://drive.google.com/file/d/1VveU-twC70qwEWza8bbn3iu7ZLT_8xuX/view?usp=sharing" target="_blank" class="disk-btn">
+                <i class="fab fa-google-drive"></i> VIDEONI DISKDAN KO'RISH
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 Mirobid | Media-savodxonlik: Axborot Immuniteti Kursi
+    </footer>
+</div>
+    
+</body>
+</html>

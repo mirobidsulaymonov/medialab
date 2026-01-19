@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-KEYS: Manba Ishonchliligi | Mirobid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Ubuntu:wght@400;700&display=swap');
+        
+        :root { 
+            --danger: #e74c3c; 
+            --dark: #2c3e50; 
+            --bg: #f0f2f5; 
+            --yellow: #f1c40f; 
+            --primary: #0f172a;
+            --accent: #3b82f6;
+        }
+
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', 'Ubuntu', sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            padding-top: 90px; 
+        }
+
+        /* --- Navigatsiya Paneli --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- Container va Card --- */
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 35px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            margin-bottom: 30px; 
+            border-top: 8px solid var(--danger); 
+            text-align: center;
+        }
+        
+        /* Shubhali sayt simulyatsiyasi */
+        .fake-news-site { border: 2px solid #ddd; border-radius: 10px; overflow: hidden; background: #fff; margin: 25px 0; text-align: left; }
+        .site-header { background: #333; color: #fff; padding: 10px 20px; font-size: 12px; display: flex; justify-content: space-between; }
+        .site-content { padding: 25px; }
+        .ad-banner { background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; text-align: center; font-size: 12px; margin-bottom: 15px; color: #856404; }
+        .article-title { color: var(--danger); font-size: 28px; line-height: 1.2; font-weight: bold; margin-bottom: 15px; }
+        .article-meta { font-size: 13px; color: #777; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+
+        /* CRAAP Jadvali */
+        .craap-table { width: 100%; border-collapse: collapse; margin-top: 25px; background: #fff; text-align: left; }
+        .craap-table th { background: var(--dark); color: white; padding: 15px; }
+        .craap-table td { border: 1px solid #dee2e6; padding: 15px; vertical-align: middle; font-size: 14px; }
+        
+        .status-btn { padding: 8px 15px; border-radius: 20px; border: none; font-size: 11px; font-weight: bold; cursor: default; }
+        .status-unclear { background: #ffeaa7; color: #d35400; }
+        .status-fake { background: #ff7675; color: white; }
+
+        /* Natija */
+        .result-box { display: none; margin-top: 30px; padding: 30px; border-radius: 15px; background: #d63031; color: white; text-align: center; animation: shake 0.5s; }
+        @keyframes shake { 0%, 100% {transform: translateX(0);} 25% {transform: translateX(-10px);} 75% {transform: translateX(10px);} }
+
+        .btn-check { background: var(--dark); color: white; border: none; padding: 15px 30px; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; font-size: 18px; margin-top: 20px; transition: 0.3s; }
+        .btn-check:hover { background: #1a252f; transform: translateY(-2px); }
+        
+        .badge { display: inline-block; background: #000; color: #fff; padding: 5px 15px; border-radius: 50px; font-size: 12px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="index.html#darslar">Darslar</a>
+        <a href="index.html#keyslar">Ilovalar va Keyslar</a>
+        <a href="index.html#oyinlar">O'yinlar</a>
+        <a href="index.html#diagnostika">Diagnostika</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div>
+            <span class="badge"><i class="fas fa-exclamation-triangle"></i> MANBA TAHLILI</span>
+            <h2 style="margin: 0;">4-KEYS: “Muallifi yo‘q maqola”</h2>
+            <p style="color: #666; margin-top: 10px;">Internetda tarqalayotgan quyidagi "shov-shuvli" xabarni ko'zdan kechiring:</p>
+        </div>
+
+        <div class="fake-news-site">
+            <div class="site-header">
+                <span>WWW.TEZKOR-NEWS-24.UZ (Yangi ochilgan)</span>
+                <span><i class="fas fa-ellipsis-v"></i></span>
+            </div>
+            <div class="ad-banner"><i class="fas fa-ad"></i> REKLAMA: "OZISHNING OSON YO'LI! SHOSHILING!"</div>
+            <div class="site-content">
+                <div class="article-title">ZUDLIK BILAN! OMMAVIY TARZDA INTERNET TO'LIQ YOPILADI!</div>
+                <div class="article-meta">
+                    <i class="fas fa-user-slash"></i> Muallif: Ko'rsatilmagan | <i class="fas fa-calendar-times"></i> Sana: Noaniq
+                </div>
+                <p style="color: #444;">Ertadan boshlab butun dunyo bo'ylab internet tarmoqlari to'liq o'chirilishi kutilmoqda. Bu haqda maxfiy manbalar xabar bermoqda. Hoziroq ushbu xabarni hamma bilan ulashing...</p>
+                <div class="ad-banner" style="background:#e1f5fe; border-color:#b3e5fc; color:#01579b;">REKLAMA: "1 KUNDA 100$ TOPISHNI XOHLAYSIZMI?"</div>
+            </div>
+        </div>
+
+        <p><strong>Vazifa:</strong> Ushbu manbaning ishonchliligini professional <b>CRAAP</b> testi orqali tekshiring.</p>
+        
+        <button class="btn-check" onclick="showCraapTable()"><i class="fas fa-tasks"></i> TAHLILNI BOSHLASH</button>
+    </div>
+
+    <div id="craap-section" style="display: none;">
+        <div class="card" style="border-top-color: var(--dark);">
+            <h3><i class="fas fa-search-plus"></i> CRAAP Metodi bo'yicha baholash</h3>
+            
+            <div style="overflow-x: auto;">
+                <table class="craap-table">
+                    <thead>
+                        <tr>
+                            <th>Mezon (CRAAP)</th>
+                            <th>Tahlil natijasi</th>
+                            <th>Xulosa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Currency</b> (Sana)</td>
+                            <td>Sana yo'q. "Ertaga" so'zi istalgan paytda ishlatilaveradi.</td>
+                            <td><span class="status-btn status-unclear">Eskirgan/Noaniq</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Relevance</b> (Moslik)</td>
+                            <td>Mavzu juda keng va faktik asosga ega emas.</td>
+                            <td><span class="status-btn status-unclear">Foydasiz</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Authority</b> (Muallif)</td>
+                            <td>Muallif nomi yo'q, sayt nomi esa ishonchsiz (Tezkor-24).</td>
+                            <td><span class="status-btn status-fake">Noma'lum</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Accuracy</b> (Aniqlik)</td>
+                            <td>Hech qanday rasmiy tashkilotga havola berilmagan.</td>
+                            <td><span class="status-btn status-fake">Yolg'on</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Purpose</b> (Maqsad)</td>
+                            <td>Vahima uyg'otib, reklama orqali pul ishlash (Clickbait).</td>
+                            <td><span class="status-btn status-fake">Tijoriy aldov</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn-check" style="background: var(--danger);" onclick="showFinalResult()">YAKUNIY DIAGNOZNI KO'RISH</button>
+        </div>
+
+        <div id="final-result" class="result-box">
+            <i class="fas fa-skull-crossbones fa-3x"></i>
+            <h2>XULOSA: MANBA 100% ISHONCHSIZ!</h2>
+            <p style="font-size: 18px;">Bu — klassik feyk xabar. Maqsad: ko'p marta bosish (click) va reklama ko'rsatish. <br><b>Eslatma:</b> Bunday xabarlarni tarqatish qonunan javobgarlikka sabab bo'lishi mumkin.</p>
+            <button class="btn-check" style="background: white; color: var(--danger); margin-top: 20px;" onclick="window.location.href='index.html#keyslar'">BO'LIMLARGA QAYTISH</button>
+        </div>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 30px; color: #7f8c8d;">
+    <p>© 2026 Mirobid | Media Portal</p>
+</footer>
+
+<script>
+    function showCraapTable() {
+        document.getElementById('craap-section').style.display = 'block';
+        window.scrollTo({ 
+            top: document.getElementById('craap-section').offsetTop - 90, 
+            behavior: 'smooth' 
+        });
+    }
+
+    function showFinalResult() {
+        document.getElementById('final-result').style.display = 'block';
+        window.scrollTo({ 
+            top: document.getElementById('final-result').offsetTop - 100, 
+            behavior: 'smooth' 
+        });
+    }
+</script>
+
+</body>
+</html>

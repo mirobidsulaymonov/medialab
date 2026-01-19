@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11-Mashg'ulot: Media-etiket va muloqot madaniyati</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --navy: #1a1a2e;
+            --crimson: #e94560;
+            --gold: #ffd54f;
+            --light-bg: #f4f7f6;
+            --card-bg: white;
+            --text-color: #333;
+        }
+
+        .dark-mode {
+            --light-bg: #0b1a2a;
+            --card-bg: #122a44;
+            --text-color: #ecf0f1;
+            --navy: #3498db;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            transition: 0.3s;
+        }
+
+        /* Navigatsiya Paneli */
+        .top-nav {
+            background: #1a237e;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover { background: var(--gold); color: #1a237e; }
+        .home-btn { background: #27ae60; border: none; }
+
+        .container {
+            max-width: 850px;
+            margin: 25px auto;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+        }
+
+        /* Header */
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .header-image-box {
+            flex: 1;
+            min-width: 250px;
+            height: 160px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 4px solid var(--crimson);
+        }
+
+        .header-image-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 1.5; text-align: right; }
+        .header-text h1 { color: #2980b9; font-size: 22px; margin: 0; }
+        .header-text h2 { color: var(--crimson); font-size: 32px; font-weight: 900; margin: 5px 0; }
+
+        .goal-box {
+            border-left: 6px solid var(--crimson);
+            padding: 20px;
+            background: rgba(233, 69, 96, 0.1);
+            margin-bottom: 35px;
+            font-size: 15px;
+        }
+
+        /* Step Strukturasi */
+        .step-container { display: flex; margin-bottom: 40px; scroll-margin-top: 100px; }
+        .step-number {
+            min-width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 900; color: white;
+            margin-right: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-top: 10px;
+        }
+
+        .s1 .step-number { background: #3498db; }
+        .s2 .step-number { background: #1abc9c; }
+        .s3 .step-number { background: #9b59b6; }
+        .s4 .step-number { background: var(--crimson); }
+
+        .step-content { flex-grow: 1; border-radius: 15px; border: 1px solid #ddd; overflow: hidden; background: var(--card-bg); }
+        .step-header { background: #1a237e; color: white; padding: 15px; font-weight: bold; text-align: center; }
+        .step-body { padding: 20px; line-height: 1.7; }
+
+        .thermometer-container {
+            background: linear-gradient(to right, #2ecc71, #f1c40f, #e74c3c);
+            height: 20px; border-radius: 10px; margin: 15px 0;
+        }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; color: #333; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #f8f9fa; }
+
+        .variant-box { background: rgba(0,0,0,0.05); padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #1a237e; }
+
+        .section-title {
+            background: #1a237e; color: white;
+            padding: 15px; border-radius: 8px;
+            text-align: center; margin: 40px 0 20px;
+            font-weight: bold;
+        }
+
+        .video-box { width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 10px; overflow: hidden; border: 2px solid #333; }
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        /* Diskdan ko'rish tugmasi */
+        .disk-btn-container { text-align: center; margin-top: 15px; }
+        .disk-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .disk-btn:hover { background: #219150; transform: translateY(-2px); }
+
+        @media print { .top-nav, .disk-btn-container { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#step1" class="nav-btn"><i class="fas fa-book"></i> DARS REJA</a>
+    <a href="#info-area" class="nav-btn"><i class="fas fa-image"></i> INFOGRAFIKA</a>
+    <a href="#video-area" class="nav-btn"><i class="fas fa-video"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <div class="header-section">
+        <div class="header-image-box">
+            <img src="https://drive.google.com/thumbnail?id=1UIXA-vhp5c11MnlmujQORZ2pb1V_50Y3&sz=w1000" alt="Media-etiket">
+        </div>
+        <div class="header-text">
+            <h1>11-Mashg'ulot:</h1>
+            <h2>Media-etiket va muloqot madaniyati</h2>
+            <p style="color: #666; font-style: italic;">Raqamli dunyoda o'zaro hurmat</p>
+        </div>
+    </div>
+
+    <div class="goal-box">
+        <strong>Maqsadi:</strong> O'quvchilarda axborot makonidagi tajovuzkor muloqot usullarini (agressiv ritorika) aniqlash va ularning <b> affektiv (hissiy) </b>bosimiga qarshi <b>kognitiv (mantiqiy) </b> himoyani shakllantirish.
+    </div>
+
+    <div class="step-container s1" id="step1">
+        <div class="step-number">1</div>
+        <div class="step-content">
+            <div class="step-header">Affektiv sezgi: "Salbiy energiya" (7 daqiqa)</div>
+            <div class="step-body">
+                <strong>Metod: "Hissiyotlar termometri"</strong><br>
+                O'qituvchi bitta voqeaga yozilgan ikki xil izohni ko'rsatadi:
+                <div class="variant-box">
+                    <b>A variant (Madaniyatli):</b> "Men bu fikrga qo'shilmayman, chunki dalillar boshqacha."<br><br>
+                    <b>B variant (Tajovuzkor):</b> "Siz hech narsani tushunmaysiz, o'zi siz kabi odamlar hamma yoqni buzyapti!"
+                </div>
+                <strong>Vazifa:</strong> Ushbu matnlarni o'qiganda o'zingizdagi ruhiy holat o'zgarishini belgilang:
+                <div class="thermometer-container"></div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:bold;">
+                    <span>XOTIRJAM</span><span>G'AZAB</span>
+                </div>
+                <p><i>Monitoring: O'quvchining axborotdagi agressiyaga nisbatan hissiy sezgirligi o'lchanadi.</i></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-container s2" id="step2">
+        <div class="step-number">2</div>
+        <div class="step-content">
+            <div class="step-header">Kognitiv tahlil: "Shaxsiyat va Fikr" (13 daqiqa)</div>
+            <div class="step-body">
+                <strong>Metod: "Argumentlar filtri"</strong><br>
+                Muloqotdagi manipulyatsiyani aniqlashning oltin qoidasi:
+                
+                <table>
+                    <tr>
+                        <th>Yo'nalish</th>
+                        <th>Xususiyati</th>
+                        <th>Tahlil turi</th>
+                    </tr>
+                    <tr>
+                        <td><b>Fikrga hujum</b></td>
+                        <td>Sog'lom bahs</td>
+                        <td>Kognitiv jarayon</td>
+                    </tr>
+                    <tr>
+                        <td><b>Shaxsiyatga hujum</b></td>
+                        <td>Madaniyatsizlik va manipulyatsiya</td>
+                        <td>Affektiv hujum</td>
+                    </tr>
+                </table>
+                <br>
+                <strong>Vazifa:</strong> Matn ichidan <b>fakt (argument)</b> va <b>haqoratni</b> ajratib olishni o'rganish.
+            </div>
+        </div>
+    </div>
+
+    <div class="step-container s3" id="step3">
+        <div class="step-number">3</div>
+        <div class="step-content">
+            <div class="step-header">Amaliy mashg'ulot: "Media-diplomat" (15 daqiqa)</div>
+            <div class="step-body">
+                Ijtimoiy tarmoqdagi "qizigan" bahslardan namunalar bilan ishlash.<br><br>
+                <strong>Topshiriq:</strong> Berilgan tajovuzkor (agressiv) xabarni o'zgartirib, uni madaniyatli, faktlarga asoslangan xabarga aylantiring.
+                <br><br>
+                <strong>Maqsad:</strong> O'quvchi hissiy portlashni (affektiv holatni) to'xtatib, uni mantiqiy (kognitiv) muloqotga o'tkazish ko'nikmasini mashq qiladi.
+            </div>
+        </div>
+    </div>
+
+    <div class="step-container s4" id="step4">
+        <div class="step-number">4</div>
+        <div class="step-content">
+            <div class="step-header">O'quvchi sahifasida Monitoring (5 daqiqa)</div>
+            <div class="step-body">
+                <strong>Topshiriq:</strong> "Ushbu sharh muallifi o'z fikrini isbotlash uchun dalil keltirdimi yoki shunchaki hissiyotga berildimi?"
+                <br><br>
+                <div style="background:#fff3cd; padding:15px; border-radius:10px; border: 1px solid #ffeeba; color:#856404;">
+                    <strong>O'qituvchi uchun natija:</strong> Siz o'quvchi xabarning "shovqini" (haqorat) ichidan "mazmuni"ni (fakt) ajratib olganini monitoring qilasiz.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-area">
+        <div class="section-title">DARSNING INFOGRAFIKASI</div>
+        <div style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 30px;">
+            <img src="https://drive.google.com/thumbnail?id=1fjNVbT0lnzzmqTxhuiA-KpwgT2BrFEn7&sz=w1000" style="width:100%; border-radius:10px;" alt="Grafika">
+        </div>
+    </div>
+
+    <div id="video-area">
+        <div class="section-title">MAVZUGA DOIR VIDEO</div>
+        <div style="background: white; padding: 15px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 10px;">
+            <div class="video-box">
+                <iframe src="https://drive.google.com/file/d/1VrxSsJ6xsW2TzSmsSPpCwfa32w5QgwxF/preview" allow="autoplay" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="disk-btn-container">
+            <a href="https://drive.google.com/file/d/1VrxSsJ6xsW2TzSmsSPpCwfa32w5QgwxF/view" target="_blank" class="disk-btn">
+                <i class="fab fa-google-drive"></i> VIDEONI DISKDAN KO'RISH
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<footer style="text-align: center; padding: 40px; color: #999; font-size: 13px;">
+    © 2026 Mirobid | Media Savodxonlik: Axborot Immuniteti Kursi
+</footer>
+
+</body>
+</html>

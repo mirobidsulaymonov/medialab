@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3-Mashg'ulot: Faktcheking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+            --primary-teal: #00695c;
+            --accent-orange: #d35400;
+            --drive-blue: #1a73e8;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #f0f0f0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        /* Navigatsiya */
+        .top-nav {
+            background: var(--primary-teal);
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-btn:hover { background: #ffd54f; color: #004d40; }
+        .home-btn { background: #27ae60; border: none; } /* Bosh sahifa uchun yashil rang */
+
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .page-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+        }
+
+        /* HEADER & HARAKATLANUVCHI RASM */
+        .header-section { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+        
+        .header-image-container { 
+            flex: 1; 
+            min-width: 250px; 
+            height: 180px; 
+            border-radius: 8px; 
+            margin-right: 20px; 
+            overflow: hidden; 
+            border: 2px solid var(--primary-teal);
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .header-image-container img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: all 0.6s ease;
+        }
+
+        .header-image-container:hover img { 
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #1b4f72; margin: 0; font-size: 26px; text-transform: uppercase; }
+        .header-text h2 { color: var(--accent-orange); margin: 5px 0; font-size: 20px; font-weight: 700; text-transform: uppercase; }
+        .subtitle-bar { background-color: #5dade2; color: white; padding: 10px; text-align: center; font-weight: bold; border-radius: 5px; margin-top: 10px; }
+
+        /* GOAL BOX */
+        .goal-box {
+            border-left: 5px solid var(--primary-teal);
+            padding: 15px;
+            background-color: #e0f2f1;
+            margin-bottom: 20px;
+            font-size: 15px;
+            color: #004d40;
+        }
+
+        /* QADAMLAR */
+        .step-container { display: flex; margin-bottom: 20px; }
+        .step-number { min-width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: white; margin-right: 15px; flex-shrink: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-top: 10px; }
+        .step-content { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; background: white; }
+        .step-header { padding: 10px; font-weight: bold; text-align: center; color: white; }
+        .step-body { padding: 15px; font-size: 14px; line-height: 1.6; color: #444; }
+
+        .s1 .step-number { background: #e67e22; } .s1 .step-header { background: #f39c12; }
+        .s2 .step-number { background: #1abc9c; } .s2 .step-header { background: #48c9b0; }
+        .s3 .step-number { background: #8e44ad; } .s3 .step-header { background: #9b59b6; }
+        .s4 .step-number { background: #c0392b; } .s4 .step-header { background: #e74c3c; }
+
+        .keys-list { list-style-type: none; padding: 0; }
+        .keys-list li { background: #f9f9f9; margin-bottom: 10px; padding: 10px; border-radius: 5px; border-left: 3px solid #ddd; }
+
+        /* VIDEO QISMI */
+        .video-wrapper {
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        .drive-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--drive-blue);
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        /* PRINT */
+        @media print { 
+            .top-nav, .drive-btn { display: none !important; } 
+            .main-container { width: 100%; margin: 0; }
+            .page-section { box-shadow: none; border: 1px solid #eee; break-inside: avoid; }
+        }
+
+        @media (max-width: 600px) {
+            .video-wrapper iframe { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#dars-reja" class="nav-btn"><i class="fas fa-list"></i> REJA</a>
+    <a href="#infografika" class="nav-btn"><i class="fas fa-image"></i> INFOGRAFIKA</a>
+    <a href="#video-joy" class="nav-btn"><i class="fas fa-video"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> TUNGI</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="main-container">
+
+    <section id="dars-reja" class="page-section">
+        <div class="header-section">
+            <div class="header-image-container">
+                <img src="https://drive.google.com/thumbnail?id=1GSFu9Zm39rlWKe4DNvVd2bqfvE9xTJuM&sz=w1000" alt="Faktcheking Header">
+            </div>
+            <div class="header-text">
+                <h1>3-Mashg'ulot:</h1>
+                <h2>Faktcheking</h2>
+                <div class="subtitle-bar">"Axborotning pasportini tekshiramiz"</div>
+            </div>
+        </div>
+
+        <div class="goal-box">
+            <strong>Maqsad:</strong> O'quvchilarda axborot manbasini tekshirish (Investigate the source) va ma'lumotning haqiqiyligini bir necha manbalar orqali solishtirish ko'nikmasini shakllantirish
+        </div>
+
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">"Sirli xabar" metodi (7 daqiqa)</div>
+                <div class="step-body">
+                    O'quvchilarga anonim xabar tahlil qildiriladi. 
+                    <i>"(masalan: "Ertadan boshlab barcha ijtimoiy tarmoqlar pullik bo'lar emish"). "</i><br>
+                    <strong>Savol:</strong> Bu xabarga ishonasizmi? Kim aytdi? Qayerda yozilgan? Xulosa: "Kim aytdi?" (Manba) — bu axborotning eng muhim qismi. Manbasi yo'q xabar — egasi yo'q buyumga o'xshaydi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">"SIFT" metodikasi (10 daqiqa)</div>
+                <div class="step-body">
+                    O'quvchilarga dunyoda tan olingan SIFT (Stop, Investigate, Find, Trace) metodining soddalashtirilgan variantini o'rgatamiz:<br><br>
+                    <strong>1. Stop (To‘xtang):</strong> Xabarni tarqatishga shoshilmang.<br>
+                    <strong>2. Investigate (Manbani tekshiring):</strong> Bu sayt yoki kanal ishonchlimi? (Ko'k belgi bormi, nomi to'g'ri yozilganmi?)<br>
+                    <strong>3. Find (Boshqa manbalarni toping):</strong> Rasmiy OAVlar (masalan, Kun.uz yoki Gazeta.uz) bu haqda yozyaptimi?<br>
+                    <strong>4. Trace (Asliga qayting):</strong> Rasm yoki gap birinchi marta qayerda paydo bo'lgan?
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">"Raqamli detektiv" o‘yini (20 daqiqa)</div>
+                <div class="step-body">
+                    O'quvchilarga 3 ta keys "shubhali" topshiriq beriladi:
+                    <ul class="keys-list">
+                        <li><strong>1-Keys:</strong> O'zbekistonning mashhur sayti nomini biroz o'zgartirgan "feyk" havola (Masalan: <i>kun.uz.news.me</i>)</li>
+                        <li><strong>2-Keys:</strong> Eski rasmga yangi matn qo'yilgan post.</li>
+                        <li><strong>3-Keys:</strong> Anonim kanaldagi shov-shuvli xabar.</li>
+                        <li><strong>Vazifa:</strong> O'quvchilar telefonlari orqali haqiqiy manbalarni qidirib, ushbu xabarlarning yolg'onligini isbotlashlari kerak.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">Monitoring va baholash (8 daqiqa)</div>
+                <div class="step-body">
+                    Topshiriq: "Xabar muallifi yoki manbasi haqida ma'lumot berilganmi?" degan savolga javob berishadi.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="infografika" class="page-section" style="background: #0b3b5c; color: white; text-align: center;">
+        <h2 style="margin-bottom: 20px;">Faktcheking: Axborotning “pasporti”</h2>
+        <img src="https://drive.google.com/thumbnail?id=1isCo2S5g_23vDxxyIzmboyiC9vd3IE6b&sz=w1000" style="width: 100%; border-radius: 10px; background: white; padding: 5px;" alt="Infografika">
+    </section>
+
+    <section id="video-joy" class="page-section">
+        <h2 style="text-align: center; color: var(--primary-teal);">Mavzuga doir video-dars</h2>
+        
+        <div class="video-wrapper">
+            <iframe src="https://drive.google.com/file/d/10uTdClJJySDcBGyQPatSRK_TCd9ok6dv/preview" allow="autoplay"></iframe>
+        </div>
+
+        <a href="https://drive.google.com/file/d/10uTdClJJySDcBGyQPatSRK_TCd9ok6dv/view?usp=sharing" target="_blank" class="drive-btn">
+            <i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH (Agar ochilmasa, bosing)
+        </a>
+        <p style="text-align: center; font-size: 12px; color: #777; margin-top: 10px;">
+            Eslatma: Video yuklanishi uchun Google hisobingizga kirgan bo'lishingiz kerak bo'lishi mumkin.
+        </p>
+    </section>
+
+    <footer style="text-align: center; padding: 20px; color: #7f8c8d; font-size: 14px;">
+        <p>&copy; 2026 Mirobid | Media Savodxonlik Portali</p>
+    </footer>
+</div>
+
+</body>
+</html>

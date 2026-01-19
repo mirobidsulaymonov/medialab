@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media-Savodxonlik: O'quvchi Platformasi</title>
+    <style>
+        :root { --p: #1a73e8; --bg: #f0f2f5; --success: #27ae60; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding: 0; display: flex; flex-direction: row; }
+        
+        .sidebar { width: 340px; background: white; height: 100vh; padding: 25px; box-shadow: 2px 0 10px rgba(0,0,0,0.1); position: fixed; overflow-y: auto; box-sizing: border-box; z-index: 100; }
+        .main { margin-left: 340px; padding: 30px; width: 100%; box-sizing: border-box; }
+        
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); width: 100%; max-width: 800px; margin: 0 auto; }
+        select, input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; outline: none; }
+        input:focus { border-color: var(--p); }
+
+        .btn { background: var(--p); color: white; border: none; padding: 15px; border-radius: 10px; width: 100%; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* Media xabarlar dizayni */
+        .media-link-box { padding: 20px; border-radius: 15px; text-align: center; margin: 20px 0; border: 2px dashed; }
+        .tg-box { background: #e3f2fd; border-color: #2196f3; color: #0d47a1; }
+        .yt-box { background: #fff3f3; border-color: #ff0000; color: #c62828; }
+        .ig-box { background: #fdf2f8; border-color: #e1306c; color: #880e4f; }
+        .fb-box { background: #e7f3ff; border-color: #1877f2; color: #004a99; }
+
+        /* Savollar dizayni */
+        .section-title { background: var(--p); color: white; padding: 10px 20px; border-radius: 8px; margin: 25px 0 15px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        .q-box { background: #f9f9f9; padding: 18px; margin-bottom: 15px; border-radius: 12px; border-left: 6px solid #ddd; transition: 0.3s; }
+        .q-box:hover { border-left-color: var(--p); background: #f1f5ff; }
+        .q-box b { font-size: 16px; display: block; margin-bottom: 10px; }
+        
+        .hidden { display: none; }
+        .result-card { text-align: center; padding: 40px; }
+        .sticker { font-size: 70px; margin-bottom: 15px; }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            .sidebar { position: relative; width: 100%; height: auto; padding: 20px; }
+            .main { margin-left: 0; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+    <h2 style="color:var(--p); text-align:center;">Media-monitoring</h2>
+    <p style="font-size:13px; color:#666; text-align:center;">O'quvchi identifikatsiyasi</p>
+    
+    <label>Sinf va Belgi:</label>
+    <div style="display: flex; gap: 5px;">
+        <input type="number" id="s_grade_num" placeholder="Sinf" style="flex:1">
+        <input type="text" id="s_grade_char" placeholder="Belgi" style="flex:1">
+    </div>
+
+    <label>Guruh:</label>
+    <select id="s_group">
+        <option value="Tajriba">Tajriba guruhi(E)</option>
+        <option value="Nazorat">Nazorat guruhi (C)</option>
+    </select>
+
+    <label>Hudud:</label>
+    <select id="s_region" onchange="updateDistricts()">
+        <option value="">-- Viloyatni tanlang --</option>
+        <option value="Toshkent shahri">Toshkent shahri</option>
+<option value="Toshkent viloyati">Toshkent viloyati</option>
+        <option value="Samarqand">Samarqand</option>
+        <option value="Andijon">Andijon</option>
+        <option value="Buxoro">Buxoro</option>
+ <option value="Namangan">Namangan</option>
+ <option value="Farg'ona">Farg'ona</option>
+ <option value="Sirdaryo">Sirdaryo</option>
+ <option value="Jizzax">Jizzax</option>
+ <option value="Navoiy">Navoiy</option>
+<option value="Qashqadaryo">Qashqadaryo</option>
+<option value="Surxondaryo">Surxondaryo</option>
+<option value="Xorazm">Xorazm</option>
+<option value="Qoraqalpog'iston">Qoraqalpog'iston</option>
+    </select>
+
+    <label>Tuman:</label>
+    <select id="s_district"><option value="">Avval viloyatni tanlang</option></select>
+
+    <input type="number" id="s_school" placeholder="Maktab №">
+    <input type="text" id="s_name" placeholder="F.I.Sh (To'liq yozing)">
+
+    <button class="btn" id="startBtn" onclick="startTest()">TESTNI BOSHLASH</button>
+</div>
+
+<div class="main">
+    <div id="testArea" class="card hidden">
+        <div id="headerInfo" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="phaseTag" style="color: var(--p); margin:0;"></h3>
+            <div id="timerBox" style="font-weight:bold; color:red; font-size:18px;">15:00</div>
+        </div>
+        
+        <div id="taskContent" style="margin-top:20px;">
+            <p id="taskText" style="font-size: 19px; line-height: 1.5; color: #333;"></p>
+            <div id="mediaBox"></div>
+        </div>
+
+        <div id="quizContainer"></div>
+        
+        <button class="btn" id="submitBtn" style="background:var(--success); margin-top:30px;" onclick="submitFinalResult()">NATIJANI YUBORISH</button>
+    </div>
+
+    <div id="resultArea" class="card hidden result-card"></div>
+</div>
+
+<script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzMW31nkG-jUWbYzP2FbxQx8c1_LX1HDnxvUWDI1FBn9kOEeTwv8aFK0m9BlgOoJEcWWA/exec";
+    let currentPhase = "";
+    let timeLimit = 15;
+    let timer;
+
+    const districtData = {
+    "Toshkent shahri": ["Yunusobod", "Chilonzor", "Mirzo Ulug'bek", "Sergeli", "Yashnobod", "Olmazor", "Mirobod", "Shayxontohur", "Uchtepa", "Yakkasaroy", "Bektemir", "Yangihayot"],
+"Toshkent viloyati": ["Nurafshon sh.", "Olmaliq sh.", "Angren sh.", "Bekobod sh.", "Chirchiq sh.", "Ohangaron sh.", "Yangiyo'l sh.", "Bekobod tumani", "Bo'stonliq", "Bo'ka", "Chinoz", "Qibray", "Parkent", "Piskent", "O'rtachirchiq", "Quyichirchiq", "Toshkent tumani", "Oqqo'rg'on", "Ohangaron tumani", "Yuqorichirchiq", "Zangiota", "Yangiyo'l tumani"],
+    "Samarqand": ["Samarqand sh.", "Kattaqo'rg'on sh.", "Samarqand tumani", "Pastdarg'om", "Urgut", "Bulung'ur", "Jomboy", "Ishtixon", "Kattaqo'rg'on tumani", "Narpay", "Nurobod", "Oqdaryo", "Payariq", "Paxtachi", "Toyloq", "Qo'shrabot"],
+    "Andijon": ["Andijon sh.", "Xonobod sh.", "Andijon tumani", "Asaka", "Baliqchi", "Bo'ston", "Buloqboshi", "Izboskan", "Jalaquduq", "Marhamat", "Oltinko'l", "Paxtaobod", "Qo'rg'ontepa", "Shahrixon", "Ulug'nor", "Xo'jaobod"],
+    "Buxoro": ["Buxoro sh.", "Kogon sh.", "Buxoro tumani", "G'ijduvon", "Jondor", "Kogon tumani", "Qorako'l", "Qorovulbozor", "Olot", "Peshku", "Romitan", "Shofirkon", "Vobkent"],
+    "Namangan": ["Namangan sh.", "Chartaq", "Chust", "Kosonsoy", "Mingbuloq", "Namangan tumani", "Norin", "Pop", "To'raqo'rg'on", "Uychi", "Uychi", "Yangiqo'rg'on", "Davlatobod", "Yangi Namangan"],
+    "Farg'ona": ["Farg'ona sh.", "Qo'qon sh.", "Marg'ilon sh.", "Quvasoy sh.", "Oltiariq", "Bag'dod", "Beshariq", "Buvayda", "Dang'ara", "Farg'ona tumani", "Furqat", "Qo'shtepa", "Quva", "Rishton", "So'x", "Toshloq", "Uchko'prik", "O'zbekiston", "Yozyovon"],
+    "Sirdaryo": ["Guliston sh.", "Shirin sh.", "Yangiyer sh.", "Boyovut", "Guliston tumani", "Irustov", "Mirzaobod", "Oqoltin", "Sayhunobod", "Sardoba", "Sirdaryo tumani"],
+    "Jizzax": ["Jizzax sh.", "Arnasoy", "Baxmal", "Do'stlik", "Forish", "G'allaorol", "Sharof Rashidov", "Mirzachul", "Paxtakor", "Yangiobod", "Zamin", "Zafarobod", "Zarbdor"],
+    "Navoiy": ["Navoiy sh.", "Zarafshon sh.", "G'ozg'on sh.", "Karmana", "Konimex", "Navbahor", "Nurota", "Qiziltepa", "Tomdi", "Uchquduq", "Xatirchi"],
+    "Qashqadaryo": ["Qarshi sh.", "Shahrisabz sh.", "Chiroqchi", "Dehqonobod", "G'uzor", "Kasbi", "Kitob", "Koson", "Mirishkor", "Muborak", "Nishon", "Qamashi", "Qarshi tumani", "Shahrisabz tumani", "Yakkabog'", "Ko'kdala"],
+    "Surxondaryo": ["Termiz sh.", "Angor", "Boysun", "Denov", "Jarqo'rg'on", "Muzrabot", "Oltinsoy", "Qiziriq", "Qumqo'rg'on", "Sariosiyo", "Sherobod", "Sho'rchi", "Termiz tumani", "Uzun"],
+    "Xorazm": ["Urganch sh.", "Xiva sh.", "Bog'ot", "Gurlan", "Qo'shko'pir", "Shovot", "Urganch tumani", "Xazorasp", "Xiva tumani", "Xonqa", "Yangiariq", "Yangibozor", "Tuproqqal'a"],
+    "Qoraqalpog'iston": ["Nukus sh.", "Amudaryo", "Beruniy", "Chimboy", "Ellikqal'a", "Kegeyli", "Mo'ynoq", "Nukus tumani", "Qanliko'l", "Qo'ng'irot", "Qorao'zak", "Shumanay", "Taxtako'pir", "To'rtko'l", "Xo'jayli", "Taxiatosh", "Bo'zatov"]
+};
+
+    function updateDistricts() {
+        const r = document.getElementById("s_region").value;
+        const ds = document.getElementById("s_district");
+        ds.innerHTML = "";
+        if (r && districtData[r]) {
+            districtData[r].forEach(t => {
+                let o = document.createElement("option"); o.value = t; o.innerText = t; ds.appendChild(o);
+            });
+        }
+    }
+
+    // SAVOLLAR TO'PLAMI (20 ta)
+    const questions = [
+        // 1-5: Xabarni affektiv va kognitiv tahlil qilish (Vazifaga bog'liq)
+        { q: "Yuqoridagi xabar sizda qanday birinchi hissiyotni uyg'otdi? (Affektiv tahlil)", a: ["Vahima yoki qo'rquv", "Ishonch va xotirjamlik", "Hayrat va qiziqish"], c: 0, type: "analysis" },
+        { q: "Xabarda keltirilgan asosiy faktlarni aniqlay oldingizmi? (Kognitiv tahlil)", a: ["Ha, faktlar aniq", "Yo'q, faqat hissiyotga tayanilgan", "Ba'zi qismlari shubhali"], c: 1, type: "analysis" },
+        { q: "Ushbu xabar sarlavhasi va mazmuni bir-biriga mos keladimi?", a: ["To'liq mos", "Sarlavha bo'rttirilgan (Klikbeyt)", "Umuman aloqasi yo'q"], c: 1, type: "analysis" },
+        { q: "Xabar muallifi yoki manbasi haqida ma'lumot berilganmi?", a: ["Ha, rasmiy manba", "Yo'q, anonim yoki shubhali", "Faqat havola bor"], c: 1, type: "analysis" },
+        { q: "Sizningcha, ushbu xabar auditoriyaga qanday ta'sir o'tkazish uchun yozilgan?", a: ["Ma'lumot berish uchun", "Manipulyatsiya va chalg'itish uchun", "Ko'ngil ochish uchun"], c: 1, type: "analysis" },
+        
+        // 6-20: Umumiy didaktik savollar
+        { q: "Axloqiy nuqtai nazardan, tekshirilmagan xabarni tarqatish qanday baholanadi?", a: ["Bu oddiy holat", "Mas'uliyatsizlik va axloqsizlik", "Foydali ish"], c: 1 },
+        { q: "Dizinformatsiya (soxta ma'lumot) tarqatishdan asosiy maqsad nima?", a: ["Xalqqa yordam", "Siyosiy yoki iqtisodiy manfaat", "Xatolik"], c: 1 },
+        { q: "Faktcheking (Faktlarni tekshirish) jarayonida birinchi qadam nima?", a: ["Do'stlarga yuborish", "Asl manbani qidirish", "Izohlarni o'qish"], c: 1 },
+        { q: "Manipulyatsiyaning 'Hissiyotlarga ta'sir qilish' usuli qachon qo'llaniladi?", a: ["Tanqidiy fikrlashni pasaytirish uchun", "Tezroq o'qish uchun", "Rasm qo'shish uchun"], c: 0 },
+        { q: "Deepfake texnologiyasi orqali nimalarni soxtalashtirish mumkin?", a: ["Faqat matnni", "Video va audio tasvirlarni", "Faqat ob-havoni"], c: 1 },
+        { q: "Instagramda 'ko'k belgi' (verified) nimani kafolatlaydi?", a: ["Xabarlarning 100% rostligini", "Profil haqiqatan shu shaxsga tegishliligini", "Hech narsani"], c: 1 },
+        { q: "Propaganda xabarlarining asosiy belgisi nima?", a: ["Bir tomonlama va hissiy bo'lishi", "Xolis va tahliliy bo'lishi", "Qisqa bo'lishi"], c: 0 },
+        { q: "Agar xabarda 'Tezroq tarqating!' so'zi bo'lsa, bu nimadan dalolat?", a: ["Xabar juda muhimligidan", "Vahima uyg'otishga urinishdan", "Yaxshilikdan"], c: 1 },
+        { q: "Kiber-fishing (Phishing) maqsadi nima?", a: ["Baliq ovi", "Shaxsiy ma'lumot va parollarni o'g'irlash", "Internetni tezlashtirish"], c: 1 },
+        { q: "SIFT metodidagi 'I' (Investigate) qadami nimani anglatadi?", a: ["Inkor etish", "Manbani tekshirish", "Ism qo'yish"], c: 1 },
+        { q: "Xabarda statistik ma'lumotlar manbasiz berilsa unga ishonish mumkinmi?", a: ["Ha", "Yo'q, manba bo'lishi shart", "Faqat rasmi bo'lsa"], c: 1 },
+        { q: "Raqamli gigiyena qoidalariga nima kiradi?", a: ["Tez-tez qo'l yuvish", "Murakkab parollar va shubhali linklarga kirmaslik", "Kompyuterni o'chirish"], c: 1 },
+        { q: "Klikbeyt sarlavhalar odatda qanday boshlanadi?", a: ["'Tahlillarga ko'ra...'", "'Daxshat! Hamma ko'rsin...'", "'Xayrli kun...'"], c: 1 },
+        { q: "Siz xabarni tarqatishdan oldin uning jamiyatga ta'sirini o'ylaysizmi?", a: ["Har doim", "Ba'zida", "Hech qachon"], c: 0 },
+        { q: "Tanqidiy fikrlash mediasavodxonlikda qanday rol o'ynaydi?", a: ["Hech qanday", "Asosiy himoya vositasi", "Faqat jurnalistlar uchun"], c: 1 }
+    ];
+
+   async function loadTask() {
+    try {
+        // Ma'lumotni olish uchun yangi format
+        const response = await fetch(`${API_URL}?type=getTask`);
+        const tasks = await response.json();
+
+        if (tasks && tasks.length > 1) {
+            // Eng oxirgi yuborilgan vazifani olamiz
+            const latestTask = tasks[tasks.length - 1]; 
+            
+            // Sahifadagi elementlarga vazifani chiqaramiz
+            document.getElementById("taskText").innerText = latestTask[1]; // Matn
+            document.getElementById("mediaContainer").innerHTML = renderMedia(latestTask[3], latestTask[4]); // Media
+            
+            // Test sozlamalarini o'rnatamiz
+            window.timeLimit = latestTask[5] * 60;
+            window.qCount = latestTask[6];
+        }
+    } catch (e) {
+        console.error("Vazifani yuklashda xatolik:", e);
+    }
+}
+
+// Sahifa yuklanganda vazifani tekshirish
+setInterval(loadTask, 5000); // Har 5 soniyada yangi vazifa bormi deb tekshiradi
+    function renderMedia(type, url) {
+        const mb = document.getElementById("mediaBox");
+        if(!url) return mb.innerHTML = "";
+        const t = String(type).toLowerCase();
+        
+        let boxClass = "", btnText = "", icon = "";
+        if(t === "telegram") { boxClass = "tg-box"; btnText = "TELEGRAMDA O'QISH"; icon = "🔹"; }
+        else if(t === "video") { boxClass = "yt-box"; btnText = "YOUTUBEDA KO'RISH"; icon = "▶"; }
+        else if(t === "instagram") { boxClass = "ig-box"; btnText = "INSTAGRAMDA KO'RISH"; icon = "📸"; }
+        else if(t === "facebook") { boxClass = "fb-box"; btnText = "FACEBOOKDA KO'RISH"; icon = "👥"; }
+        else { boxClass = "tg-box"; btnText = "HAVOLANI OCHISH"; icon = "🔗"; }
+
+        mb.innerHTML = `
+            <div class="media-link-box ${boxClass}">
+                <p><b>Vazifa manbasi:</b> Quyidagi havolaga o'tib xabarni tahlil qiling va qaytib savollarga javob bering.</p>
+                <a href="${url}" target="_blank" class="btn" style="background:inherit; border:1px solid; color:inherit; text-decoration:none; display:inline-block; width:auto; padding:10px 30px;">
+                    ${icon} ${btnText}
+                </a>
+            </div>`;
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById("quizContainer");
+        container.innerHTML = "";
+        questions.forEach((item, idx) => {
+            if(idx === 0) container.innerHTML += `<div class="section-title">I-BOSQICH: Xabarni tahlil qilish</div>`;
+            if(idx === 5) container.innerHTML += `<div class="section-title">II-BOSQICH: Nazariy va axloqiy bilimlar</div>`;
+
+            let opts = item.a.map((opt, i) => `
+                <label style="display:flex; align-items:center; cursor:pointer; margin:8px 0;">
+                    <input type="radio" name="q${idx}" value="${i==item.c?1:0}" style="width:20px; height:20px; margin-right:10px;"> ${opt}
+                </label>`).join("");
+            
+            container.innerHTML += `<div class="q-box"><b>${idx+1}. ${item.q}</b>${opts}</div>`;
+        });
+    }
+
+    function startTimer(min) {
+        let sec = min * 60;
+        timer = setInterval(() => {
+            let m = Math.floor(sec / 60);
+            let s = sec % 60;
+            document.getElementById("timerBox").innerText = `${m}:${s < 10 ? '0'+s : s}`;
+            if(sec <= 0) { clearInterval(timer); submitFinalResult(); }
+            sec--;
+        }, 1000);
+    }
+
+    async function sendResult(studentData) {
+    // studentData ichida ism, guruh, ball va h.k. bor deb hisoblaymiz
+    
+    const params = new URLSearchParams({
+        action: "saveResult", // Bu yerda action nomi backend bilan mos bo'lishi kerak
+        name: studentData.name,
+        group: studentData.group,
+        phase: studentData.phase,
+        score: studentData.score,
+        grade: studentData.grade,
+        region: studentData.region,
+        district: studentData.district
+    });
+
+    try {
+        // GET orqali yuborish juda tez ishlaydi
+        await fetch(`${API_URL}?${params.toString()}`, { mode: 'no-cors' });
+        alert("Natijangiz qabul qilindi! ✅");
+    } catch (e) {
+        console.log("Yuborishda xato, lekin ma'lumot yetib borgan bo'lishi mumkin.");
+    }
+}
+    function showResultView(p, c) {
+        document.getElementById("testArea").classList.add("hidden");
+        const area = document.getElementById("resultArea");
+        area.classList.remove("hidden");
+
+        let s = "", t = "", m = "", color = "";
+        if(p >= 90) { s = "🏆"; t = "A'LO! BARAKALLA!"; m = "Siz media-ekspertsiz! Manipulyatsiyalarni oson aniqlaysiz."; color = "#27ae60"; }
+        else if(p >= 70) { s = "🧐"; t = "YAXSHI!"; m = "Bilimlaringiz mustahkam, lekin yanada diqqatli bo'ling."; color = "#1a73e8"; }
+        else if(p >= 60) { s = "📚"; t = "QONIQUARLI"; m = "Yaxshi o'qishingiz kerak. SIFT metodini qayta ko'ring."; color = "#f39c12"; }
+        else if(p >= 40) { s = "😟"; t = "QONIQUARSIZ"; m = "Ehtiyot bo'ling! Sizni chalg'itishlari juda oson."; color = "#e67e22"; }
+        else { s = "🚨"; t = "OGOH BO'LING!"; m = "Siz barcha tuzoqlarga tushdingiz. Ko'proq o'rganing."; color = "#e74c3c"; }
+
+        area.innerHTML = `
+            <div class="sticker">${s}</div>
+            <h1 style="color:${color}; font-size:48px;">${p}%</h1>
+            <p>To'g'ri javoblar: ${c} / 20</p>
+            <h2 style="color:${color}">${t}</h2>
+            <p style="font-size:18px; line-height:1.6">${m}</p>
+            <button class="btn" style="width:200px; margin-top:20px;" onclick="location.reload()">YOPISH</button>
+        `;
+    }
+</script>
+</body>
+</html>

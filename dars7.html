@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 7-Mashg'ulot: Reklama va neyromarketing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+        }
+
+        .dark-mode {
+            --bg-color: #0b2f52;
+            --card-bg: #123f68;
+            --text-color: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        /* Navigatsiya Paneli */
+        .top-nav {
+            background: #1a237e;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .home-btn { background: #27ae60; border: none; }
+        .nav-btn:hover { background: #ffd54f; color: #1a237e; }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid #ccc;
+        }
+
+        /* Header */
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-image {
+            flex: 1;
+            min-width: 250px;
+            height: 200px;
+            border-radius: 8px;
+            margin-right: 20px;
+            overflow: hidden;
+            border: 2px solid #ddd;
+        }
+
+        .header-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #2980b9; margin: 0; font-size: 30px; }
+        .header-text h2 { color: #e67e22; margin: 5px 0; font-size: 50px; font-weight: 900; }
+
+        .goal-box {
+            border-left: 5px solid #e67e22;
+            padding: 15px;
+            background-color: rgba(230, 126, 34, 0.1);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* Dars reja qadamlari */
+        .step-container { display: flex; margin-bottom: 20px; }
+        .step-number {
+            min-width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; font-weight: 900; color: white;
+            margin-right: 15px; flex-shrink: 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin-top: 10px;
+        }
+
+        .step-content { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; background: white; }
+        .step-header { padding: 10px; font-weight: bold; text-align: center; color: white; }
+        .step-body { padding: 15px; font-size: 14px; line-height: 1.6; color: #333; }
+
+        .s1 .step-number, .s1 .step-header { background-color: #3498db; }
+        .s2 .step-number, .s2 .step-header { background-color: #1abc9c; }
+        .s3 .step-number, .s3 .step-header { background-color: #9b59b6; }
+        .s4 .step-number, .s4 .step-header { background-color: #34495e; }
+
+        /* Media */
+        .section-title {
+            background: #1a237e; color: white;
+            padding: 10px; border-radius: 5px;
+            text-align: center; margin: 30px 0 15px;
+            font-weight: bold;
+        }
+        
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #333;
+            margin-bottom: 15px;
+        }
+
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .info-img { width: 100%; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table, th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; color: #333; }
+
+        .action-btn {
+            background: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .action-btn:hover { background: #d35400; }
+
+        @media print { .top-nav { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#reja" class="nav-btn"><i class="fas fa-tasks"></i> DARS REJA</a>
+    <a href="#infografika" class="nav-btn"><i class="fas fa-project-diagram"></i> INFOGRAFIKA</a>
+    <a href="#video" class="nav-btn"><i class="fas fa-play-circle"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-adjust"></i> REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <section id="reja">
+        <div class="header-section">
+            <div class="header-image">
+                <img src="https://drive.google.com/thumbnail?id=1-nt_seL9uqaI3KaRKNnBBbvadHstuo39&sz=w1000" alt="Reklama va marketing">
+            </div>
+            <div class="header-text">
+                <h1>7-Mashg'ulot:</h1>
+                <h2>Reklama va neyromarketing</h2>
+            </div>
+        </div>
+
+        <div class="goal-box">
+            <strong>Maqsad:</strong> Bu darsda biz o'quvchining axborotni qabul qilishdagi affektiv (hissiy) moyilligi qanday qilib uning kognitiv (mantiqiy) qaroriga ta'sir qilishini o'rganamiz.
+        </div>
+
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">"Nega sotib oldim?" — Kirish</div>
+                <div class="step-body">
+                    Affektiv qo'zg'atuvchi (7 daqiqa) — Metod: "Hissiy trigger"
+                    O'qituvchi o'quvchilarga 15 soniyalik juda emotsional reklamani ko'rsatadi (masalan, baxtli oila yoki juda mazali taom tasviri).
+                    <br>• Vazifa: O'quvchi xabarni ko'rgan zahoti o'zidagi birinchi hissiyotni (quvonch, ochlik, egalik qilish istagi) aniqlashi kerak.
+                    <br>Ilmiy tahlil: Bu dissertatsiyangizdagi **"Affektiv reaksiya monitoringi"**dir.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Kognitiv filtrlash (10 daqiqa) - Metod: "Mantiqiy tahlil"</div>
+                <div class="step-body">
+                    Endi o'sha reklama "sovuq" miya bilan tahlil qilinadi:
+                    <br>• Savol: "Sizga nima sotishyapti? Mahsulotning o'zinimi yoki o'sha baxtli hissiyotnimi? Mahsulotning tarkibi yoki narxi haqida aniq fakt bormi?"
+                    <br>• Vazifa: O'quvchi reklamadagi emotsional "shakar"ni olib tashlab, quruq faktni qoldirishi kerak.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Amaliy mashg'ulot (20 daqiqa) - Metod: "Media-manipulyatsiyani dekonstruksiya qilish"</div>
+                <div class="step-body">
+                    O'quvchilarga ijtimoiy tarmoqdagi "Yashirin reklama" (masalan, blogerning tasodifan tavsiya qilayotgan mahsuloti) ko'rsatiladi.
+                    <br>Topshiriq: O'quvchi ushbu jadvalni to'ldiradi (bu sizning monitoringingiz uchun xomashyo):
+                    <table>
+                        <tr>
+                            <th>Xabar qismi</th>
+                            <th>Affektiv (Hissiyot)</th>
+                            <th>Kognitiv (Mantiq)</th>
+                        </tr>
+                        <tr>
+                            <td>Chiroyli qadoq</td>
+                            <td>"Menga yoqdi"</td>
+                            <td>"Sifati noma'lum"</td>
+                        </tr>
+                        <tr>
+                            <td>Bloger gapi</td>
+                            <td>"Unga ishonaman"</td>
+                            <td>"Bu shunchaki reklama"</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">Monitoring - 10 daqiqa</div>
+                <div class="step-body">
+                    O'quvchilar siz yaratgan ilovaga kirib, quyidagi savollarga javob berishadi:
+                    <br>1. "Ushbu xabarni ko'rganda birinchi nima his qildingiz?" (Affektiv ma'lumot).
+                    <br>2. "Xabarda keltirilgan faktlar ishonchlimi?" (Kognitiv ma'lumot).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="infografika" class="section-title">DARSNING INFOGRAFIKASI</div>
+    <img src="https://drive.google.com/thumbnail?id=1mjngqvfCSgrsTColOAyXWBYQn4ognt7N&sz=w1000" class="info-img" alt="Reklama Infografikasi">
+
+    <div id="video" class="section-title">MAVZUGA DOIR VIDEO</div>
+    <div class="video-box">
+        <iframe src="https://drive.google.com/file/d/1R5P6rWRGKhFla7pchtPz-hGaxggNhfyO/preview" allow="autoplay"></iframe>
+    </div>
+    <div style="text-align: center;">
+        <a href="https://drive.google.com/file/d/1R5P6rWRGKhFla7pchtPz-hGaxggNhfyO/view" target="_blank" class="action-btn">
+            <i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH
+        </a>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 20px; color: #7f8c8d; font-size: 13px;">
+    © 2026 Mirobid | Media Savodxonlik
+</footer>
+
+</body>
+</html>

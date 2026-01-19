@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2-Mashg'ulot: Media-filtr</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+            --primary-blue: #1a5276;
+            --drive-blue: #1a73e8;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #f0f0f0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        .top-nav {
+            background: var(--primary-blue);
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .nav-btn:hover { background: #f1c40f; color: #1a5276; }
+
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .page-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+        }
+
+        .header-section { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .header-image { 
+            flex: 1; 
+            min-width: 250px; 
+            height: 180px; 
+            border-radius: 8px; 
+            margin-right: 20px; 
+            overflow: hidden; 
+            border: 1px solid #ddd; 
+        }
+        .header-image img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.5s ease;
+        }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #154360; margin: 0; font-size: 28px; text-transform: uppercase; }
+        .header-text h2 { color: #c0392b; margin: 5px 0; font-size: 36px; font-weight: 900; }
+        .subtitle-bar { background-color: #5dade2; color: white; padding: 10px; text-align: center; font-weight: bold; border-radius: 5px; margin-top: 10px; }
+
+        .goal-box {
+            border: 2px solid #bdc3c7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #fdfefe;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .step-container { display: flex; margin-bottom: 20px; }
+        .step-number { min-width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; font-weight: 900; color: white; margin-right: 15px; flex-shrink: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-top: 10px; }
+        .step-content { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; background: white; }
+        .step-header { padding: 10px; font-weight: bold; text-align: center; }
+        .step-body { padding: 15px; font-size: 14px; line-height: 1.5; color: #444; }
+
+        .s1 .step-number { background: #e67e22; } .s1 .step-header { background: #f39c12; color: black; } .s1 .step-content { border: 2px solid #e67e22; }
+        .s2 .step-number { background: #1abc9c; } .s2 .step-header { background: #48c9b0; color: black; } .s2 .step-content { border: 2px solid #1abc9c; }
+        .s3 .step-number { background: #8e44ad; } .s3 .step-header { background: #9b59b6; color: white; } .s3 .step-content { border: 2px solid #8e44ad; }
+        .s4 .step-number { background: #c0392b; } .s4 .step-header { background: #e74c3c; color: white; } .s4 .step-content { border: 2px solid #c0392b; }
+
+        .info-box { background: #0c2b4a; padding: 25px; border-radius: 15px; color: white; text-align: center; }
+        .info-box img { width: 100%; border-radius: 10px; background: white; padding: 10px; box-sizing: border-box; }
+        .info-footer { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; background: #143c66; padding: 20px; border-radius: 12px; }
+
+        .video-container { 
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; 
+            background: #000; 
+            border-radius: 15px; 
+            overflow: hidden; 
+            margin: 20px 0;
+        }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .drive-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: var(--drive-blue);
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media print { .top-nav, .drive-btn { display: none; } body { background: white; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn">BOSH SAHIFA</a>
+    <a href="#dars-reja" class="nav-btn">DARS REJA</a>
+    <a href="#infografika" class="nav-btn">INFOGRAFIKA</a>
+    <a href="#video-joy" class="nav-btn">VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')">TUNGI REJIM</button>
+    <button class="nav-btn" onclick="window.print()">CHOP ETISH</button>
+</nav>
+
+<div class="main-container">
+
+    <section id="dars-reja" class="page-section">
+        <div class="header-section">
+            <div class="header-image">
+                <img src="https://drive.google.com/thumbnail?id=1SjZWcRORSxAr-8_Ok81Cs9Bpv9Lg-55Q&sz=w1000" alt="Dars rasmi">
+            </div>
+            <div class="header-text">
+                <h1>2-Mashg'ulot:</h1>
+                <h2>Media-filtr</h2>
+                <div class="subtitle-bar">"Klikbeytni aniqlash"</div>
+            </div>
+        </div>
+
+        <div class="goal-box">
+            <strong>Maqsad:</strong>O‘quvchilarda axborotni tanqidiy baholash va klikbeytni aniqlash ko‘nikmasini shakllantirish.
+Kutilayotgan natijalar: - Klikbeyt sarlavhalarni ajrata oladi – Axborotni hissiy va mantiqiy tahlil qiladi
+- Raqamli xavfsizlik haqida xulosa chiqaradi
+Metodlar: - Vaziyatli tahlil - guruhli ish - video-trening - interaktiv o‘yin
+Vositalar: - Slayd taqdimot - video lavha - onlayn test platforma
+Baholash: - Test natijalari - guruhli muhokamadagi faollik
+
+        </div>
+
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">Nazariy qism: Infografika asosida tushuntirish</div>
+                <div class="step-body">Darsning boshida o'quvchilarga quyidagi 
+"Klikbeyt anatomiyasi" infografikasini namoyish etasiz.
+O‘qituvchi tushuntirishi:
+•Sarlavha: "Daxshat! 2 kundan keyin hamma maktablar yopiladi..." (Hissiy bosim).
+Maqsad: Sizning hissiyotingizni uyg'otish va havolaga bosishga majbur qilish.
+</div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Amaliy qism: "Haqiqatmi yoki tuzoq?"</div>
+                <div class="step-body">O'quvchilarga bir nechta real keyslar (slaydlar) ko'rsatiladi. Ular sizning 3 bosqichli algoritmingiz bo'yicha tahlil qilishadi:
+Keys №1: YouTube-da video: "O'zbekistonda yangi qonun: endi hamma boy bo'ladi!"
+ (Rasmda pul to'la sumkalar va hayratdagi odam).
+•	Affektiv tahlil: O'quvchi hayrat va qiziqishni sezyapti.
+•	Kognitiv tahlil: "Hamma boy bo'ladi" - mantiqsiz va'da.      Xulosa: Bu klikbeyt!
+</div>
+            </div>
+        </div>
+    </section>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Video-trening: "Ko'zgu effekti"</div>
+                <div class="step-body">Darsda 2 daqiqalik qisqa video ko'rsatiladi (yoki ssenariysi o'qib beriladi):
+•	Video mazmuni: Bir o'quvchi klikbeyt havolaga kiradi va uning telefoni virus bilan zararlanadi yoki u noto'g'ri ma'lumotni guruhga tarqatib, uyatga qoladi.
+•	Xulosa: Klikbeyt — shunchaki yolg'on emas, u raqamli xavfsizlikka tahdid!
+</div>
+            </div>
+        </div>
+    </section>
+
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">VInteraktiv o'yin: "Klikbeyt konstruktori"</div>
+                <div class="step-body">O'quvchilar 2 guruhga bo'linadi:
+1.	"Klikbeyt ustalari" guruhi: Oddiy xabardan (masalan: "Ertaga yomg'ir yog'adi") klikbeyt yasashadi ("Daxshatli xabar! Ertaga uydan chiqmaganingiz ma'qul...").
+2.	"Detektivlar" guruhi: Bu xabarni fosh etishadi.
+   5. Mustahkamlash: Platforma orqali test: Dars yakunida o'quvchilar siz yaratgan o'quvchi sahifasiga kiradilar va siz yuborgan topshiriqni tahlil qiladilar. Natijalar real vaqtda jadvalingizda aks etadi.
+
+</div>
+            </div>
+        </div>
+    </section>
+    <section id="infografika" class="page-section info-box">
+        <h1 style="color: white; margin-bottom: 20px;">Klikbeyt va Manipulyatsiya</h1>
+        <img src="https://drive.google.com/thumbnail?id=1ihd1nQTWsaeSYTBy_Q_9xn_hpqHcW2hn&sz=w1000" alt="Infografika">
+        
+        <div class="info-footer">
+            <div><h3 style="color:#ffd54f">🎯 Maqsad</h3><p style="color:white">Klikbeytni aniqlash</p></div>
+            <div><h3 style="color:#ffd54f">🧠 Ko‘nikma</h3><p style="color:white">Tahlil qilish</p></div>
+            <div><h3 style="color:#ffd54f">📊 Natija</h3><p style="color:white">Tanqidiy fikrlash</p></div>
+        </div>
+    </section>
+
+    <section id="video-joy" class="page-section">
+        <h2 style="text-align: center; color: var(--primary-blue);">Mavzuga doir video-dars</h2>
+        <div class="video-container">
+            <iframe src="https://drive.google.com/file/d/1wmaEjT4KCbEYVSN7_Ea7GrM-Cuka8vOL/preview" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <a href="https://drive.google.com/file/d/1wmaEjT4KCbEYVSN7_Ea7GrM-Cuka8vOL/view?usp=sharing" target="_blank" class="drive-btn">
+            <i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH
+        </a>
+    </section>
+
+    <footer style="text-align: center; padding: 20px; color: #7f8c8d; font-size: 14px;">
+        <p>&copy; 2026 Mirobid | Media Savodxonlik Portali</p>
+    </footer>
+</div>
+
+</body>
+</html>

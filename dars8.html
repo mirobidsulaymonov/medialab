@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8-Mashg'ulot: Propaganda va yashirin xabarlar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+        }
+
+        .dark-mode {
+            --bg-color: #0b2f52;
+            --card-bg: #123f68;
+            --text-color: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        /* Navigatsiya Paneli */
+        .top-nav {
+            background: #1a237e;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .home-btn { background: #27ae60; border: none; }
+        .nav-btn:hover { background: #ffd54f; color: #1a237e; }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 1px solid #ccc;
+        }
+
+        /* Header */
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-image {
+            flex: 1;
+            min-width: 250px;
+            height: 200px;
+            border-radius: 8px;
+            margin-right: 20px;
+            overflow: hidden;
+            border: 2px solid #ddd;
+        }
+
+        .header-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #2980b9; margin: 0; font-size: 28px; }
+        .header-text h2 { color: #e67e22; margin: 5px 0; font-size: 40px; font-weight: 900; line-height: 1.1; }
+
+        .goal-box {
+            border-left: 5px solid #e67e22;
+            padding: 15px;
+            background-color: rgba(230, 126, 34, 0.1);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* Qadamlar */
+        .step-container { display: flex; margin-bottom: 25px; }
+        .step-number {
+            min-width: 65px; height: 65px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; font-weight: 900; color: white;
+            margin-right: 15px; flex-shrink: 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin-top: 10px;
+        }
+
+        .step-content { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; background: white; }
+        .step-header { padding: 12px; font-weight: bold; text-align: center; color: white; font-size: 16px; }
+        .step-body { padding: 15px; font-size: 14.5px; line-height: 1.6; color: #333; }
+
+        .s1 .step-number, .s1 .step-header { background-color: #3498db; }
+        .s2 .step-number, .s2 .step-header { background-color: #1abc9c; }
+        .s3 .step-number, .s3 .step-header { background-color: #9b59b6; }
+        .s4 .step-number, .s4 .step-header { background-color: #34495e; }
+
+        /* Media va tugmalar */
+        .section-title {
+            background: #1a237e; color: white;
+            padding: 10px; border-radius: 5px;
+            text-align: center; margin: 30px 0 15px;
+            font-weight: bold;
+        }
+        
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #333;
+            margin-bottom: 15px;
+        }
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .info-img { width: 100%; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 10px; }
+
+        .action-btn {
+            background: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .marker-box {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #9b59b6;
+            background: #f4ecf7;
+        }
+
+        @media print { .top-nav { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#reja" class="nav-btn"><i class="fas fa-tasks"></i> DARS REJA</a>
+    <a href="#infografika" class="nav-btn"><i class="fas fa-project-diagram"></i> INFOGRAFIKA</a>
+    <a href="#video" class="nav-btn"><i class="fas fa-play-circle"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-adjust"></i> REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <section id="reja">
+        <div class="header-section">
+            <div class="header-image">
+                <img src="https://drive.google.com/thumbnail?id=1-nt_seL9uqaI3KaRKNnBBbvadHstuo39&sz=w1000" alt="Propaganda">
+            </div>
+            <div class="header-text">
+                <h1>8-Mashg'ulot:</h1>
+                <h2>Propaganda va yashirin xabarlar</h2>
+            </div>
+        </div>
+
+        <div class="goal-box">
+            <strong>Maqsadi:</strong> O'quvchilarda axborotning tashqi qobig'i (affektiv ta'siri) ortidagi yashirin maqsadlarni (kognitiv mazmunni) ajratib olish ko'nikmasini shakllantirish. "Muztog'i" ostidagi haqiqatni ko'rishni o'rganish.
+        </div>
+
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">Affektiv Kirish (5 daqiqa) — Metod: "Ideal dunyo manzarasi"</div>
+                <div class="step-body">
+                    O'qituvchi o'quvchilarga biror ijtimoiy-siyosiy yoki ommaviy xabarni ko'rsatadi (masalan: "Hamma bir xil kiyinsa, jamiyatda adolat bo'ladi" mazmunidagi juda ta'sirli video). 
+                    <br>• <b>Vazifa:</b> O'quvchi videodagi musiqiy fon va chiroyli kadrlar keltirib chiqargan hissiyotni (tinchlik, ishonch, birdamlik) yozadi. 
+                    <br>• <b>Monitoring:</b> Bu o'quvchining <i>Affektiv moyilligini</i> aniqlash bosqichi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Kognitiv Dekonstruksiya (12 daqiqa) — Metod: "Savollarni qayta yuklash"</div>
+                <div class="step-body">
+                    Endi chiroyli kadrlar va musiqani chetga surib, xabarning quruq matni tahlil qilinadi:
+                    <br>• <b>Mantiqiy savol:</b> "Bu g'oya amalda ishlaydimi? Inson huquqlariga zid emasmi? Kimga foyda?"
+                    <br>• <b>Vazifa:</b> O'quvchi xabardagi "chiroyli yolg'on" va "achchiq haqiqat" o'rtasidagi mantiqiy ziddiyatni topishi kerak.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Amaliy Mashg'ulot (20 daqiqa) — Metod: "Rangli Markerlar"</div>
+                <div class="step-body">
+                    O'quvchilarga bitta propaganda matni beriladi. Ular ikki xil rangli marker bilan ishlaydi:
+                    <div class="marker-box">
+                        <span style="color: #e74c3c; font-weight: bold;">● Qizil marker:</span> Faqat hissiyotga ta'sir qiluvchi so'zlarni (buyuk, mangu, dushman, najot) belgilash. <br>
+                        <span style="color: #27ae60; font-weight: bold;">● Yashil marker:</span> Aniq faktlar, raqamlar va isbotlarni belgilash.
+                    </div>
+                    <b>Natija:</b> Agar matn qizil rangga "bo'yalib" ketsa, bu kognitiv mazmuni bo'sh propaganda hisoblanadi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">Monitoring va yakun (8 daqiqa)</div>
+                <div class="step-body">
+                    O'quvchilar quyidagi savolga javob berishadi: 
+                    <br><i>"Ushbu xabar sizni nimanidir his qilishga majbur qilyaptimi yoki o'ylashgami?"</i>
+                    <br>Agar javob "his qilish" bo'lsa, demak axborot affektiv filtrdan o'tgan va kognitiv tahlil talab etiladi.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="infografika" class="section-title">DARSNING INFOGRAFIKASI</div>
+    <img src="https://drive.google.com/thumbnail?id=1Bc5tCOZQ-oxne4yWwH_Jwa1M80m2Cn7g&sz=w1000" class="info-img" alt="Propaganda Infografikasi">
+
+    <div id="video" class="section-title">MAVZUGA DOIR VIDEO</div>
+    <div class="video-box">
+        <iframe src="https://drive.google.com/file/d/15iXgKoKkG3GvQhC6K-YhIQMyVBT9XiMz/preview" allow="autoplay"></iframe>
+    </div>
+    <div style="text-align: center;">
+        <a href="https://drive.google.com/file/d/15iXgKoKkG3GvQhC6K-YhIQMyVBT9XiMz/view" target="_blank" class="action-btn">
+            <i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH
+        </a>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 20px; color: #7f8c8d; font-size: 13px;">
+    © 2026 Mirobid | Media Savodxonlik
+</footer>
+
+</body>
+</html>

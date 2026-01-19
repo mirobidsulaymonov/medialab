@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Simulyatori | SamDVMU</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+        :root {
+            --primary: #1a5276;
+            --gold: #b7950b;
+            --bg: #e5ddd5;
+            --my-msg: #dcf8c6;
+            --friend-msg: #ffffff;
+            --danger: #c0392b;
+            --success: #1e8449;
+            --dark: #0f172a;
+        }
+
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #f0f2f5; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+            padding-top: 80px; /* Navigatsiya uchun joy */
+        }
+
+        /* --- Navigatsiya Paneli --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* --- Chat Dizayni --- */
+        .chat-container { 
+            width: 100%; 
+            max-width: 450px; 
+            background: var(--bg); 
+            height: 80vh; 
+            display: flex; 
+            flex-direction: column; 
+            border-radius: 25px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15); 
+            overflow: hidden; 
+            position: relative;
+            margin-bottom: 20px;
+            border: 6px solid #fff;
+        }
+
+        .chat-header { 
+            background: var(--primary); 
+            color: white; 
+            padding: 15px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+        
+        .avatar { 
+            width: 45px; 
+            height: 45px; 
+            background: var(--gold); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: 800; 
+            font-size: 20px; 
+            color: white; 
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .chat-area { 
+            flex: 1; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            overflow-y: auto; 
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'); /* WhatsApp pattern */
+        }
+
+        .msg { 
+            max-width: 85%; 
+            padding: 12px 16px; 
+            border-radius: 15px; 
+            font-size: 15px; 
+            position: relative; 
+            line-height: 1.5; 
+            animation: fadeIn 0.4s ease; 
+            font-weight: 500;
+        }
+        .friend { 
+            align-self: flex-start; 
+            background: var(--friend-msg); 
+            border-bottom-left-radius: 2px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+        }
+        
+        .system-date { 
+            align-self: center; 
+            font-size: 11px; 
+            background: rgba(0,0,0,0.1); 
+            padding: 4px 12px; 
+            border-radius: 10px; 
+            color: #555; 
+            margin: 5px 0; 
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .options-box { background: white; padding: 20px; border-top: 1px solid #ddd; }
+        .option-btn { 
+            width: 100%; 
+            padding: 14px; 
+            margin-bottom: 10px; 
+            border: 2px solid var(--primary); 
+            border-radius: 12px; 
+            background: white; 
+            color: var(--primary); 
+            font-size: 14px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            text-align: left; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option-btn:hover { background: var(--primary); color: white; transform: translateX(5px); }
+
+        /* --- Feedback (Natija) --- */
+        #feedback { 
+            display: none; 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 90%; 
+            padding: 30px; 
+            border-radius: 25px; 
+            text-align: center; 
+            z-index: 100; 
+            box-shadow: 0 0 100px rgba(0,0,0,0.4); 
+            border: 4px solid #fff;
+        }
+        .success-box { background: #d4edda; color: #155724; }
+        .error-box { background: #f8d7da; color: #721c24; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 768px) { .nav-links { display: none; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Bosh sahifa</a>
+        <a href="index.html#darslar">Darslar</a>
+        <a href="index.html#keyslar">Keyslar</a>
+        <a href="index.html#oyinlar">O'yinlar</a>
+        <a href="diagnostika.html">Diagnostika</a>
+    </div>
+</nav>
+
+<div style="text-align: center; margin-bottom: 15px;">
+    <h2 style="color: var(--primary); margin: 0;">Integrativ Simulyator</h2>
+    <p style="color: var(--gold); font-weight: 800; margin: 5px 0;">SamDVMU: Sulaymonov Mirobid</p>
+</div>
+
+
+
+<div class="chat-container">
+    <div class="chat-header">
+        <div class="avatar" id="currentAvatar">?</div>
+        <div>
+            <div style="font-weight: 800; font-size: 16px;" id="currentName">Xabarnoma</div>
+            <div style="font-size: 11px; opacity: 0.9;" id="currentStatus"><i class="fas fa-circle" style="font-size: 8px; color: #2ecc71;"></i> online</div>
+        </div>
+    </div>
+
+    <div class="chat-area" id="chatArea"></div>
+
+    <div class="options-box" id="optionsBox">
+        <p style="margin-top:0; font-size: 12px; font-weight:bold; color:#888; text-transform: uppercase;" id="qCount">Ssenariy: 1 / 15</p>
+        <div id="buttonsContainer"></div>
+    </div>
+
+    <div id="feedback">
+        <h2 id="fbTitle" style="margin-top: 0;"></h2>
+        <p id="fbText" style="font-size: 16px; font-weight: 600;"></p>
+        <button class="option-btn" style="justify-content:center; margin-top:20px; background: var(--primary); color:white; border:none;" id="nextBtn" onclick="nextQuestion()">DAVOM ETISH</button>
+    </div>
+</div>
+
+<script>
+    const scenarios = [
+        { name: "Yaqin do'stingiz", avatar: "D", msg: "Salom! Menga tezda 100 ming so'm tashlab yubor, juda zarur, keyin tushuntiraman! 🚨", 
+          options: [
+              {t: "A) Darrov pul o'tkazaman", r: "XATO! Bu profil buzilgan bo'lishi mumkin. Pul firibgarga ketadi.", s: false},
+              {t: "B) Guruhga yozaman", r: "XAVFLI! Bu boshqalarni ham chalg'itishi mumkin.", s: false},
+              {t: "C) Telefon qilib ovozini eshitaman", r: "TO'G'RI! Shaxsan tasdiqlash — eng xavfsiz yo'l.", s: true}
+          ]
+        },
+        { name: "Noma'lum raqam", avatar: "N", msg: "Tabriklaymiz! Siz yutuq yutdingiz. Mukofotni olish uchun ushbu linkka kiring: http://yutuq-uz.ga", 
+          options: [
+              {t: "A) Linkka kirib ko'raman", r: "XATO! Bu fishing linki. Ma'lumotlaringiz o'g'irlanadi.", s: false},
+              {t: "B) Xabarni o'chirib yuboraman", r: "TO'G'RI! Noma'lum linklar har doim xavfli.", s: true},
+              {t: "C) Raqamga rahmat deb yozaman", r: "XATO! Firibgarlar bilan muloqot qilmang.", s: false}
+          ]
+        },
+        { name: "E'lonlar", avatar: "E", msg: "Kuniga 2 soat ishlab 1 mln topishni xohlaysizmi? Pasport nusxasini yuboring.", 
+          options: [
+              {t: "A) Rasmga olib yuboraman", r: "XATO! Shaxsiy hujjatlaringizdan yomon niyatda foydalanishadi.", s: false},
+              {t: "B) Ish haqida batafsil so'rayman", r: "XATO! Bunday takliflar 99% holatda firibgarlikdir.", s: false},
+              {t: "C) Taklifni rad etaman", r: "TO'G'RI! Hujjatlarni begonalarga bermaslik kerak.", s: true}
+          ]
+        },
+        { name: "Bank Xizmati", avatar: "B", msg: "Karta bloklandi! Uni ochish uchun telefoningizga kelgan SMS kodni ayting.", 
+          options: [
+              {t: "A) Kodni yozib yuboraman", r: "XATO! Bank xodimi hech qachon SMS kodni so'ramaydi.", s: false},
+              {t: "B) Bankka borib tekshiraman", r: "TO'G'RI! Bank masalalarini faqat rasmiy ilova yoki filialda hal qiling.", s: true},
+              {t: "C) Kodni do'stimga beraman", r: "XATO! Maxfiy kod faqat siz uchun.", s: false}
+          ]
+        },
+        { name: "Instagram Reklama", avatar: "I", msg: "iPhone 15 pro max - bor yo'g'i 1 mln so'm! Shoshiling, soni cheklangan (Link)", 
+          options: [
+              {t: "A) Juda arzon ekan, olaman", r: "XATO! Bu klassik klikbeyt yoki moliyaviy tuzoq.", s: false},
+              {t: "B) Reklamani bloklayman", r: "TO'G'RI! Shubhali past narxlarga ishonmaslik kerak.", s: true},
+              {t: "C) Do'stlarimga ulashaman", r: "XATO! Yolg'onni tarqatish orqali boshqalarni ham xavfga qo'yasiz.", s: false}
+          ]
+        },
+        { name: "Guruh xabari", avatar: "G", msg: "Ertaga non 10 ming so'm bo'lar emish, hamma tarqatsin! (Audio)", 
+          options: [
+              {t: "A) Darhol hammaga tarqataman", r: "XATO! Bu asossiz vahima tarqatuvchi feyk xabar.", s: false},
+              {t: "B) Rasmiy kanallardan tekshiraman", r: "TO'G'RI! Fakt-cheking - media savodxonlikning birinchi qoidasi.", s: true},
+              {t: "C) Ovozli xabarni saqlab olaman", r: "XATO! Tekshirilmagan gaplarga tayanmang.", s: false}
+          ]
+        },
+        { name: "Telegram Bot", avatar: "🤖", msg: "Profilingiz xavf ostida! Parolingizni tasdiqlash uchun shu yerga yozing.", 
+          options: [
+              {t: "A) Parolimni yozaman", r: "XATO! Hech qanday bot parolingizni so'rashga haqli emas.", s: false},
+              {t: "B) Botni bloklayman", r: "TO'G'RI! Bu fishing botidir.", s: true},
+              {t: "C) Botga savol beraman", r: "XATO! Botlar shunchaki ma'lumot yig'ish uchun dasturlangan.", s: false}
+          ]
+        },
+        { name: "Noma'lum shaxs", avatar: "👤", msg: "Sizning shaxsiy rasmlaringiz qo'limda. Pul bermasangiz tarqataman!", 
+          options: [
+              {t: "A) Qo'rqib pul yuboraman", r: "XATO! Tovlamachi pul olgandan keyin ham to'xtamaydi.", s: false},
+              {t: "B) Huquq tartibot organlariga aytaman", r: "TO'G'RI! Kiber-tovlamachilik - jiddiy jinoyatdir.", s: true},
+              {t: "C) Uni haqorat qilaman", r: "XATO! Hissiyotga berilmang, qonuniy yo'l tuting.", s: false}
+          ]
+        },
+        { name: "Tanishiz", avatar: "T", msg: "Zo'r o'yin ekan, mana bu faylni yuklab o'rnat: o'yin.exe", 
+          options: [
+              {t: "A) Yuklab o'rnataman", r: "XATO! Noma'lum .exe fayllar qurilmangizni nazoratga oladi.", s: false},
+              {t: "B) Faylni o'chirib yuboraman", r: "TO'G'RI! Shubhali dasturlardan saqlaning.", s: true},
+              {t: "C) Kompyuterimga saqlayman", r: "XATO! Virus saqlanganda ham xavfli bo'lishi mumkin.", s: false}
+          ]
+        },
+        { name: "Xayriya guruhi", avatar: "🤲", msg: "Kasal bolaga yordam bering! (Karta raqami: 8600...)", 
+          options: [
+              {t: "A) Pul o'tkazaman", r: "DIQQAT! Karta egasi ismini fond bilan tekshiring.", s: false},
+              {t: "B) Rasmiy fond orqali yordam beraman", r: "TO'G'RI! Haqiqiy muhtojlarga rasmiy yo'l bilan yordam bering.", s: true},
+              {t: "C) Xabarni guruhlarga tarqataman", r: "XATO! Firibgarlik bo'lsa, uning sherigiga aylanasiz.", s: false}
+          ]
+        },
+        { name: "Sizning ID", avatar: "🆔", msg: "Akkauntingizga yangi qurilmadan kirildi. Bu sizmi?", 
+          options: [
+              {t: "A) E'tibor bermayman", r: "XATO! Hozir akkauntingiz o'g'irlanishi mumkin.", s: false},
+              {t: "B) Darhol seanslarni yakunlayman", r: "TO'G'RI! Bu xavfsizlikni tiklashning eng tez yo'li.", s: true},
+              {t: "C) Kutib turaman", r: "XATO! Kiber-xavfsizlikda soniyalar muhim.", s: false}
+          ]
+        },
+        { name: "Online Do'kon", avatar: "🛍️", msg: "Sizga sovg'a yubordik, kuryer pulini oldindan to'lang.", 
+          options: [
+              {t: "A) To'lovni qilaman", r: "XATO! Kuryer uchun oldindan to'lov - aldov belgisidir.", s: false},
+              {t: "B) Rad etaman", r: "TO'G'RI! Bepul sovg'a uchun haq so'ralmaydi.", s: true},
+              {t: "C) Manzilni yuboraman", r: "XATO! Shaxsiy manzilingizni ham bermang.", s: false}
+          ]
+        },
+        { name: "O'yin Bot", avatar: "🎮", msg: "Bepul PUBG UC xohlaysizmi? Login va parolingizni yuboring.", 
+          options: [
+              {t: "A) Ma'lumotni beraman", r: "XATO! Akkauntingizni shunchaki sovg'a qilib yubordingiz.", s: false},
+              {t: "B) Botni bloklayman", r: "TO'G'RI! Hech qachon login-parolni begona joyga yozmang.", s: true},
+              {t: "C) Sinab ko'raman", r: "XATO! Xavfsizlik bilan tajriba o'tkazilmaydi.", s: false}
+          ]
+        },
+        { name: "Video xabar", avatar: "🎥", msg: "Sizning sharmandali videongiz chiqib ketdi: (Link)", 
+          options: [
+              {t: "A) Qo'rqib linkni ochaman", r: "XATO! Bu hissiy manipulyatsiya (qo'rqitish) orqali virus yuqtirish.", s: false},
+              {t: "B) Linkni ochmay o'chiraman", r: "TO'G'RI! Bu klassik kiber-tuzoq.", s: true},
+              {t: "C) Politsiyaga aytaman", r: "TO'G'RI! Ammo linkni ochish baribir xato.", s: true}
+          ]
+        },
+        { name: "Tizim", avatar: "⚙️", msg: "Tabriklaymiz! Barcha ssenariylardan o'tdingiz. Tayyormisiz?", 
+          options: [
+              {t: "Natijani ko'rish", r: "Siz kiber-xavfsizlik va media madaniyat bo'yicha tayyorgarlikka egasiz!", s: true}
+          ]
+        }
+    ];
+
+    let currentIdx = 0;
+
+    function initScenario() {
+        const sc = scenarios[currentIdx];
+        document.getElementById('currentName').innerText = sc.name;
+        document.getElementById('currentAvatar').innerText = sc.avatar;
+        document.getElementById('qCount').innerText = `Ssenariy: ${currentIdx + 1} / 15`;
+        
+        const chatArea = document.getElementById('chatArea');
+        chatArea.innerHTML = `<div class="system-date">Bugun</div>`;
+        chatArea.innerHTML += `<div class="msg friend">${sc.msg}</div>`;
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        const btnContainer = document.getElementById('buttonsContainer');
+        btnContainer.innerHTML = '';
+        sc.options.forEach((opt, idx) => {
+            btnContainer.innerHTML += `<button class="option-btn" onclick="checkAnswer(${idx})"><i class="fas fa-chevron-right" style="font-size:10px;"></i> ${opt.t}</button>`;
+        });
+    }
+
+    function checkAnswer(optIdx) {
+        const sc = scenarios[currentIdx];
+        const opt = sc.options[optIdx];
+        const fb = document.getElementById('feedback');
+        const fbTitle = document.getElementById('fbTitle');
+        const fbText = document.getElementById('fbText');
+
+        fb.style.display = "block";
+        if(opt.s) {
+            fb.className = "success-box";
+            fbTitle.innerText = "✅ TO'G'RI!";
+        } else {
+            fb.className = "error-box";
+            fbTitle.innerText = "❌ XATO!";
+        }
+        fbText.innerText = opt.r;
+        
+        if(currentIdx === scenarios.length - 1) {
+            document.getElementById('nextBtn').innerText = "BOSHIDAN BOSHLASH";
+        } else {
+            document.getElementById('nextBtn').innerText = "KEYINGI BOSQICH";
+        }
+    }
+
+    function nextQuestion() {
+        if(currentIdx === scenarios.length - 1) {
+            location.reload();
+        } else {
+            currentIdx++;
+            document.getElementById('feedback').style.display = "none";
+            initScenario();
+        }
+    }
+
+    initScenario();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10-Mashg'ulot: Feyk-botlar va Trollar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: white;
+            --text-color: #2c3e50;
+            --accent-color: #e74c3c;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #f1f1f1;
+            --accent-color: #ff4d4d;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        .top-nav {
+            background: #2c3e50;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .home-btn { background: #27ae60; border: none; }
+        .nav-btn:hover { background: var(--accent-color); color: white; }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-image {
+            flex: 1;
+            min-width: 250px;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid var(--accent-color);
+        }
+
+        .header-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #34495e; margin: 0; font-size: 24px; }
+        .header-text h2 { color: var(--accent-color); margin: 5px 0; font-size: 34px; font-weight: 900; line-height: 1.2; }
+
+        .goal-box {
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            background-color: rgba(231, 76, 60, 0.05);
+            margin-bottom: 30px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .step-container { display: flex; margin-bottom: 30px; }
+        .step-number {
+            min-width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 900; color: white;
+            margin-right: 20px; flex-shrink: 0;
+            background: #34495e;
+        }
+
+        .step-content { flex-grow: 1; border-radius: 12px; border: 1px solid #ddd; background: #fff; overflow: hidden; }
+        .step-header { padding: 15px; font-weight: bold; background: #34495e; color: white; }
+        .step-body { padding: 20px; line-height: 1.6; color: #444; }
+
+        .bot-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .feature-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+            font-size: 14px;
+        }
+
+        .section-title {
+            background: #2c3e50; color: white;
+            padding: 15px; border-radius: 8px;
+            text-align: center; margin: 40px 0 20px;
+            font-weight: bold; letter-spacing: 1px;
+        }
+
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .info-img { width: 100%; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        .action-btn {
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 14px; }
+        th { background: #f2f2f2; }
+
+        /* Chop etish uchun maxsus (Video va tugmalar chiqmaydi) */
+        @media print {
+            .top-nav, .action-btn, #video { display: none; }
+            .container { box-shadow: none; border: none; }
+            body { background: white; }
+        }
+
+        @media (max-width: 600px) {
+            .bot-features { grid-template-columns: 1fr; }
+            .header-text { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#reja" class="nav-btn">DARS REJASI</a>
+    <a href="#infografika" class="nav-btn">INFOGRAFIKA</a>
+    <a href="#video" class="nav-btn">VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <section id="reja">
+        <div class="header-section">
+            <div class="header-image">
+                <img src="https://drive.google.com/thumbnail?id=1gF-AWMJpYEkSkFSRbNAwTa0rsl01jyFI&sz=w1000" alt="Feyk-botlar">
+            </div>
+            <div class="header-text">
+                <h1>10-Mashg'ulot:</h1>
+                <h2>Feyk-botlar va Trollar: <br>"Podaga" ergashmang!</h2>
+            </div>
+        </div>
+
+        <div class="goal-box">
+            <strong>Maqsadi:</strong> O'quvchilarda ijtimoiy tarmoqlardagi sun'iy yaratilgan "shov-shuv"larni tanish, feyk profil va botlarni aniqlash hamda ko'pchilikning fikriga ko'r-ko'rona ergashishdan (konformizmdan) himoyalanishni o'rgatish.
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">Affektiv Bosim: "Podaga ergashish" effekti (7 daqiqa)</div>
+                <div class="step-body">
+                    O'qituvchi 500 ta bir xil ijobiy izoh ("Ajoyib!", "To'ppa-to'g'ri!") yozilgan postni ko'rsatadi.
+                    <br>• <b>Vazifa:</b> O'quvchi o'ziga savol beradi: <i>"Agar hamma ma'qullayotgan bo'lsa, demak bu to'g'ri ekan-da?"</i> degan fikr miyamdan o'tdimi?
+                    <br>• <b>Monitoring:</b> O'quvchining "Social Proof" (ijtimoiy tasdiqlash)ga nisbatan affektiv moyilligi aniqlanadi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Kognitiv Tahlil: "Botni fosh etish" (13 daqiqa)</div>
+                <div class="step-body">
+                    Botlarni aniqlashning 4 ta asosiy kognitiv belgisi:
+                    <div class="bot-features">
+                        <div class="feature-item"><b>1. Profil rasmi:</b> Rasm yo'qligi yoki internetdan olingan gullar/mashinalar rasmi.</div>
+                        <div class="feature-item"><b>2. Faollik vaqti:</b> Bir soniyada bir nechta izoh yozish (robotik tezlik).</div>
+                        <div class="feature-item"><b>3. Matn bir xilligi:</b> Turli postlar ostida aynan bir xil jumlalarni nusxalash.</div>
+                        <div class="feature-item"><b>4. Obunachilar:</b> O'zida obunachi yo'q, lekin minglab odamni kuzatadi.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Amaliy Mashg'ulot: "Botlarni qidiramiz" (15 daqiqa)</div>
+                <div class="step-body">
+                    
+                    O'quvchilar izohlar skrinshotini "Haqiqiy foydalanuvchi" va "Bot" guruhlariga ajratishadi.
+                    <br><b>Kognitiv monitoring jadvali:</b>
+                    <table>
+                        <tr>
+                            <th>Profil nomi</th>
+                            <th>Shubhali belgi</th>
+                            <th>Xulosa</th>
+                        </tr>
+                        <tr>
+                            <td>User12345</td>
+                            <td>Rasm yo'q, izoh takroriy</td>
+                            <td>BOT</td>
+                        </tr>
+                        <tr>
+                            <td>Anvar_88</td>
+                            <td>Shaxsiy rasmlar, turli izohlar</td>
+                            <td>REAL</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">Monitoring va O'lchov (10 daqiqa)</div>
+                <div class="step-body">
+                    <b>Savollar:</b>
+                    <br>1. <i>Affektiv:</i> "1000 kishi ma'qullagan xabarni haqiqat deb qabul qilasizmi?"
+                    <br>2. <i>Kognitiv:</i> "Botlarni aniqlashda qaysi texnik usul sizga eng ko'p yordam berdi?"
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="infografika" class="section-title">DARSNING INFOGRAFIKASI</div>
+    <img src="https://drive.google.com/thumbnail?id=1PbWKq9wQ_T893Vo3q-cLUY6FPIhr_P_z&sz=w1000" class="info-img" alt="Trollar va Botlar">
+
+    <div id="video" class="section-title">MAVZUGA DOIR VIDEO</div>
+    <div class="video-box">
+        <iframe src="https://drive.google.com/file/d/1eQ0um1DmoTi1b-KxPdflzYTYaFEzHc6h/preview" allow="autoplay"></iframe>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="https://drive.google.com/file/d/1eQ0um1DmoTi1b-KxPdflzYTYaFEzHc6h/view" target="_blank" class="action-btn">
+            <i class="fab fa-google-drive"></i> VIDEONI TO'LIQ KO'RISH
+        </a>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 30px; color: #95a5a6; font-size: 13px;">
+    © 2026 Mirobid | Media Savodxonlik: 10-Mashg'ulot | Axborot Immuniteti Kursi
+</footer>
+
+</body>
+</html>

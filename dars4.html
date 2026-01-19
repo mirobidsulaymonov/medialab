@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-Mashg'ulot: Deepfake va Sun'iy Intellekt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: white;
+            --text-color: #333;
+            --primary-dark: #0a2c46;
+            --accent-yellow: #ffd54f;
+            --drive-blue: #1a73e8;
+        }
+
+        .dark-mode {
+            --bg-color: #051622;
+            --card-bg: #0a2c46;
+            --text-color: #f0f0f0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        /* Navigatsiya */
+        .top-nav {
+            background: var(--primary-dark);
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--accent-yellow);
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-btn:hover { background: var(--accent-yellow); color: var(--primary-dark); }
+        .home-btn { background: #27ae60; border: none; }
+
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .page-section {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+        }
+
+        /* HEADER */
+        .header-section { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .header-image-container { 
+            flex: 1; 
+            min-width: 250px; 
+            height: 200px; 
+            border-radius: 8px; 
+            margin-right: 20px; 
+            overflow: hidden; 
+            border: 2px solid var(--accent-yellow);
+            background: #000;
+        }
+        .header-image-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; }
+        .header-image-container:hover img { transform: scale(1.1); }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #2980b9; margin: 0; font-size: 24px; text-transform: uppercase; }
+        .header-text h2 { color: #e67e22; margin: 5px 0; font-size: 26px; font-weight: 900; }
+        .subtitle-bar { background-color: #34495e; color: var(--accent-yellow); padding: 10px; text-align: center; font-weight: bold; border-radius: 5px; margin-top: 10px; }
+
+        /* QADAMLAR */
+        .step-container { display: flex; margin-bottom: 20px; }
+        .step-number { min-width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 900; color: white; margin-right: 15px; flex-shrink: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-top: 10px; }
+        .step-content { flex-grow: 1; border-radius: 12px; overflow: hidden; border: 1px solid #ddd; background: white; }
+        .step-header { padding: 10px; font-weight: bold; text-align: center; color: #fff; }
+        .step-body { padding: 15px; font-size: 14px; line-height: 1.6; color: #333; }
+
+        .s1 .step-number { background: #3498db; } .s1 .step-header { background: #2980b9; }
+        .s2 .step-number { background: #1abc9c; } .s2 .step-header { background: #16a085; }
+        .s3 .step-number { background: #9b59b6; } .s3 .step-header { background: #8e44ad; }
+        .s4 .step-number { background: #34495e; } .s4 .step-header { background: #2c3e50; }
+
+        /* VIDEO */
+        .video-box { width: 100%; height: 450px; background: #000; border-radius: 15px; overflow: hidden; margin: 20px 0; border: 2px solid #333; }
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--drive-blue);
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 5px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 600px) { .video-box { height: 250px; } }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#reja" class="nav-btn"><i class="fas fa-brain"></i> DARS REJASI</a>
+    <a href="#info" class="nav-btn"><i class="fas fa-eye"></i> INFOGRAFIKA</a>
+    <a href="#video" class="nav-btn"><i class="fas fa-play"></i> VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="main-container">
+
+    <section id="reja" class="page-section">
+        <div class="header-section">
+            <div class="header-image-container">
+                <img src="https://drive.google.com/thumbnail?id=1GSFu9Zm39rlWKe4DNvVd2bqfvE9xTJuM&sz=w1000" alt="Deepfake Header">
+            </div>
+            <div class="header-text">
+                <h1>4-Mashg'ulot:</h1>
+                <h2>Deepfake va sun'iy intellekt</h2>
+                <div class="subtitle-bar">"Ko'zingga ishonma — soxta kontent"</div>
+            </div>
+        </div>
+
+        <div class="page-section" style="background: #fff3e0; border-left: 5px solid #e67e22;">
+            <strong>Maqsadi:</strong> <h4>O'quvchilarda sun'iy intellekt yordamida yaratilgan soxta kontentni (video, audio, rasm) tanish ko‘nikmasini shakllantirish va raqamli manipulyatsiyaning eng xavfli turidan ogoh etish.</h4>
+        </div>
+
+        <div class="step-container s1">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">"1. "Provokatsion kirish" metodi (5 daqiqa)"</div>
+                <div class="step-body">O'qituvchi dars boshida dunyoga mashhur biror insonning (masalan, Elon Musk yoki biror taniqli san'atkorning) o'zbek tilida gapirayotgan yoki mantiqsiz bayonot berayotgan qisqa Deepfake videosini ko'rsatadi.
+<br>Savol: "U haqiqatan ham shunday dedimi? 
+<br>Bu rasmda g'alati narsani sezmadingizmi?" 
+<br>Xulosa: Bugun texnologiya har qanday insonning qiyofasi va ovozini soxtalashtira oladi
+.</div>
+            </div>
+        </div>
+
+        <div class="step-container s2">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">"2. "Texnik detektor" metodi (10 daqiqa) — Nazariy tahlil"</div>
+                <div class="step-body">Deepfukeni aniqlash belgilari: Ko'z qisishi, yuz chetlari xiraligi, ovoz va lab mos kelmasligi, g'alati soyalar.</div>
+            </div>
+        </div>
+
+        <div class="step-container s3">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">"3. "AI-ekspertiza" o'yini (20 daqiqa) — Amaliyot </div>
+                <div class="step-body">O‘quvchilarga 4 ta rasm yoki qisqa video ko'rsatiladi:
+<br>1.	Real rasm: Oddiy surat.
+<br>2.	AI tomonidan yaratilgan rasm: (Masalan, Midjourney'da yaratilgan o'ta mukammal, lekin barmoqlari 6 ta bo'lgan odam rasmi).
+<br>3.	Deepfake audio: Taniqli odamning ovoziga o'xshash, lekin "robotik" ohangdagi ovoz.
+<br>4.	Deepfake video: Yuzi almashtirilgan mashhur shaxs.
+<br>Vazifa: Guruhlar "Ekspert xulosasi"ni berishlari kerak: Qaysi biri haqiqiy va nega shunday deb o'ylashadi? (Bu yerda o‘quvchilar dissertatsiyangizdagi 
+kognitiv tahlil metodini qo‘llashadi).
+
+</div>
+            </div>
+        </div>
+
+        <div class="step-container s4">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">4. Monitoring va psixologik tahlil (10 daqiqa)</div>
+                <div class="step-body">O‘qituvchi sahifasida siz yuborgan topshiriqdagi 
+<br>"Ushbu video/rasmda g'ayritabiiy holatni sezdingizmi?" degan savolga javob berishadi.
+<br>•	O'qituvchi uchun eslatma: Deepfake nafaqat kognitiv (mantiqiy) aldov, balki affektiv (hissiy) ta'sir ham o'tkazadi (qo'rqitish yoki obro'sizlantirish orqali).
+</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="info" class="page-section" style="background: var(--primary-dark); color: white; text-align: center;">
+        <h2>Infografika: Deepfake belgilari</h2>
+        <img src="https://drive.google.com/thumbnail?id=1X6mpa_Okl1n7-vOGex0xz0bVRfF2NARz&sz=w1000" style="width: 100%; border-radius: 10px; background: white; padding: 5px; margin-bottom: 15px;">
+        <br>
+        <a href="https://drive.google.com/file/d/1X6mpa_Okl1n7-vOGex0xz0bVRfF2NARz/view" target="_blank" class="action-btn">
+            <i class="fas fa-external-link-alt"></i> TO'LIQ KO'RISH
+        </a>
+    </section>
+
+    <section id="video" class="page-section">
+        <h2 style="text-align: center;">Mavzuga doir video</h2>
+        <div class="video-box">
+            <iframe src="https://drive.google.com/file/d/1ZaYRPpHv0X78Aqe4R8_ezstyHkcZJhxK/preview" allow="autoplay"></iframe>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://drive.google.com/file/d/1ZaYRPpHv0X78Aqe4R8_ezstyHkcZJhxK/view?usp=drive_link" target="_blank" class="action-btn">
+                <i class="fab fa-google-drive"></i> VIDEONI DISKDA KO'RISH
+            </a>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 20px; color: #7f8c8d; font-size: 13px;">
+        <p>© 2026 Mirobid | Media Savodxonlik | 4-Mashg'ulot</p>
+    </footer>
+</div>
+
+</body>
+</html>
