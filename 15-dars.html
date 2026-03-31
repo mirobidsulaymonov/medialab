@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15-Mashg'ulot: Deepfeyklar va AI Manipulyatsiyasi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: white;
+            --text-color: #2c3e50;
+            --accent-color: #8e44ad; /* Binafsharang - Texnologiya va sun'iy intellekt ramzi */
+        }
+
+        .dark-mode {
+            --bg-color: #0f0c29;
+            --card-bg: #1b1b2f;
+            --text-color: #e0e0e0;
+            --accent-color: #bb86fc;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: 0.3s;
+        }
+
+        .top-nav {
+            background: #2c3e50;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .home-btn { background: #27ae60; border: none; }
+        .nav-btn:hover { background: var(--accent-color); color: white; }
+
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-image {
+            flex: 1;
+            min-width: 250px;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid var(--accent-color);
+        }
+
+        .header-image img { width: 100%; height: 100%; object-fit: cover; }
+
+        .header-text { flex: 2; text-align: right; }
+        .header-text h1 { color: #34495e; margin: 0; font-size: 24px; }
+        .header-text h2 { color: var(--accent-color); margin: 5px 0; font-size: 34px; font-weight: 900; line-height: 1.2; }
+
+        .goal-box {
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            background-color: rgba(142, 68, 173, 0.05);
+            margin-bottom: 30px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .step-container { display: flex; margin-bottom: 30px; }
+        .step-number {
+            min-width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 900; color: white;
+            margin-right: 20px; flex-shrink: 0;
+            background: #34495e;
+        }
+
+        .step-content { flex-grow: 1; border-radius: 12px; border: 1px solid #ddd; background: var(--card-bg); overflow: hidden; }
+        .step-header { padding: 15px; font-weight: bold; background: #34495e; color: white; }
+        .step-body { padding: 20px; line-height: 1.6; }
+
+        .tech-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .feature-item {
+            background: rgba(0,0,0,0.03);
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color);
+            font-size: 14px;
+        }
+
+        .section-title {
+            background: #2c3e50; color: white;
+            padding: 15px; border-radius: 8px;
+            text-align: center; margin: 40px 0 20px;
+            font-weight: bold; letter-spacing: 1px;
+        }
+
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .video-box iframe { width: 100%; height: 100%; border: none; }
+
+        .info-img { width: 100%; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        .action-btn {
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 14px; }
+        th { background: rgba(0,0,0,0.05); }
+
+        @media print {
+            .top-nav, .action-btn, #video { display: none; }
+            .container { box-shadow: none; border: none; }
+            body { background: white; }
+        }
+
+        @media (max-width: 600px) {
+            .tech-features { grid-template-columns: 1fr; }
+            .header-text { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="index.html" class="nav-btn home-btn"><i class="fas fa-home"></i> BOSH SAHIFA</a>
+    <a href="#reja" class="nav-btn">DARS REJASI</a>
+    <a href="#infografika" class="nav-btn">INFOGRAFIKA</a>
+    <a href="#video" class="nav-btn">VIDEO</a>
+    <button class="nav-btn" onclick="document.body.classList.toggle('dark-mode')"><i class="fas fa-moon"></i> REJIM</button>
+    <button class="nav-btn" onclick="window.print()"><i class="fas fa-print"></i> CHOP ETISH</button>
+</nav>
+
+<div class="container">
+    <section id="reja">
+        <div class="header-section">
+            <div class="header-image">
+                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000" alt="Deepfakes">
+            </div>
+            <div class="header-text">
+                <h1>15-Mashg'ulot:</h1>
+                <h2>Deepfeyklar: <br>Ko'zingizga ishonmang!</h2>
+            </div>
+        </div>
+
+        <div class="goal-box">
+            <strong>Maqsadi:</strong> O'quvchilarga sun'iy intellekt yordamida yaratilgan soxta video va audio (deepfake) materiallarni tanishni o'rgatish, vizual manipulyatsiya texnikalarini tushuntirish va raqamli skeptitsizmni shakllantirish.
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <div class="step-header">Affektiv Shok: "Miya ko'rganiga ishonadi" </div>
+                <div class="step-body">
+                    O'qituvchi mashhur shaxsning (masalan, prezident yoki yulduz) aslida aytmagan gaplarini gapirayotgan deepfake videosini ko'rsatadi.
+                    <br>• <b>Savol:</b> "Agar bu odamni shaxsan tanimasangiz, videoga 100% ishonarmidingiz?"
+                    <br>• <b>Muhokama:</b> Birinchi hissiyot (hayrat) va kognitiv shubha o'rtasidagi kurash tahlil qilinadi.
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <div class="step-header">Kognitiv Filtr: Deepfeykni qanday tanish mumkin? </div>
+                <div class="step-body">
+                    AI xatolarini topishning 4 ta texnik usuli:
+                    <div class="tech-features">
+                        <div class="feature-item"><b>1. Ko'z pirpiratish:</b> Deepfeyklarda ko'zlar g'ayritabiiy kam yoki umuman pirpiramaydi.</div>
+                        <div class="feature-item"><b>2. Lab va Nutq:</b> Talaffuz qilinayotgan harflar lab harakatiga to'liq mos kelmaydi (sinxron xatosi).</div>
+                        <div class="feature-item"><b>3. Teridagi xiralik:</b> Yuz chetlari, quloqlar yoki soch ildizlarida g'alati xiralik (blur) mavjudligi.</div>
+                        <div class="feature-item"><b>4. Soyalar:</b> Ko'z ichidagi chaqnoqlar yoki yuzdagi soyalar yorug'lik manbasiga mos kelmasligi.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <div class="step-header">Amaliy Ekspertiza: "Haqiqatmi yoki AI?" </div>
+                <div class="step-body">
+                    O'quvchilar juftlikda ishlaydi va berilgan 5 ta portret/videoni tahlil qilib jadvalni to'ldiradi.
+                    <table>
+                        <tr>
+                            <th>Material ID</th>
+                            <th>Shubhali belgi</th>
+                            <th>Xulosa (AI / Real)</th>
+                        </tr>
+                        <tr>
+                            <td>Video_Sample_01</td>
+                            <td>Bo'yin qismidagi siljish</td>
+                            <td>DEEPFAKE</td>
+                        </tr>
+                        <tr>
+                            <td>Photo_Sample_02</td>
+                            <td>Tabiiy mimika va tekstura</td>
+                            <td>HAQIQIY</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <div class="step-header">Xulosa va immunitet </div>
+                <div class="step-body">
+                    <b>Oltin qoida:</b> "Ko'rish - ishonish degani emas". <br>
+                    Har qanday shov-shuvli videoni 3 ta mustaqil manba orqali tekshirish ko'nikmasini mustahkamlash.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="infografika" class="section-title">DEEPFAKE MEXANIZMI </div>
+    <div style="text-align: ; color: #7f8c8d; font-style: italic; padding: 40px; border: 2px dashed #ccc; border-radius: 20px;">
+
+        Deepfeyk qanday ishlaydi? (Avtoenkoder uslubi)
+Deepfeyklarning aksariyati Avtoenkoder (Autoencoder) deb ataladigan neyron tarmog'i yordamida yaratiladi. 
+<br>
+Bu jarayonni ikkita ishchi  "Siquvchi" va "Tiklovchi" kabi tasavvur qilish mumkin.
+<br>
+1-bosqich: Kodlash (Encoder)
+Sun'iy intellektga ikki kishining (masalan, A - siz va B - taniqli shaxs) minglab rasmlari beriladi. 
+<br>
+Neyron tarmog'i bu yuzlarning umumiy tomonlarini (ko'z joylashuvi, burun shakli, mimika) 
+o'rganadi va ularni siqilgan "kod" ko'rinishiga keltiradi.
+<br>
+<br>2-bosqich: Dekodlash (Decoder)
+Har bir shaxs uchun alohida "tiklovchi" (dekoder) o'qitiladi:
+<br>
+A-dekoder: Siqilgan koddan sizning yuzingizni qayta tiklashni o'rganadi.
+<br>
+B-dekoder: Xuddi shu koddan taniqli shaxsning yuzini tiklashni o'rganadi.
+<br>
+<br>3-bosqich: "Almashtirish" (The Swap)
+Mana shu yerda "sehr" sodir bo'ladi:
+<br>
+Tizimga A shaxsning (sizning) videosi beriladi.
+<br>
+Encoder sizning yuz harakatlaringizni siqilgan kodga aylantiradi.
+<br>
+Lekin bu safar kod A-dekoderga emas, balki B-dekoderga yuboriladi.
+<br>
+<br>Natijada, B shaxsning (mashhur odamning) yuzi A shaxsning mimikasi va harakatlarini takrorlay boshlaydi.
+<br>
+Deepfeykning 3 ta asosiy komponenti:
+Encoder (Kodlovchi): Yuzning mimikasi va harakatlarini (ko'z qisish, gapirish) "tushunadi".
+<br>
+Decoder (Dekodlovchi): O'rganilgan ma'lumotlar asosida yangi yuzni chizadi.
+<br>
+GAN (Generative Adversarial Network): Ikki neyron tarmog'ining o'zaro "musobaqasi". Biri rasm chizadi (Generator), ikkinchisi uning soxtaligini tekshiradi (Discriminator). Bu tasvirning o'ta realistik chiqishini ta'minlaydi.
+<br>
+Eslatma: Deepfeyk nafaqat yuzni, balki ovozni ham xuddi shu usulda (neyron tarmoqlariga ovoz namunalarini berish orqali) klonlashi mumkin.
+    </div>
+
+	<div class="infographic-container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 40px; background: rgba(0,0,0,0.02); border-radius: 20px; margin: 20px 0;">
+    
+    <div style="display: flex; justify-content: space-around; width: 100%; flex-wrap: wrap; gap: 20px;">
+        <div style="text-align: center; flex: 1; min-width: 150px;">
+            <div style="font-size: 40px; color: #3498db;"><i class="fas fa-users"></i></div>
+            <h4 style="margin: 10px 0;">1. Ma'lumot yig'ish</h4>
+            <p style="font-size: 12px; color: #7f8c8d;">A va B shaxslarning minglab rasmlari olinadi.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; color: #bdc3c7;"><i class="fas fa-chevron-right fa-2x"></i></div>
+
+        <div style="text-align: center; flex: 1; min-width: 150px;">
+            <div style="font-size: 40px; color: #e67e22;"><i class="fas fa-brain"></i></div>
+            <h4 style="margin: 10px 0;">2. Enkoder (analiz)</h4>
+            <p style="font-size: 12px; color: #7f8c8d;">AI yuz mimikalarini raqamli kodga aylantiradi.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; color: #bdc3c7;"><i class="fas fa-chevron-right fa-2x"></i></div>
+
+        <div style="text-align: center; flex: 1; min-width: 150px;">
+            <div style="font-size: 40px; color: #2ecc71;"><i class="fas fa-magic"></i></div>
+            <h4 style="margin: 10px 0;">3. Dekoder (sintez)</h4>
+            <p style="font-size: 12px; color: #7f8c8d;">Kod B-shaxs yuzi ko'rinishida qayta chiziladi.</p>
+        </div>
+
+        <div style="display: flex; align-items: center; color: #bdc3c7;"><i class="fas fa-chevron-right fa-2x"></i></div>
+
+        <div style="text-align: center; flex: 1; min-width: 150px;">
+            <div style="font-size: 40px; color: #e74c3c;"><i class="fas fa-video"></i></div>
+            <h4 style="margin: 10px 0;">4. Natija</h4>
+            <p style="font-size: 12px; color: #7f8c8d;">Soxta, lekin o'ta realistik video tayyor.</p>
+        </div>
+    </div>
+
+    <div style="background: var(--accent-color); color: white; padding: 15px 30px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <i class="fas fa-cogs"></i> GAN (Neyron tarmoq) Sifatni tekshiradi
+    </div>
+</div>
+	
+    <div id="video" class="section-title">DEEPFAKE HAQIDA EKSPERT FIKRI</div>
+    <div class="video-box">
+        <iframe src="https://www.youtube.com/watch?v=kTxjSU-4jbo" title="Deepfake detection" allowfullscreen></iframe>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="#" class="action-btn">
+            <i class="fas fa-shield-alt"></i> ANALIZ VOSITALARI BILAN TANISHISH
+        </a>
+    </div>
+</div>
+
+<footer style="text-align: center; padding: 30px; color: #95a5a6; font-size: 13px;">
+    © 2026 Mirobid | Media Savodxonlik
+</footer>
+
+</body>
+</html>
